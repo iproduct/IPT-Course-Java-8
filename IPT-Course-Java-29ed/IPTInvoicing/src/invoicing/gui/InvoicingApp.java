@@ -1,9 +1,8 @@
 /* COPYRIGHT & LICENSE HEADER
 * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 *
-* IPT Mobile Presentation demonstrates interactive mobile presentation
-* and login event notifications using WebSocket, JAX-RS (REST) & jQuery Mobile
-*
+* IPTInvoicing project is a simple demo using Swing GUI and local file for DB
+* 
 * Copyright (c) 2012 - 2014 IPT - Intellectual Products & Technologies Ltd.
 * All rights reserved.
 *
