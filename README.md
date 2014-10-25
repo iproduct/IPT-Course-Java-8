@@ -1,5 +1,5 @@
-IPT-Course-Java-8
-=================
+IPT-Course-Java-8-Shared
+========================
 
 IPT Course: Programming with Java 8 provides practical skills in object-oriented programming with the new Java™ 8. Java 8 has the potential to significantly change the way to implement high-quality code. It provides new opportunities for functional and stream programming using lambda expressions. Major Java APIs have been extensivly updated to take advantage of new programming idioms. The code becomes shorter and elegant, while increasing productivity by replacing heavy-weight anonymous classes with dynamic function calls, and allowing parallel execution of streaming operations.
 
