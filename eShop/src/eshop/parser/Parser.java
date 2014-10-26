@@ -72,7 +72,8 @@ public class Parser {
 			inStr = sc.nextLine().trim();
 			try {
 				it.setPrice(Double.parseDouble(inStr));
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {}
+			if(it.getPrice() <= 0) {
 				System.err.println("Invalid price - should be a positive number.");
 			}
 		} while (it.getPrice() <= 0);
@@ -83,7 +84,8 @@ public class Parser {
 			inStr = sc.nextLine().trim();
 			try {
 				it.setStockQuantity(Integer.parseInt(inStr));
-			} catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {}
+			if(it.getStockQuantity() <= 0) {
 				System.err.println("Invalid stock quantity - should be a positive number.");
 			}
 		} while (it.getStockQuantity() <= 0);
