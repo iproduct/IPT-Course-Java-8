@@ -1,5 +1,15 @@
 package eshop.entity;
 
+/**
+ * Item class models a stock item in eShop program.
+ * Items can be interactively produced using 
+ * {@link eshop.parser.Parser#inputItem() eshop.parser.Parser#inputItem() factory method}
+ * @author Trayan Iliev
+ * @author http://iproduct.org
+ * @version 0.1
+ * @since 0.1
+ * @see eshop.parser.Parser
+ */
 public class Item {
 	private long id;
 	private String name;
@@ -10,16 +20,17 @@ public class Item {
 	private int stockQuantity;
 
 	/**
-	 * 
+	 * No argument constructor
 	 */
 	public Item() {
 		super();
 	}
 
 	/**
-	 * @param id
-	 * @param name
-	 * @param manufacturer
+	 * Constructor with mandatory arguments
+	 * @param id item it
+	 * @param name item name
+	 * @param manufacturer item manufacturer
 	 */
 	public Item(long id, String name, String manufacturer) {
 		super();
@@ -29,13 +40,14 @@ public class Item {
 	}
 
 	/**
-	 * @param id
-	 * @param name
-	 * @param manufacturer
-	 * @param category
-	 * @param description
-	 * @param price
-	 * @param stockQuantity
+	 * Full constructor
+	 * @param @param id item it
+	 * @param name item name
+	 * @param manufacturer item manufacturer
+	 * @param category category name from a predefined list of categories
+	 * @param description optional item description
+	 * @param price optional standard price for the item 
+	 * @param stockQuantity optional available stock quantity for the item
 	 */
 	public Item(long id, String name, String manufacturer, String category,
 			String description, double price, int stockQuantity) {
@@ -50,6 +62,7 @@ public class Item {
 	}
 
 	/**
+	 * Returns item id
 	 * @return the id
 	 */
 	public long getId() {
@@ -57,6 +70,7 @@ public class Item {
 	}
 
 	/**
+	 * Sets item id
 	 * @param id
 	 *            the id to set
 	 */
@@ -65,6 +79,7 @@ public class Item {
 	}
 
 	/**
+	 * Returns item name
 	 * @return the name
 	 */
 	public String getName() {
@@ -72,6 +87,7 @@ public class Item {
 	}
 
 	/**
+	 * Sets item name
 	 * @param name
 	 *            the name to set
 	 */
@@ -80,6 +96,7 @@ public class Item {
 	}
 
 	/**
+	 * Return item manufacturer
 	 * @return the manufacturer
 	 */
 	public String getManufacturer() {
@@ -87,6 +104,7 @@ public class Item {
 	}
 
 	/**
+	 * Sets item manufacturer
 	 * @param manufacturer
 	 *            the manufacturer to set
 	 */
@@ -95,6 +113,9 @@ public class Item {
 	}
 
 	/**
+	 * Return item category. 
+	 * See {@link #setCategory(String) examples in #setCategory(String)}
+	 *
 	 * @return the category
 	 */
 	public String getCategory() {
@@ -102,6 +123,13 @@ public class Item {
 	}
 
 	/**
+	 * Sets item category from a predefined list of categories. Example:
+	 * <ul>
+	 * <li>Processors</li>
+	 * <li>Moteherboards</li>
+	 * <li>Accessories</li>
+	 * <li>etc.</li>
+	 * </ul>
 	 * @param category
 	 *            the category to set
 	 */
@@ -110,6 +138,7 @@ public class Item {
 	}
 
 	/**
+	 * Return item description
 	 * @return the description
 	 */
 	public String getDescription() {
@@ -117,6 +146,7 @@ public class Item {
 	}
 
 	/**
+	 * Sets item description
 	 * @param description
 	 *            the description to set
 	 */
@@ -125,6 +155,7 @@ public class Item {
 	}
 
 	/**
+	 * Return item price in default currency
 	 * @return the price
 	 */
 	public double getPrice() {
@@ -132,6 +163,7 @@ public class Item {
 	}
 
 	/**
+	 * Sets item price in default currency
 	 * @param price
 	 *            the price to set
 	 */
@@ -140,6 +172,7 @@ public class Item {
 	}
 
 	/**
+	 * Returns stock quantity available for the item 
 	 * @return the stockQuantity
 	 */
 	public int getStockQuantity() {
@@ -147,6 +180,7 @@ public class Item {
 	}
 
 	/**
+	 * Modifies the stock quantity available for the item
 	 * @param stockQuantity
 	 *            the stockQuantity to set
 	 */
@@ -195,7 +229,7 @@ public class Item {
 	public String toString() {
 		return String
 				.format("|%8d |%25s |%15s |%15s |%7.2f |%5d|",
-						id, name, manufacturer, category, price, stockQuantity);
+						this.getId(), this.name, manufacturer, category, price, stockQuantity);
 	}
 
 	public static void main(String[] args) {
