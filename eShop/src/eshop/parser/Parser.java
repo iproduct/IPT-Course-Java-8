@@ -7,14 +7,19 @@ import java.util.regex.Pattern;
 import eshop.entity.Item;
 
 public class Parser {
-	private Scanner sc;
+	protected Scanner sc;
 	
 	public Parser(InputStream in) {
 		sc = new Scanner(in);
 	}
 	
-	public Item inputItem() {
+	public Item inputItemFactory() {
 		Item it = new Item();
+		inputItem(it);
+		return it;
+	}
+	
+	protected void inputItem(Item it) {
 		String inStr;
 		//input id
 		do{
@@ -89,14 +94,13 @@ public class Parser {
 				System.err.println("Invalid stock quantity - should be a positive number.");
 			}
 		} while (it.getStockQuantity() <= 0);
-		
-		return it;
+
 	}
 	
 	public static void main(String[] args) {
 		Parser p  = new Parser(System.in);
-		Item i1 = p.inputItem();
-		System.out.println(i1);
+		Item it = p.inputItemFactory();
+		System.out.println(it);
 	}
 
 }
