@@ -1,5 +1,7 @@
 package eshop.entity;
 
+import eshop.repository.Identifiable;
+
 /**
  * Item class models a stock item in eShop program.
  * Items can be interactively produced using 
@@ -10,8 +12,8 @@ package eshop.entity;
  * @since 0.1
  * @see eshop.parser.Parser
  */
-public class Item {
-	private long id;
+public class Item implements Identifiable<Long>{
+	private Long id;
 	private String name;
 	private String manufacturer;
 	private String category;
@@ -32,7 +34,7 @@ public class Item {
 	 * @param name item name
 	 * @param manufacturer item manufacturer
 	 */
-	public Item(long id, String name, String manufacturer) {
+	public Item(Long id, String name, String manufacturer) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,7 +51,7 @@ public class Item {
 	 * @param price optional standard price for the item 
 	 * @param stockQuantity optional available stock quantity for the item
 	 */
-	public Item(long id, String name, String manufacturer, String category,
+	public Item(Long id, String name, String manufacturer, String category,
 			String description, double price, int stockQuantity) {
 		super();
 		this.id = id;
@@ -65,7 +67,7 @@ public class Item {
 	 * Returns item id
 	 * @return the id
 	 */
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -74,7 +76,7 @@ public class Item {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -233,9 +235,9 @@ public class Item {
 	}
 
 	public static void main(String[] args) {
-		Item i1 = new Item(1, "Computer Mouse", "Logitech", "Accessoaries",
+		Item i1 = new Item(1L, "Computer Mouse", "Logitech", "Accessoaries",
 				"High quality optical mouse", 12.5, 20);
-		Item i2 = new Item(2, "Motherboard", "ASUS", "Motherboards",
+		Item i2 = new Item(2L, "Motherboard", "ASUS", "Motherboards",
 				"AMD Athlon II x4 A03 motherboard", 125.7, 15);
 		System.out.println(i1);
 		System.out.println(i2);
