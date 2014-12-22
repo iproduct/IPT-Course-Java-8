@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 import eshop.entity.Item;
 
-public class HelloLabmda {
+public class HelloLambda {
 	public static final Item[] items = {
 			new Item(42L, "Computer Mouse", "Logitech", "Accessoaries",
 					"High quality optical mouse", 12.5, 20),
@@ -40,13 +40,12 @@ public class HelloLabmda {
 			.mapToDouble((Item i) -> i.getStockQuantity() * i.getPrice())
 			.sum());
 
-		// Old way:
-		System.out.println("\nOld way:");
+		System.out.println("\nWithout lambdas:");
 		List<Integer> list = Arrays.asList(4, 3, 6, 7, 2, 5, 1);
 		Collections.sort(list, new Comparator<Integer>() {
 			@Override
 			public int compare(Integer i1, Integer i2) {
-				return i2 - i1;
+				return (int) Math.signum(i2 - i1);
 			}
 		});
 		for (Integer n : list) {	
@@ -54,17 +53,14 @@ public class HelloLabmda {
 			System.out.println(x);
 		}
 
-		// New way:
-		System.out.println("\nJava 8 way:");
+		System.out.println("\nWith lambdas:");
 		List<Integer> list1 = Arrays.asList(4, 3, 6, 7, 2, 5, 1);
 		Consumer<Integer> p = System.out::println;	
-		
 		list1.stream().sorted((i1, i2) -> i2-i1 )
 			.map(x -> x*x)
 			.forEach(p);
 
-		// Old way:
-		System.out.println("\nOld way:");
+		System.out.println("\nWithout lambdas:");
 		List<Integer> list2 = Arrays.asList(4, 3, 6, 7, 2, 5, 1);
 		int sum2 = 0;
 		for (Integer n : list2) {
@@ -73,14 +69,13 @@ public class HelloLabmda {
 		}
 		System.out.println(sum2);
 
-//		// New way:
-		System.out.println("\nJava 8 way:");
+		System.out.println("\nWith lambdas:");
 		List<Integer> list3 = Arrays.asList(4, 3, 6, 7, 2, 5, 1);
 		int sum3 = list3.stream().sorted().map(x -> x * x)
 				.reduce((x, y) -> x + y).get();
 		System.out.println(sum3);
 		
-		//Test find keyword
+		// Test find keyword
 		System.out.println("============================>");
 		
 		String keywordsRegex = "motherboard";
@@ -94,7 +89,6 @@ public class HelloLabmda {
 			return matches.entrySet().stream();
 		}).forEach(System.out::println);	
 		
-
 	}
 
 }
