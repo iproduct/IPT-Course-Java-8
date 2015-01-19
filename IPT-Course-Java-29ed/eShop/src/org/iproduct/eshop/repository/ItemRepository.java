@@ -1,6 +1,6 @@
-package eshop.repository;
+package org.iproduct.eshop.repository;
 
-import eshop.entity.Item;
+import org.iproduct.eshop.entity.Item;
 
 public class ItemRepository extends AbstractRepository<Long, Item> {
 	private static long sequence = 0;

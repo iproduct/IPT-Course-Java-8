@@ -1,9 +1,8 @@
-package eshop.parser;
+package org.iproduct.eshop.parser;
 
 import java.io.InputStream;
 
-import eshop.entity.Item;
-import eshop.entity.SoftwareItem;
+import org.iproduct.eshop.entity.SoftwareItem;
 
 public class ExtendedParser extends Parser {
 

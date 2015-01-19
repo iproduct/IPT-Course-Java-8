@@ -1,8 +1,8 @@
-package eshop.repository;
+package org.iproduct.eshop.repository;
 
 import java.util.Collection;
 
-import eshop.repository.exception.NonExistingItemException;
+import org.iproduct.eshop.repository.exception.NonExistingItemException;
 
 public interface Repository <K, V extends Identifiable<K>>{
 	V getItem(K key);

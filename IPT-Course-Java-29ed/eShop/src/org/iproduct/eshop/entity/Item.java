@@ -1,6 +1,6 @@
-package eshop.entity;
+package org.iproduct.eshop.entity;
 
-import eshop.repository.Identifiable;
+import org.iproduct.eshop.repository.Identifiable;
 
 /**
  * Item class models a stock item in eShop program.

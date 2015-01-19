@@ -1,10 +1,10 @@
-package eshop.repository;
+package org.iproduct.eshop.repository;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import eshop.repository.exception.NonExistingItemException;
+import org.iproduct.eshop.repository.exception.NonExistingItemException;
 
 public abstract class AbstractRepository<K,V extends Identifiable<K>> implements Repository<K,V>{
 	protected Map<K,V> store = new HashMap<>();

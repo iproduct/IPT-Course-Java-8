@@ -1,4 +1,4 @@
-package eshop.repository.exception;
+package org.iproduct.eshop.repository.exception;
 
 public class NonExistingItemException extends Exception {
 	private static final long serialVersionUID = 1L;

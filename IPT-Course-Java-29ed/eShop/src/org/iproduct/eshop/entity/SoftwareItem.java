@@ -1,4 +1,4 @@
-package eshop.entity;
+package org.iproduct.eshop.entity;
 
 public class SoftwareItem extends Item {
 	private String softwareType = "Business Software";

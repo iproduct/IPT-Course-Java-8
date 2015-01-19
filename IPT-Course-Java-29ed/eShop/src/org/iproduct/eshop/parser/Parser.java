@@ -1,10 +1,10 @@
-package eshop.parser;
+package org.iproduct.eshop.parser;
 
 import java.io.InputStream;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import eshop.entity.Item;
+import org.iproduct.eshop.entity.Item;
 
 public class Parser {
 	protected Scanner sc;

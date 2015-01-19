@@ -1,4 +1,4 @@
-package lambdas;
+package org.iproduct.lambdas;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import eshop.entity.Item;
+import org.iproduct.eshop.entity.Item;
 
 public class HelloLambda {
 	public static final Item[] items = {
