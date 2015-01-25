@@ -1,14 +1,16 @@
-package eshop.repository;
+package org.iproduct.eshop.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
+import org.iproduct.eshop.entity.Item;
+import org.iproduct.eshop.repository.ItemRepository;
+import org.iproduct.eshop.repository.exception.NonExistingItemException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import eshop.entity.Item;
-import eshop.repository.exception.NonExistingItemException;
 
 public class ItemRepositoryTest {
 	public static final Item 
