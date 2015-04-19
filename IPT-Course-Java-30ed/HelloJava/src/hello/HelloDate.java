@@ -1,6 +1,7 @@
 package hello;
 
 import java.util.Date;
+import static hello.Person.*;
 
 public class HelloDate {
 
@@ -19,6 +20,8 @@ public class HelloDate {
 		
 		// Create Person using constructor with arguments
 		Person p2 = new Person(23434345435L, "Petar Georgiev", "Plovdiv", 38);
+		p2.setAge(39);
+		incrementAgeBy10(p2);
 		System.out.println(p2);
 	}
 

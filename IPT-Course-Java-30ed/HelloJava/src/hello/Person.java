@@ -21,10 +21,46 @@ public class Person {
 		this.age = age;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public long getIdNumber() {
+		return idNumber;
+	}
+
+	public void setIdNumber(long idNumber) {
+		this.idNumber = idNumber;
+	}
+
 	public String toString(){
 		return "Id Number: " + idNumber
 			+ ", Name: " + name
 			+ ", Address: " + address
 			+ ", Age: " + age;
+	}
+	
+	public static void incrementAgeBy10(Person p){
+		p.age = p.age + 10;
 	}
 }
