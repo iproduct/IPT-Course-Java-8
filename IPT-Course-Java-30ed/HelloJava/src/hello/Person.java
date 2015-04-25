@@ -63,4 +63,25 @@ public class Person {
 	public static void incrementAgeBy10(Person p){
 		p.age = p.age + 10;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (idNumber ^ (idNumber >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (obj instanceof Person && idNumber == ((Person) obj).idNumber)
+			return true;
+		return false;
+	}
+	
+	
 }

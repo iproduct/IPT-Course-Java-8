@@ -19,10 +19,11 @@ public class HelloDate {
 //		p1.age  = 35;
 		
 		// Create Person using constructor with arguments
+		Person p1 = new Person(23434345435L, "Petar Georgiev", "Plovdiv", 38);
 		Person p2 = new Person(23434345435L, "Petar Georgiev", "Plovdiv", 38);
 		p2.setAge(39);
 		incrementAgeBy10(p2);
-		System.out.println(p2);
+		System.out.println(p2.equals("11"));
 	}
 
 }
