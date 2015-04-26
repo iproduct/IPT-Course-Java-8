@@ -30,14 +30,21 @@ public class InvoicingController {
 		builder.append(invoice.getReceiver().getName());
 		builder.append(String.format("\n%-12s", "Address:"));
 		builder.append(invoice.getReceiver().getAddress());
-//		builder.append(", receiver=");
-//		builder.append(invoice.receiver);
-//		builder.append(", positions=");
-//		builder.append(Arrays.toString(positions));
-//		builder.append(", issuedBy=");
-//		builder.append(issuedBy);
+		Position[] positions = invoice.getPositions();
+
+		//Format positions
+		builder.append("\n\n==============Ordered Goods:================");
+		for(int i = 0; i < positions.length; i++){
+			builder.append("\n");
+			builder.append(formatPosition(positions[i]));
+		}
 		builder.append("]");
 		return builder.toString();
+	}
+
+	private static String formatPosition(Position p) {
+		return String.format("|%3s | %30s | %6.2f | %2s | %6.2f | %9.2f |",
+			p.getNumber(), p.getItem().getName(), p.getPrice(), p);
 	}
 
 	public static void main(String[] args) {

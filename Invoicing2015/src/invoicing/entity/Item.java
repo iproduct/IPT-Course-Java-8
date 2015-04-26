@@ -7,6 +7,7 @@ public class Item {
 	private double price;
 	private double vatRate = 0.2;
 	private String vendor;
+	private String measure = "qt";
 	
 	public Item() {
 		super();
@@ -29,7 +30,7 @@ public class Item {
 	}
 
 	public Item(long id, int group, String name, double price, double vatRate,
-			String vendor) {
+			String vendor, String measure) {
 		super();
 		this.id = id;
 		this.group = group;
@@ -37,6 +38,7 @@ public class Item {
 		this.price = price;
 		this.vatRate = vatRate;
 		this.vendor = vendor;
+		this.measure = measure;
 	}
 
 	public long getId() {
@@ -87,6 +89,14 @@ public class Item {
 		this.vendor = vendor;
 	}
 
+	public String getMeasure() {
+		return measure;
+	}
+
+	public void setMeasure(String measure) {
+		this.measure = measure;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

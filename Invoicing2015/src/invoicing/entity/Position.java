@@ -5,8 +5,6 @@ public class Position {
 	private Item item;
 	private double quantity;
 	private double price;
-	private String measure = "qt";
-	
 	public Position() {
 	}
 	
@@ -16,13 +14,11 @@ public class Position {
 		this.quantity = quantity;
 	}
 	
-	public Position(int number, Item item, double quantity, double price,
-			String measure) {
+	public Position(int number, Item item, double quantity, double price) {
 		this.number = number;
 		this.item = item;
 		this.quantity = quantity;
 		this.price = price;
-		this.measure = measure;
 	}
 
 	public int getNumber() {
@@ -57,20 +53,11 @@ public class Position {
 		this.price = price;
 	}
 
-	public String getMeasure() {
-		return measure;
-	}
-
-	public void setMeasure(String measure) {
-		this.measure = measure;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((item == null) ? 0 : item.hashCode());
-		result = prime * result + ((measure == null) ? 0 : measure.hashCode());
 		result = prime * result + number;
 		long temp;
 		temp = Double.doubleToLongBits(price);
@@ -93,11 +80,6 @@ public class Position {
 			if (other.item != null)
 				return false;
 		} else if (!item.equals(other.item))
-			return false;
-		if (measure == null) {
-			if (other.measure != null)
-				return false;
-		} else if (!measure.equals(other.measure))
 			return false;
 		if (number != other.number)
 			return false;
@@ -122,7 +104,6 @@ public class Position {
 		builder.append(", price=");
 		builder.append(price);
 		builder.append(", measure=");
-		builder.append(measure);
 		builder.append("]");
 		return builder.toString();
 	}
