@@ -38,13 +38,20 @@ public class InvoicingController {
 			builder.append("\n");
 			builder.append(formatPosition(positions[i]));
 		}
-		builder.append("]");
+		
+		builder.append("\n\nTotal: ").append(invoice.getTotal())
+			.append("\nVAT: ").append(invoice.getVat())
+			.append("\nTotal with VAT: ").append(invoice.getTotalWithVat());		
+
 		return builder.toString();
 	}
 
 	private static String formatPosition(Position p) {
-		return String.format("|%3s | %30s | %6.2f | %2s | %6.2f | %9.2f |",
-			p.getNumber(), p.getItem().getName(), p.getPrice(), p);
+		return String.format("|%3s | %-30s | " 
+				+ ((p.getItem().getMeasure().equals("qt")) ? "%6.0f" : "%6.2f")
+				+ " | %2s | %6.2f | %9.2f |",
+			p.getNumber(), p.getItem().getName(), p.getQuantity(), 
+			p.getItem().getMeasure(), p.getPrice(), p.getTotal());
 	}
 
 	public static void main(String[] args) {
@@ -53,11 +60,11 @@ public class InvoicingController {
 		Contragent client1 = 
 				new Contragent(8211159034L, "Ivan Petrov", "Tzar Osvoboditel, 18");
 		//Construct item by id, name and price
-		Item item1 = new Item(1, "Thinking in Java", 23);
+		Item item1 = new Item(1, "Thinking in Java", 23.25);
 		//Construct position by number, item and quantity
 		Position position1 = new Position(1, item1, 2);
 		//Construct item by id, group, name, price, and vendor
-		Item item2 = new Item(2, 2, "Web Site Design", 23, "Web BG");
+		Item item2 = new Item(2, 2, "Web Site Design", 23.30, "Web BG");
 		Position position2 = new Position(2, item2, 1);
 		Item item3 = new Item(3,  3, "Computer Mouse", 12.50, "Logitech");
 		Position position3 = new Position(3, item1, 5);

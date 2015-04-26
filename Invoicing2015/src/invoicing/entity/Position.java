@@ -5,6 +5,7 @@ public class Position {
 	private Item item;
 	private double quantity;
 	private double price;
+	
 	public Position() {
 	}
 	
@@ -12,6 +13,7 @@ public class Position {
 		this.number = number;
 		this.item = item;
 		this.quantity = quantity;
+		this.price = item.getPrice();
 	}
 	
 	public Position(int number, Item item, double quantity, double price) {
@@ -106,5 +108,9 @@ public class Position {
 		builder.append(", measure=");
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public double getTotal() {
+		return  getQuantity() *  getPrice();
 	}
 }
