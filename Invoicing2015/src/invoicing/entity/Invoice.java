@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Invoice {
+	private static final double VAT_RATE = 0.2;
+
 	private static long invoiceCount = 0;
 	
 	private long number = ++invoiceCount;
@@ -81,6 +83,17 @@ public class Invoice {
 	public void setIssuedBy(String issuedBy) {
 		this.issuedBy = issuedBy;
 	}
+	
+	public double getTotal() {
+		double total = 0;
+		for(Position p: positions)
+			total += p.getTotal();
+		return total;
+	}
+	
+	
+	
+	
 
 	@Override
 	public int hashCode() {
@@ -121,6 +134,14 @@ public class Invoice {
 		builder.append(issuedBy);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public double getVat() {
+		return getTotal() * VAT_RATE;
+	}
+	
+	public double getTotalWithVat() {
+		return getTotal() + getVat();
 	}
 	
 	
