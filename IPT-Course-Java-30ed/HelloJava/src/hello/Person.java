@@ -78,9 +78,8 @@ public class Person {
 			return true;
 		if (obj == null)
 			return false;
-		if (obj instanceof Person && idNumber == ((Person) obj).idNumber)
-			return true;
-		return false;
+		return (obj instanceof Person && idNumber == ((Person) obj).idNumber) ?
+			true : false;
 	}
 	
 	
