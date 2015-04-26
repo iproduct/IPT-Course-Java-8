@@ -5,7 +5,29 @@ import invoicing.entity.Invoice;
 import invoicing.entity.Item;
 import invoicing.entity.Position;
 
+import java.text.SimpleDateFormat;
+import java.util.Formatter;
+
 public class InvoicingController {
+	public static String getFormattedInvoice(Invoice invoice) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Invoice Number: ");
+		Formatter fmt = new Formatter();
+		builder.append(fmt.format("%010d", invoice.getNumber()));
+		builder.append("\nIssue Date: ");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		builder.append(sdf.format(invoice.getIssuingDate()));
+		builder.append("\n issuer=");
+		builder.append(invoice.getIssuer());
+		builder.append(", receiver=");
+//		builder.append(invoice.receiver);
+//		builder.append(", positions=");
+//		builder.append(Arrays.toString(positions));
+//		builder.append(", issuedBy=");
+//		builder.append(issuedBy);
+		builder.append("]");
+		return builder.toString();
+	}
 
 	public static void main(String[] args) {
 		Contragent supplier = 
@@ -25,7 +47,7 @@ public class InvoicingController {
 		//Create Invoice at last :0
 		Invoice invoice1 = new Invoice(supplier, client1, 
 				new Position[]{position1, position2, position3});
-		System.out.println(invoice1);
+		System.out.println(getFormattedInvoice(invoice1));
 
 	}
 
