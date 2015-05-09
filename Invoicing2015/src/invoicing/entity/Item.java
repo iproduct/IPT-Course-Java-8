@@ -1,6 +1,6 @@
 package invoicing.entity;
 
-public class Item {
+public class Item implements Comparable<Item>{
 	private long id;
 	private int group = 1;
 	private String name;
@@ -136,6 +136,11 @@ public class Item {
 		builder.append(vendor);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Item item) {
+		return (this.id < item.id)? -1: (this.id == item.id)? 0 : 1;
 	}
 	
 	

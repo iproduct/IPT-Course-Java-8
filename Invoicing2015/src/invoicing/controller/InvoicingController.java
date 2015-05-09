@@ -4,8 +4,10 @@ import invoicing.entity.Contragent;
 import invoicing.entity.Invoice;
 import invoicing.entity.Item;
 import invoicing.entity.Position;
+import invoicing.utility.ItemNameComparator;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Formatter;
 
 public class InvoicingController {
@@ -68,11 +70,14 @@ public class InvoicingController {
 		Position position2 = new Position(2, item2, 1);
 		Item item3 = new Item(3,  3, "Computer Mouse", 12.50, "Logitech");
 		Position position3 = new Position(3, item1, 5);
-		
+		Position[] positions = new Position[]{position1, position2, position3};
+		Item[] items = {item2, item3, item1};
+		System.out.println("Before: " + Arrays.toString(items));
+		Arrays.sort(items, new ItemNameComparator());
+		System.out.println("After: " + Arrays.toString(items));
 		//Create Invoice at last :0
-		Invoice invoice1 = new Invoice(supplier, client1, 
-				new Position[]{position1, position2, position3});
-		System.out.println(getFormattedInvoice(invoice1));
+		Invoice invoice1 = new Invoice(supplier, client1, positions);
+//		System.out.println(getFormattedInvoice(invoice1));
 
 	}
 
