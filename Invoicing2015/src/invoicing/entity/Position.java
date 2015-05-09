@@ -1,22 +1,22 @@
 package invoicing.entity;
 
-public class Position {
+public class Position <T extends Item>{
 	private int number;
-	private Item item;
+	private T item;
 	private double quantity;
 	private double price;
 	
 	public Position() {
 	}
 	
-	public Position(int number, Item item, double quantity) {
+	public Position(int number, T item, double quantity) {
 		this.number = number;
 		this.item = item;
 		this.quantity = quantity;
 		this.price = item.getPrice();
 	}
 	
-	public Position(int number, Item item, double quantity, double price) {
+	public Position(int number, T item, double quantity, double price) {
 		this.number = number;
 		this.item = item;
 		this.quantity = quantity;
@@ -35,7 +35,7 @@ public class Position {
 		return item;
 	}
 
-	public void setItem(Item item) {
+	public void setItem(T item) {
 		this.item = item;
 	}
 

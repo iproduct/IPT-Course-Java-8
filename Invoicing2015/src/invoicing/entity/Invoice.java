@@ -1,9 +1,10 @@
 package invoicing.entity;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class Invoice {
+public class Invoice<T extends Item> {
 	private static final double VAT_RATE = 0.2;
 
 	private static long invoiceCount = 0;
@@ -11,7 +12,7 @@ public class Invoice {
 	private long number = ++invoiceCount;
 	private Date issuingDate = new Date();
 	private Contragent issuer, receiver;
-	private Position[] positions = new Position[0];
+	private List<Position<T>> positions = new ArrayList<>();
 	private String issuedBy;
 	
 	public Invoice() {
@@ -22,13 +23,13 @@ public class Invoice {
 		this.receiver = receiver;
 	}
 
-	public Invoice(Contragent issuer, Contragent receiver,	Position[] positions) {
+	public Invoice(Contragent issuer, Contragent receiver,	List<Position<T>> positions) {
 		this.issuer = issuer;
 		this.receiver = receiver;
 		this.positions = positions;
 	}
 	public Invoice(Date issuingDate, Contragent issuer, Contragent receiver,
-			Position[] positions, String issuedBy) {
+			List<Position<T>> positions, String issuedBy) {
 		this.issuingDate = issuingDate;
 		this.issuer = issuer;
 		this.receiver = receiver;
@@ -68,11 +69,11 @@ public class Invoice {
 		this.receiver = receiver;
 	}
 
-	public Position[] getPositions() {
+	public List<Position<T>> getPositions() {
 		return positions;
 	}
 
-	public void setPositions(Position[] positions) {
+	public void setPositions(List<Position<T>> positions) {
 		this.positions = positions;
 	}
 
@@ -129,7 +130,7 @@ public class Invoice {
 		builder.append(", receiver=");
 		builder.append(receiver);
 		builder.append(", positions=");
-		builder.append(Arrays.toString(positions));
+		builder.append(positions);
 		builder.append(", issuedBy=");
 		builder.append(issuedBy);
 		builder.append("]");

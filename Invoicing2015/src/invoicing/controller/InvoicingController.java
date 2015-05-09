@@ -1,5 +1,6 @@
 package invoicing.controller;
 
+import invoicing.entity.BookItem;
 import invoicing.entity.Contragent;
 import invoicing.entity.Invoice;
 import invoicing.entity.Item;
@@ -7,8 +8,9 @@ import invoicing.entity.Position;
 import invoicing.utility.ItemNameComparator;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Formatter;
+import java.util.List;
 
 public class InvoicingController {
 	public static String getFormattedInvoice(Invoice invoice) {
@@ -64,18 +66,39 @@ public class InvoicingController {
 		//Construct item by id, name and price
 		Item item1 = new Item(1, "Thinking in Java", 23.25);
 		//Construct position by number, item and quantity
-		Position position1 = new Position(1, item1, 2);
+		Position<Item> position1 = new Position<>(1, item1, 2);
 		//Construct item by id, group, name, price, and vendor
 		Item item2 = new Item(2, 2, "Web Site Design", 23.30, "Web BG");
-		Position position2 = new Position(2, item2, 1);
+		Position<Item> position2 = new Position<>(2, item2, 1);
 		Item item3 = new Item(3,  3, "Computer Mouse", 12.50, "Logitech");
-		Position position3 = new Position(3, item1, 5);
-		Position[] positions = new Position[]{position1, position2, position3};
+		Position<Item> position3 = new Position<>(3, item1, 5);
+		List<Position<Item>> positions = new ArrayList<>();
+		positions.add(position1);
+		positions.add(position2);
+		positions.add(position3);
 		Item[] items = {item2, item3, item1};
 		System.out.println("Before: " + Arrays.toString(items));
 		Arrays.sort(items, new ItemNameComparator());
 		System.out.println("After: " + Arrays.toString(items));
 		//Create Invoice at last :0
+		
+		List<BookItem> books = new ArrayList<>();
+		books.add(new BookItem(1, "Thinking in Java", 15.50, "Bruce Eckel", 
+				"Prentice Hall", 2006));
+		books.add(new BookItem(2, "UML Distilled", 12.80, "Martin Fowler", 
+				"Soft Press", 2005));
+		books.add(new BookItem(3, "Effective Java", 18.50, "Joshua Boch", 
+				"Addisson Wesley", 2008));
+		books.add(new BookItem(4, "Java Concurrency in Practice", 25.30, "Brian Goetz", 
+				"Addisson Wesley", 2006));
+		List<Position<BookItem>> bookPositions = new ArrayList<>();
+		
+		for(BookItem bookItem: books){
+			
+		}
+		
+		
+		
 		Invoice invoice1 = new Invoice(supplier, client1, positions);
 //		System.out.println(getFormattedInvoice(invoice1));
 
