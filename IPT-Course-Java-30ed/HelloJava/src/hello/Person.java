@@ -1,5 +1,16 @@
 package hello;
 
+/** 
+ * Models a physical person
+ * 
+ * @author admin
+ * @version 1.0
+ * @since 1.0
+ * 
+ * @see PersonController
+ * @see PersonController#inputPerson()
+ * 
+ */
 public class Person {
 	private String name;
 	private int age;
@@ -14,6 +25,13 @@ public class Person {
 		this.name = name;
 	}
 	
+	/**
+	 * Constructs new person with all attributes
+	 * @param id person Id number
+	 * @param name person name
+	 * @param address person home address
+	 * @param age person age
+	 */
 	public Person(long id, String name, String address, int age) {
 		idNumber = id;
 		this.name = name;
