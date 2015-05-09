@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InvoicingController {
-	public static String getFormattedInvoice(Invoice invoice) {
+	public static <T extends Item> String getFormattedInvoice(Invoice<T> invoice) {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Invoice Number: ");
 		builder.append(String.format("%010d", invoice.getNumber()));
@@ -34,13 +34,13 @@ public class InvoicingController {
 		builder.append(invoice.getReceiver().getName());
 		builder.append(String.format("\n%-12s", "Address:"));
 		builder.append(invoice.getReceiver().getAddress());
-		Position[] positions = invoice.getPositions();
+		List<Position<T>> positions = invoice.getPositions();
 
 		//Format positions
 		builder.append("\n\n==============Ordered Goods:================");
-		for(int i = 0; i < positions.length; i++){
+		for(int i = 0; i < positions.size(); i++){
 			builder.append("\n");
-			builder.append(formatPosition(positions[i]));
+			builder.append(formatPosition(positions.get(i)));
 		}
 		
 		builder.append("\n\nTotal: ").append(invoice.getTotal())
@@ -94,13 +94,11 @@ public class InvoicingController {
 		List<Position<BookItem>> bookPositions = new ArrayList<>();
 		
 		for(BookItem bookItem: books){
-			
+			bookPositions.add(new Position<>(1, bookItem, 3));
 		}
 		
-		
-		
-		Invoice invoice1 = new Invoice(supplier, client1, positions);
-//		System.out.println(getFormattedInvoice(invoice1));
+		Invoice<BookItem> invoice1 = new Invoice<>(supplier, client1, bookPositions);
+		System.out.println(getFormattedInvoice(invoice1));
 
 	}
 

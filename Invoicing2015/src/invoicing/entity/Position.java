@@ -31,7 +31,7 @@ public class Position <T extends Item>{
 		this.number = number;
 	}
 
-	public Item getItem() {
+	public T getItem() {
 		return item;
 	}
 
