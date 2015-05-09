@@ -87,7 +87,7 @@ public class Invoice<T extends Item> {
 	
 	public double getTotal() {
 		double total = 0;
-		for(Position p: positions)
+		for(Position<T> p: positions)
 			total += p.getTotal();
 		return total;
 	}
