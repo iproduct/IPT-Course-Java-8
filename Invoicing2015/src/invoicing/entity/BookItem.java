@@ -1,20 +1,20 @@
 package invoicing.entity;
+import static invoicing.utility.ItemCathegory.*;
 
 public class BookItem extends Item {
-	public static final int BOOKS_GROUP = 5;
 	private String author;
 	private int year;
 	public BookItem(long id, String name, double price,
 			double vatRate, String vendor, String measure,
 			String author, String publisher, int year) {
-		super(id, BOOKS_GROUP, name, price, vatRate, publisher, measure);
+		super(id, BOOK, name, price, vatRate, publisher, measure);
 		this.author = author;
 		this.year = year;
 		
 	}
 	public BookItem(long id, String name, double price,
 			String author, String publisher, int year) {
-		super(id, BOOKS_GROUP, name, price, publisher);
+		super(id, BOOK, name, price, publisher);
 		this.author = author;
 		this.year = year;
 	}

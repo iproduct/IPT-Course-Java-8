@@ -56,7 +56,7 @@ public class HelloLambda {
 		System.out.println("\nWith lambdas:");
 		List<Integer> list1 = Arrays.asList(4, 3, 6, 7, 2, 5, 1);
 		Consumer<Integer> p = System.out::println;	
-		list1.stream().sorted((i1, i2) -> i2-i1 )
+		list1.stream().sorted((i1, i2) -> i1-i2 )
 			.map(x -> x*x)
 			.forEach(p);
 
