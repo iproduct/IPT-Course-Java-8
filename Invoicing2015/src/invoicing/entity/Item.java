@@ -1,8 +1,11 @@
 package invoicing.entity;
 
+import invoicing.utility.ItemCathegory;
+import static invoicing.utility.ItemCathegory.*;
+
 public class Item implements Comparable<Item>{
 	private long id;
-	private int group = 1;
+	private ItemCathegory group = DEFAULT;
 	private String name;
 	private double price;
 	private double vatRate = 0.2;
@@ -20,7 +23,7 @@ public class Item implements Comparable<Item>{
 		this.price = price;
 	}
 
-	public Item(long id, int group, String name, double price, String vendor) {
+	public Item(long id, ItemCathegory group, String name, double price, String vendor) {
 		super();
 		this.id = id;
 		this.group = group;
@@ -29,7 +32,7 @@ public class Item implements Comparable<Item>{
 		this.vendor = vendor;
 	}
 
-	public Item(long id, int group, String name, double price, double vatRate,
+	public Item(long id, ItemCathegory group, String name, double price, double vatRate,
 			String vendor, String measure) {
 		super();
 		this.id = id;
@@ -49,11 +52,11 @@ public class Item implements Comparable<Item>{
 		this.id = id;
 	}
 
-	public int getGroup() {
+	public ItemCathegory getGroup() {
 		return group;
 	}
 
-	public void setGroup(int group) {
+	public void setGroup(ItemCathegory group) {
 		this.group = group;
 	}
 

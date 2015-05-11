@@ -5,7 +5,9 @@ import invoicing.entity.Contragent;
 import invoicing.entity.Invoice;
 import invoicing.entity.Item;
 import invoicing.entity.Position;
+import invoicing.utility.ItemCathegory;
 import invoicing.utility.ItemNameComparator;
+import static invoicing.utility.ItemCathegory.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,9 +70,9 @@ public class InvoicingController {
 		//Construct position by number, item and quantity
 		Position<Item> position1 = new Position<>(1, item1, 2);
 		//Construct item by id, group, name, price, and vendor
-		Item item2 = new Item(2, 2, "Web Site Design", 23.30, "Web BG");
+		Item item2 = new Item(2, SOFTWARE, "Web Site Design", 23.30, "Web BG");
 		Position<Item> position2 = new Position<>(2, item2, 1);
-		Item item3 = new Item(3,  3, "Computer Mouse", 12.50, "Logitech");
+		Item item3 = new Item(3,  HARDWARE, "Computer Mouse", 12.50, "Logitech");
 		Position<Item> position3 = new Position<>(3, item1, 5);
 		List<Position<Item>> positions = new ArrayList<>();
 		positions.add(position1);
@@ -97,9 +99,15 @@ public class InvoicingController {
 			bookPositions.add(new Position<>(1, bookItem, 3));
 		}
 		
-		Invoice<BookItem> invoice1 = new Invoice<>(supplier, client1, bookPositions);
-		System.out.println(getFormattedInvoice(invoice1));
+		Invoice<BookItem> invoice1 = new Invoice<>(supplier, client1);
+		Invoice<Item> invoice2 = new Invoice<>(supplier, client1);
+		invoice2.add(position1, position2, position3);
+		System.out.println(getFormattedInvoice(invoice2));
 
+//		for(ItemCathegory cathegory : ItemCathegory.values()){
+//			System.out.println(cathegory);
+//		}
+		
 	}
 
 }

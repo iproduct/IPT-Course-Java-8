@@ -1,6 +1,7 @@
 package invoicing.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -92,7 +93,12 @@ public class Invoice<T extends Item> {
 		return total;
 	}
 	
-	
+	@SafeVarargs
+	public final Invoice<T> add(Position<T> ... pos){
+		List<Position<T>> lp = Arrays.asList(pos);
+		positions.addAll(lp);
+		return this;
+	}
 	
 	
 
