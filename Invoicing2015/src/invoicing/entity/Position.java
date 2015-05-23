@@ -13,7 +13,7 @@ public class Position <T extends Item>{
 		this.number = number;
 		this.item = item;
 		this.quantity = quantity;
-		this.price = item.getPrice();
+//		this.price = item.getPrice();
 	}
 	
 	public Position(int number, T item, double quantity, double price) {
