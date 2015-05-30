@@ -1,9 +1,11 @@
 package invoicing.entity;
 
+import static invoicing.utility.ItemCathegory.DEFAULT;
 import invoicing.utility.ItemCathegory;
-import static invoicing.utility.ItemCathegory.*;
 
-public class Item implements Comparable<Item>{
+import java.io.Serializable;
+
+public class Item implements Comparable<Item>, Serializable{
 	private long id;
 	private ItemCathegory group = DEFAULT;
 	private String name;

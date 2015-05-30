@@ -31,7 +31,7 @@ public class ItemController {
 	}
 
 	private void saveItems() {
-		Path dbPath = Paths.get("products.db");
+		Path dbPath = Paths.get(PRODUCTS_FILE);
 		try {
 			SerialDB.writeObjects(dbPath, items);
 		} catch (ClassNotFoundException e) {
@@ -43,11 +43,13 @@ public class ItemController {
 	}
 
 	private Item inputItem() {
-		return ConsoleUtilities.inputItem();
+		Item item = ConsoleUtilities.inputItem();
+		items.add(item);
+		return item;
 	}
 
 	private void loadItems() {
-		Path dbPath = Paths.get("products.db");
+		Path dbPath = Paths.get(PRODUCTS_FILE);
 		if (Files.exists(dbPath)) {
 			try {
 				items = SerialDB.readObjects(dbPath);
