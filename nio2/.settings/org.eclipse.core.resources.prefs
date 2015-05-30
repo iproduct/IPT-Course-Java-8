@@ -1,2 +1,6 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
+=======
+encoding//src/nio2/BasicNIO2.java=UTF-8
+>>>>>>> branch 'master' of https://github.com/iproduct/IPT-Course-Java-8
 encoding/<project>=UTF-8
