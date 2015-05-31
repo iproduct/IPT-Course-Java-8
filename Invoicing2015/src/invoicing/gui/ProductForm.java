@@ -3,12 +3,15 @@ package invoicing.gui;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
+import invoicing.controller.ItemController;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JApplet;
 import javax.swing.JButton;
@@ -18,11 +21,21 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class ProductForm extends JApplet{
+	public static final String[] FIELD_NAMES = {
+		"ID", "Name", "Price", "Vendor"
+	};
+	
+	private ItemController controller = ItemController.getInstance();
 	private JPanel mainPanel = new JPanel();
 	private JPanel buttonPanel = new JPanel();
 	private JButton btnSubmit = new JButton("Submit");
 	private JButton btnReset = new JButton("Reset");
+	
+	private Map<String, JTextField> fields = new HashMap<>();
+	
 	public void init() {
+		controller.init();
+		
 		JLabel title = new JLabel("Add Product Form");
 		add(NORTH, title);
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -33,8 +46,9 @@ public class ProductForm extends JApplet{
 		gridbag.columnWeights = new double[] {0.5, 0.5};
 		mainPanel.setLayout(gridbag);
 		
-		JTextField jtf = makeAField("ID", mainPanel, gridbag);
-		JTextField jtf2 = makeAField("Product Name", mainPanel, gridbag);
+		for(String fName: FIELD_NAMES){
+			fields.put(fName, makeAField(fName, mainPanel, gridbag));
+		}
 		
 		add(CENTER, mainPanel);
 		add(SOUTH, buttonPanel);

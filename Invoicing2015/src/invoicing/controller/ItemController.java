@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ItemController {
@@ -19,15 +20,8 @@ public class ItemController {
 	private ItemController() {
 	}
 
-	private static ItemController getInstance() {
+	public static ItemController getInstance() {
 		return iController;
-	}
-
-	public static void main(String[] args) {
-		ItemController pc = ItemController.getInstance();
-		pc.loadItems();
-		Item it = pc.inputItem();
-		pc.saveItems();
 	}
 
 	private void saveItems() {
@@ -39,9 +33,13 @@ public class ItemController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
+	public void init() {
+		ItemController pc = ItemController.getInstance();
+		pc.loadItems();
+	}
+	
 	private Item inputItem() {
 		Item item = ConsoleUtilities.inputItem();
 		items.add(item);
@@ -60,5 +58,21 @@ public class ItemController {
 			}
 		}
 	}
+	
+	public void addItem(Item item) {
+		items.add(item);
+	}
+
+	public List<Item> getAllItems() {
+		return Collections.unmodifiableList(items);
+	}
+	
+	public static void main(String[] args) {
+		ItemController pc = ItemController.getInstance();
+		pc.loadItems();
+		Item it = pc.inputItem();
+		pc.saveItems();
+	}
+
 
 }
