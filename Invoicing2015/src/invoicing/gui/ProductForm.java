@@ -4,8 +4,11 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
 import invoicing.controller.ItemController;
+import invoicing.entity.Item;
+import invoicing.utility.ItemCathegory;
 
 import java.awt.Container;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,12 +16,16 @@ import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+
 
 public class ProductForm extends JApplet{
 	public static final String[] FIELD_NAMES = {
@@ -56,6 +63,23 @@ public class ProductForm extends JApplet{
 		buttonPanel.add(btnSubmit);
 		buttonPanel.add(btnReset);
 		
+		// add button listeners
+		btnSubmit.addActionListener(event -> {
+			try {
+				Item item = new Item(Long.parseLong(fields.get(FIELD_NAMES[0]).getText()), //ID
+					ItemCathegory.DEFAULT, //Cethegory
+					fields.get(FIELD_NAMES[1]).getText(), //Name
+					Double.parseDouble(fields.get(FIELD_NAMES[2]).getText()), //Price
+					fields.get(FIELD_NAMES[3]).getText() //Vendor		
+				);
+				controller.addItem(item);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			controller.saveItems();
+			System.out.println(controller.getAllItems());
+		});
+		
 	}
 
 	private JTextField makeAField(String fieldName, Container panel, GridBagLayout gb) {
@@ -81,8 +105,15 @@ public class ProductForm extends JApplet{
 	}
 
 	public static void main(String[] args) {
-		GuiUtilities.show(new ProductForm(), "Product Form", 600,  400);
-
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GuiUtilities.show(new ProductForm(), "Product Form", 600,  400);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 }

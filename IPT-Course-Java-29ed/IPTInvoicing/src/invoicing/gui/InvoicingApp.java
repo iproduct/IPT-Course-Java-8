@@ -53,6 +53,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Comparator;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -66,6 +67,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class InvoicingApp {
 	private JFrame frame;
@@ -231,7 +233,8 @@ public class InvoicingApp {
 		JScrollPane scrollPane = new JScrollPane();
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
-		tProducts = new JTable(new AbstractTableModel(){
+		//Create products table model
+		AbstractTableModel tProductsModel = new AbstractTableModel(){
 
 			@Override
 			public int getColumnCount() {
@@ -262,8 +265,37 @@ public class InvoicingApp {
 				return ProductController.COLUMN_NAMES[column];
 			}
 			
-		});
+		};
+		
+		// Create products table
+		tProducts = new JTable(tProductsModel);
 		scrollPane.setViewportView(tProducts);
+		
+		//Set sorter for columns
+//		tProducts.setAutoCreateRowSorter(true);
+		TableRowSorter<AbstractTableModel> sorter = new TableRowSorter<AbstractTableModel>(tProductsModel) {
+			@Override
+			public Comparator<?> getComparator(int column) {
+				switch(column) {
+					case 2: return new Comparator<String>() {
+						@Override
+						public int compare(String s1, String s2) {
+							Double d1 = Double.parseDouble(s1),
+								d2 = Double.parseDouble(s2);
+							return d1.compareTo(d2);
+						}		
+					};
+					default: return new Comparator<String>() {
+						@Override
+						public int compare(String s1, String s2) {
+							return s1.compareToIgnoreCase(s2);
+						}		
+					};
+					
+				}
+			}
+		};
+		tProducts.setRowSorter(sorter);
 	}
 
 	public ProductController getProductController() {

@@ -24,7 +24,7 @@ public class ItemController {
 		return iController;
 	}
 
-	private void saveItems() {
+	public void saveItems() {
 		Path dbPath = Paths.get(PRODUCTS_FILE);
 		try {
 			SerialDB.writeObjects(dbPath, items);
@@ -40,13 +40,13 @@ public class ItemController {
 		pc.loadItems();
 	}
 	
-	private Item inputItem() {
+	public Item inputItem() {
 		Item item = ConsoleUtilities.inputItem();
 		items.add(item);
 		return item;
 	}
 
-	private void loadItems() {
+	public void loadItems() {
 		Path dbPath = Paths.get(PRODUCTS_FILE);
 		if (Files.exists(dbPath)) {
 			try {
