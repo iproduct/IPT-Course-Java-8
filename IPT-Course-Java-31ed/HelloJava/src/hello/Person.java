@@ -1,28 +1,24 @@
 package hello;
 
 public class Person {
-	public static final int NONE = 0;
-	public static final int STUDENT = 1;
-	public static final int EMPLOYEE = 2;
-	public static final int SELF_EMPLOYED = 3;
 	
 	private long idNumber;
 	private String name;
 	private int age;
 	private String address;
 	private String phone;
-	private int ocupation;
+	private PersonOccupation occupation;
 		
 	public Person() {}
 
 	public Person(long id, String name, int age, String address, String phone,
-			int ocupation) {
+			PersonOccupation occupation) {
 		idNumber = id;
 		this.name = name;
 		this.age = age;
 		this.address = address;
 		this.phone = phone;
-		this.ocupation = ocupation;
+		this.occupation = occupation;
 	}
 	
 	public long getIdNumber() {
@@ -65,12 +61,12 @@ public class Person {
 		this.phone = phone;
 	}
 
-	public int getOcupation() {
-		return ocupation;
+	public PersonOccupation getOccupation() {
+		return occupation;
 	}
 
-	public void setOcupation(int ocupation) {
-		this.ocupation = ocupation;
+	public void setOccupation(PersonOccupation occupation) {
+		this.occupation = occupation;
 	}
 
 	@Override
@@ -97,9 +93,20 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [idNumber=" + idNumber + ", name=" + name + ", age="
-				+ age + ", address=" + address + ", phone=" + phone
-				+ ", ocupation=" + ocupation + "]";
+		String result= "Person [idNumber=" + idNumber + ", name=" + name + ", age="
+				+ age + ", address=" + address + ", phone=" + phone;
+				
+//		switch (occupation) {
+//			case NONE : break;
+//			case STUDENT: result += ", occupation=Student"; break;
+//			case EMPLOYEE: result += ", occupation=Employee"; break;
+//			case SELF_EMPLOYED: result += ", occupation=Self-Employed"; break;
+//			default: result += "ERROR: Invalid occupation value";
+//		}
+		
+		result += ", occupation=" + occupation + "]";
+		
+		return result;
 	}
 
 	public static void incrementAgeBy10(Person p) {

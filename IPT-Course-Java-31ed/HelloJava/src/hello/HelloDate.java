@@ -2,6 +2,7 @@ package hello;
 
 import java.util.Date;
 import static hello.Person.*;
+import static hello.PersonOccupation.*;
 
 public class HelloDate {
 
@@ -19,7 +20,8 @@ public class HelloDate {
 		System.out.println("SSN:" +  p.getIdNumber());
 		p.setAddress("Plovdiv");
 		p.setPhone("(+35932) 973 56 39");
-		System.out.println(p);
+//		p.setOcupation(-101);
+		System.out.println(p3);
 		Person.incrementAgeBy10(p);
 		System.out.println(!p2.equals(p));
 	}
