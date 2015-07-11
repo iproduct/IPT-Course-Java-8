@@ -1,5 +1,6 @@
 package org.iproduct.invoicing.model;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class Invoice {
@@ -10,6 +11,19 @@ public class Invoice {
 	private Date date = new Date();
 	private Position[] positions = new Position[0];
 	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Invoice [number=").append(number).append(", issuer=")
+				.append(issuer).append(", receiver=").append(receiver)
+				.append(", date=").append(date).append(", positions=")
+				.append(Arrays.toString(positions)).append(", getTotal()=")
+				.append(getTotal()).append(", getVAT()=").append(getVAT())
+				.append(", getTotalPlusVAT()=").append(getTotalPlusVAT())
+				.append("]");
+		return builder.toString();
+	}
+
 	public Invoice() {
 	}
 

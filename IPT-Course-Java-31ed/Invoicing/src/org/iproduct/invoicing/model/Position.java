@@ -14,6 +14,7 @@ public class Position {
 		this.position = position;
 		this.item = item;
 		this.quantity = quantity;
+		this.price = item.getPrice();
 	}
 
 	public Position(int position, Item item,
