@@ -45,7 +45,7 @@ public class InvoicingApp {
 		
 		//Create positions array
 		//Position[] positions = {p1, p2};
-		Position[] positions = new Position[2];
+		Position[] positions = new Position[5];
 		positions[0] = p1;
 		positions[1] = p2;
 		//Create invoice
