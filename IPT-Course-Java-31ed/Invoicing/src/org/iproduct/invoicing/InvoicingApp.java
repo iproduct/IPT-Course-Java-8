@@ -56,7 +56,8 @@ public class InvoicingApp {
 		
 		List<Position> positions = Arrays.asList(items).stream()
 //			.filter( item -> item.getCategory().equals(HARDWARE))
-			.map( (Item item) -> new Position(item))
+			.map( Position::new )
+//			.map( (Item item) -> new Position(item))
 //			.map( (Item item) -> { return new Position(item, 1);})
 //			.filter( pos -> pos.getItem().getCategory().equals(HARDWARE))
 			.map( pos -> {System.out.println(pos); return pos;})
