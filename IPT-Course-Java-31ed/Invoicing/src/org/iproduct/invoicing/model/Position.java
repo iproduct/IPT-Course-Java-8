@@ -9,6 +9,12 @@ public class Position {
 	public Position() {
 	}
 	
+	public Position( Item item) {
+		this.item = item;
+		this.quantity = 1;
+		this.price = item.getPrice();
+	}
+
 	public Position( Item item, double quantity) {
 		this.item = item;
 		this.quantity = quantity;

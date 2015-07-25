@@ -2,7 +2,7 @@ package org.iproduct.invoicing.model;
 
 import static org.iproduct.invoicing.model.Measure.*;
 
-public class Item {
+public class Item implements Comparable<Item>{
 	private static long productCount = 0;
 	private long id = productCount++;
 	private ItemCategory category;
@@ -114,6 +114,12 @@ public class Item {
 				.append(", supplier=").append(supplier).append(", price=")
 				.append(price).append(", measure=").append(measure).append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Item o) {
+		// TODO Auto-generated method stub
+		return this.getName().compareTo(o.getName());
 	}
 	
 	

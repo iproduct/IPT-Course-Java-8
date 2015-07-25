@@ -8,6 +8,7 @@ import static org.iproduct.invoicing.model.Measure.HOUR;
 import static org.iproduct.invoicing.model.Measure.PCS;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,8 +55,13 @@ public class InvoicingApp {
 		};
 		
 		List<Position> positions = Arrays.asList(items).stream()
-			.map( (Item item) -> { return new Position(item, 1);})
-			.map( item -> {System.out.println(item); return item;})
+//			.filter( item -> item.getCategory().equals(HARDWARE))
+			.map( (Item item) -> new Position(item))
+//			.map( (Item item) -> { return new Position(item, 1);})
+//			.filter( pos -> pos.getItem().getCategory().equals(HARDWARE))
+			.map( pos -> {System.out.println(pos); return pos;})
+//			.sorted((p1, p2) -> (int)Math.signum(p1.getPrice() - p2.getPrice()))
+			.sorted(Comparator.comparingDouble(Position::getPrice))
 			.collect(Collectors.toList());
 		
 		//Create invoice
