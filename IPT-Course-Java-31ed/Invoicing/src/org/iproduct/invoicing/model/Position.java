@@ -2,7 +2,6 @@ package org.iproduct.invoicing.model;
 
 public class Position {
 	public static final double VAT_RATE = 0.2d;
-	private int position;
 	private Item item;
 	private double quantity;
 	private double price;
@@ -10,27 +9,17 @@ public class Position {
 	public Position() {
 	}
 	
-	public Position(int position, Item item, double quantity) {
-		this.position = position;
+	public Position( Item item, double quantity) {
 		this.item = item;
 		this.quantity = quantity;
 		this.price = item.getPrice();
 	}
 
-	public Position(int position, Item item,
+	public Position(Item item,
 			double quantity, double price) {
-		this.position = position;
 		this.item = item;
 		this.quantity = quantity;
 		this.price = price;
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
 	}
 
 	public Item getItem() {
@@ -73,7 +62,12 @@ public class Position {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + position;
+		result = prime * result + ((item == null) ? 0 : item.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(quantity);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -86,7 +80,16 @@ public class Position {
 		if (getClass() != obj.getClass())
 			return false;
 		Position other = (Position) obj;
-		if (position != other.position)
+		if (item == null) {
+			if (other.item != null)
+				return false;
+		} else if (!item.equals(other.item))
+			return false;
+		if (Double.doubleToLongBits(price) != Double
+				.doubleToLongBits(other.price))
+			return false;
+		if (Double.doubleToLongBits(quantity) != Double
+				.doubleToLongBits(other.quantity))
 			return false;
 		return true;
 	}
@@ -94,19 +97,10 @@ public class Position {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Position [")
-				.append(", position=").append(position).append(", item=")
-				.append(item).append(", quantity=").append(quantity)
-				.append(", price=").append(price).append(", getTotalPrice()=")
-				.append(getTotalPrice()).append(", getVAT()=").append(getVAT())
-				.append(", getTotalPlusVAT()=").append(getTotalPlusVAT())
-				.append("]");
+		builder.append("Position [item=").append(item).append(", quantity=")
+				.append(quantity).append(", price=").append(price).append("]");
 		return builder.toString();
 	}
 
-	
-	
-	
-	
 	
 }

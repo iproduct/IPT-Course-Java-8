@@ -1,11 +1,18 @@
 package org.iproduct.invoicing;
 
-import static org.iproduct.invoicing.model.ItemCategory.*;
-import static org.iproduct.invoicing.model.Measure.*;
+import static org.iproduct.invoicing.model.ItemCategory.BOOK;
+import static org.iproduct.invoicing.model.ItemCategory.HARDWARE;
+import static org.iproduct.invoicing.model.ItemCategory.SERVICE;
+import static org.iproduct.invoicing.model.ItemCategory.SOFTWARE;
+import static org.iproduct.invoicing.model.Measure.HOUR;
+import static org.iproduct.invoicing.model.Measure.PCS;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.iproduct.invoicing.model.Invoice;
 import org.iproduct.invoicing.model.Item;
-import org.iproduct.invoicing.model.ItemCategory;
 import org.iproduct.invoicing.model.Position;
 
 public class InvoicingApp {
@@ -22,11 +29,11 @@ public class InvoicingApp {
 					"No.", "Item", "Price", "Quantity", "Measure", "Total")
 			);
 
-		for(int i = 0; i < inv.getPositions().length; i++){
-			Position pos = inv.getPositions()[i];
+		int n = 1;
+		for(Position pos : inv.getPositions()){
 			builder.append(
 				String.format("\n| %3d | %-30s | %8.2f | %8.2f | %7s | %10.2f |",
-					pos.getPosition(), pos.getItem().getName(), 
+					n++, pos.getItem().getName(), 
 					pos.getPrice(), pos.getQuantity(), pos.getItem().getMeasure(),
 					pos.getTotalPrice())
 			);
@@ -36,18 +43,21 @@ public class InvoicingApp {
 	}
 
 	public static void main(String[] args) {
-		Item i1 = new Item(BOOK, "Thinking in Java", "Prentice Hall", 15.7, PCS);
-		Item i2 = new Item(HARDWARE, "Logitech Optical Mouse", "Logitech", 8.75, PCS);
-		System.out.println(i1);
-		Position p1 = new Position(1, i1, 5);
-		Position p2 = new Position(2, i2, 3);
-		System.out.println(p1);
+		Item[] items = {
+			new Item(BOOK, "Thinking in Java", "Prentice Hall", 15.7, PCS),
+			new Item(HARDWARE, "Logitech Optical Mouse", "Logitech", 8.75, PCS),
+			new Item(SOFTWARE, "Photoshop CC", "Adobe", 2000, PCS),
+			new Item(HARDWARE, "Raspberry Pi 2", "Raspberry Foundation", 80, PCS),
+			new Item(SERVICE, "Raspbian Installation", "Logitech", 20, HOUR),
+			new Item(HARDWARE, "3dIMU - 3D Acceelerometr, Gyrospone & Comapss", 
+				"Pololu", 35, PCS)
+		};
 		
-		//Create positions array
-		//Position[] positions = {p1, p2};
-		Position[] positions = new Position[5];
-		positions[0] = p1;
-		positions[1] = p2;
+		List<Position> positions = Arrays.asList(items).stream()
+			.map( (Item item) -> { return new Position(item, 1);})
+			.map( item -> {System.out.println(item); return item;})
+			.collect(Collectors.toList());
+		
 		//Create invoice
 		Invoice invoice = new Invoice("ABC Ltd.", "Ivan Petrov", positions);
 		System.out.println(formatInvoice(invoice));

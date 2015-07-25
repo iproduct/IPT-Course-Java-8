@@ -1,7 +1,9 @@
 package org.iproduct.invoicing.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Invoice {
 	private static long invoiceCount = 0;
@@ -9,7 +11,7 @@ public class Invoice {
 	private String issuer; 
 	private String receiver;
 	private Date date = new Date();
-	private Position[] positions = new Position[0];
+	private List<Position> positions = new ArrayList<>();
 	
 	@Override
 	public String toString() {
@@ -17,7 +19,7 @@ public class Invoice {
 		builder.append("Invoice [number=").append(number).append(", issuer=")
 				.append(issuer).append(", receiver=").append(receiver)
 				.append(", date=").append(date).append(", positions=")
-				.append(Arrays.toString(positions)).append(", getTotal()=")
+				.append(positions).append(", getTotal()=")
 				.append(getTotal()).append(", getVAT()=").append(getVAT())
 				.append(", getTotalPlusVAT()=").append(getTotalPlusVAT())
 				.append("]");
@@ -27,14 +29,14 @@ public class Invoice {
 	public Invoice() {
 	}
 
-	public Invoice(String issuer, String receiver, Position[] positions) {
+	public Invoice(String issuer, String receiver, List<Position> positions) {
 		this.issuer = issuer;
 		this.receiver = receiver;
 		this.positions = positions;
 	}
 
 	public Invoice(long number, String issuer, String receiver, Date date,
-			Position[] positions) {
+			List<Position> positions) {
 		this.number = number;
 		this.issuer = issuer;
 		this.receiver = receiver;
@@ -74,11 +76,11 @@ public class Invoice {
 		this.date = date;
 	}
 
-	public Position[] getPositions() {
+	public List<Position> getPositions() {
 		return positions;
 	}
 
-	public void setPositions(Position[] positions) {
+	public void setPositions(List<Position> positions) {
 		this.positions = positions;
 	}
 
@@ -106,8 +108,8 @@ public class Invoice {
 	
 	public double getTotal() {
 		double sum = 0;
-		for(int i = 0; i < positions.length; i++){
-			sum += positions[i].getTotalPrice();
+		for(Position p: positions){
+			sum += p.getTotalPrice();
 		}
 		return sum;
 	}
