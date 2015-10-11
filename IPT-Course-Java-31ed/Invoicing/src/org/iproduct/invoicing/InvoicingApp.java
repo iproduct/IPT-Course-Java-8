@@ -16,8 +16,20 @@ import org.iproduct.invoicing.model.Invoice;
 import org.iproduct.invoicing.model.Item;
 import org.iproduct.invoicing.model.Position;
 
+/**
+ * Top level invoicing application class.
+ * @author Trayan Iliev
+ * @version 1.0
+ * @since 1.0
+ * @see org.iproduct.invoicing.model.Invoice
+ */
 public class InvoicingApp {
 	
+	/**
+	 * This method prints the invoice as text.
+	 * @param inv invoice to be printed
+	 * @return formatted text layout of the inoce
+	 */
 	public static String formatInvoice(Invoice inv){
 		StringBuilder builder = new StringBuilder();
 		builder.append("No.: ").append(inv.getNumber())
