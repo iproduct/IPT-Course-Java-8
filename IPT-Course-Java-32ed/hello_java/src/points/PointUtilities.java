@@ -39,7 +39,7 @@ public class PointUtilities {
 	}
 
 	public static Point[] parsePoints(String input) {
-		String[] pointsStr = input.split("[\\(\\)]\\s*[\\(\\)\\s]*\\s*");
+		String[] pointsStr = input.split("\\s*[\\(\\)]\\s*[\\(\\)\\s]*\\s*");
 		Point[] points = new Point[pointsStr.length - 1];
 		int i = 0;
 		for (String pStr : pointsStr) {
@@ -55,7 +55,7 @@ public class PointUtilities {
 	public static void main(String[] args) {
 		// System.out.println(inputPoint(-100, 100, -100, 100));
 		System.out.println(
-				Arrays.toString(parsePoints("(1.2  , 3.5)   	(4.7, 9.8)(18.2,1.5)"))
+				Arrays.toString(parsePoints("   (1.2  , 3.5)   	(4.7, 9.8)(18.2,1.5)"))
 				);
 	}
 
