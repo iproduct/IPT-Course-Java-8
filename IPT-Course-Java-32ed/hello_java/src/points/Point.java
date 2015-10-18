@@ -50,14 +50,8 @@ public class Point {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Point))
-			return false;
-		Point other = (Point) obj;
-		return x == other.x && y == other.y;
+		return obj != null && obj instanceof Point 
+				&& x == ((Point) obj).x && y == ((Point) obj).y;
 	}
 
 	@Override
@@ -77,9 +71,9 @@ public class Point {
 	public static void main(String[] args) {
 		Point p1 = new Point();
 		Point p2 = new Point(4, 3.5);
-		Point p3 = new Point(4, 3.6);
+		Point p3 = new Point(4, 3.5);
 
-		System.out.println(p2.equals(p3));
+		System.out.println(p2.equals("3.5"));
 		
 //		System.out.println(p1);
 //		p2.translate(10, 10);
