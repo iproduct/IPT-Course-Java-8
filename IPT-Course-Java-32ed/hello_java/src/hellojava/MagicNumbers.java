@@ -16,17 +16,51 @@ public class MagicNumbers {
 						d[2] = d2;
 						d[3] = d3;
 						int n = digitsToDecimalNumber(d);
-						int[] otherDigits = new int[d.length-1];
+						int[] otherDigits = new int[d.length - 1];
+						int[] otherDigits2 = new int[d.length - 2];
+						// Test 1 digit
 						for (int i = 0; i < d.length; i++) {
 							if (d[i] > 0 && n % d[i] == 0) {
 								int result = n / d[i];
 								int otherDigitsNumber = 0;
-								for(int j = 0; j <  d.length; j++)
-									if(j != i)
+								for (int j = 0; j < d.length; j++)
+									if (j != i)
 										otherDigits[otherDigitsNumber++] = d[j];
-								if(isDigitsPermutation(result, otherDigits, otherDigitsNumber))
+								if (isDigitsPermutation(result, otherDigits, otherDigitsNumber))
 									System.out.println(n);
-								
+
+								// Test 2 digits
+								for (int j = 0; j < otherDigitsNumber; j++) {
+									int divider = 10 * d[i] + otherDigits[j];
+									int result2 = n / divider; 
+									if (n % divider == 0) {
+										int otherDigitsNumber2 = 0;
+										for (int k = 0; k < otherDigitsNumber; k++)
+											if (k != j)
+												otherDigits2[otherDigitsNumber2++] = otherDigits[k];
+										if(n == 1827 && divider == 21) {
+											System.out.println("!!!!!!! " + result2);											
+										}
+										if (isDigitsPermutation(result2, otherDigits2, otherDigitsNumber2))
+											System.out.println(n);
+
+									}
+									
+									divider = d[i] + 10*otherDigits[j];
+									result2 = n / divider; 
+									if (otherDigits[j] != 0 && n % divider == 0) {
+										int otherDigitsNumber2 = 0;
+										for (int k = 0; k < otherDigitsNumber; k++)
+											if (k != j)
+												otherDigits2[otherDigitsNumber2++] = otherDigits[k];
+										if(n == 1827 && divider == 21) {
+											System.out.println("+++++++ " + result2);											
+										}
+										if (isDigitsPermutation(result2, otherDigits2, otherDigitsNumber2))
+											System.out.println(n);
+
+									}
+								}
 							}
 						}
 					}
@@ -38,11 +72,12 @@ public class MagicNumbers {
 
 	static boolean isDigitsPermutation(int number, int[] otherDigits, int otherDigitsNumber) {
 		int[] digits = decimalNumberToDigits(number);
-		if(digits.length != otherDigitsNumber)
+		if (digits.length != otherDigitsNumber)
 			return false;
-		for(int i = 0; i < otherDigitsNumber; i++){
+		for (int i = 0; i < otherDigitsNumber; i++) {
 			int position;
-			if((position = contains(digits, otherDigits[i])) >= 0) //digit found
+			if ((position = contains(digits, otherDigits[i])) >= 0) // digit
+																	// found
 				digits[position] = -1;
 			else
 				return false;
@@ -59,23 +94,24 @@ public class MagicNumbers {
 		}
 		return n;
 	}
-	
-	static int[] decimalNumberToDigits(int number){
+
+	static int[] decimalNumberToDigits(int number) {
 		int[] resultDigits = new int[NUMBER_DIGITS];
 		int numberDigits = 0;
-		while(number > 0){
+		while (number > 0) {
 			resultDigits[numberDigits++] = number % 10;
 			number /= 10;
 		}
 		int[] result = new int[numberDigits];
-		for(int i = 0; i < numberDigits; i++)
-			result[i] = resultDigits[numberDigits-1-i];
+		for (int i = 0; i < numberDigits; i++)
+			result[i] = resultDigits[numberDigits - 1 - i];
 		return result;
 	}
-	
-	static int contains(int[] a, int elem){
-		for(int i = 0; i < a.length; i++)
-			if(a[i] == elem) return i; //return position
+
+	static int contains(int[] a, int elem) {
+		for (int i = 0; i < a.length; i++)
+			if (a[i] == elem)
+				return i; // return position
 		return -1;
 	}
 
