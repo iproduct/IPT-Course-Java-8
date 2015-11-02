@@ -7,10 +7,31 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import hellojava.HelloJavaDate;
+
+
+/**
+ * Class providing utility methods for reading, parsing and manipulating points.
+ * 
+ * @see Point
+ * @see hellojava.HelloJavaDate#main(String[])
+ * @version 1.0
+ * @since 1.0
+ * @author Trayan Iliev
+ *
+ */
 public class PointUtilities {
 	public static final int MAX_POINTS = 100;
 	private static Scanner sc = new Scanner(System.in);
-
+	
+	/**
+	 * Inputs a {@link Point} in predefined ranges for X and Y, until data is valid. 
+	 * @param minX start value for X range validation
+	 * @param maxX end value for X range validation
+	 * @param minY start value for Y range validation
+	 * @param maxY end value for Y range validation
+	 * @return the input valid {@link Point} 
+	 */
 	public static Point inputPoint(double minX, double maxX, double minY, double maxY) {
 		Point point = new Point();
 
