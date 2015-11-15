@@ -1,12 +1,14 @@
 package invoicing.controller;
 
-import invoicing.entity.Product;
+import invoicing.entity.Book;
+import invoicing.entity.Invoice;
+import invoicing.entity.Item;
 
 public class ProductController {
 	public static final double VAT_RATE = .2;
-	public double calcualteTotalPrice(Product[] products) {
+	public double calcualteTotalPrice(Item[] products) {
 		double total = 0;
-		for(Product p: products)
+		for(Item p: products)
 			total += p.getPrice(); 
 		return total;
 	}
@@ -17,12 +19,25 @@ public class ProductController {
 	
 	public static void main(String[] args) {
 		ProductController pc = new ProductController();
-		double total = pc.calcualteTotalPrice(new Product[] {
-				new Product(1, "Whiteboard Marker", "", .89),
-				new Product(2, "USB Flash 16GB", "AData", 8.5),
-				new Product(3, "Computer Mouse", "Logitech", 12.33),
-		});
-		System.out.println(total);
+//		Item[] hardwareItems = new Item[] {
+//				new Item(1, "Whiteboard Marker", "", .89, "Hardware"),
+//				new Item(2, "USB Flash 16GB", "AData", 8.5, "Hardware"),
+//				new Item(3, "Computer Mouse", "Logitech", 12.33, "Hardware")
+//		};
+		Book[] books = new Book[] {
+				new Book(1001, "Thinking in Java", 24.5, 
+						"Bruce Eckel", "Prenctice Hall", 2011, "007-6092039389"),
+				new Book(1002, "UML Distilled", 18.5, 
+						"Martin Fowler", "Prenctice Hall", 2010, "010-643589389")
+		};
+		Invoice<Book> bookstoreInvoice = 
+				new Invoice<>("BG21332123121, Best Books Ltd., Sofia", "Ivan Petrov");
+		for(Book b : books)
+			bookstoreInvoice.addPosition(b, 3);
+		System.out.println(bookstoreInvoice);
+		
+//		double total = pc.calcualteTotalPrice(hardwareItems);
+//		System.out.println(total);
 	}
 
 }

@@ -1,24 +1,27 @@
 package invoicing.entity;
 
-public class Product {
+public class Item {
 	private long id;
 	private String name;
 	private String vendor;
 	private double price;
+	private String group = "Others";
 
-	public Product() {
+	public Item() {
 	}
 
-	public Product(long id, String name) {
+	public Item(long id, String name, String group) {
 		this.id = id;
 		this.name = name;
+		this.group = group;
 	}
 	
-	public Product(long id, String name, String vendor, double price) {
+	public Item(long id, String name, String vendor, double price, String group) {
 		this.id = id;
 		this.name = name;
 		this.vendor = vendor;
 		this.price = price;
+		this.group = group;
 	}
 	
 	public long getId() {
@@ -68,9 +71,9 @@ public class Product {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof Product))
+		if (!(obj instanceof Item))
 			return false;
-		Product other = (Product) obj;
+		Item other = (Item) obj;
 		if (id != other.id)
 			return false;
 		return true;
@@ -86,8 +89,8 @@ public class Product {
 	}
 
 	public static void main(String[] args) {
-		Product p1 = new Product(1, "Whiteboard Marker"),
-				p2 = new Product(2, "USB Flash 16GB", "AData", 8.5);
+		Item p1 = new Item(1, "Whiteboard Marker", "Hardware"),
+				p2 = new Item(2, "USB Flash 16GB", "AData", 8.5, "Hardware");
 		
 		System.out.println(p1);
 		System.out.println(p2);
