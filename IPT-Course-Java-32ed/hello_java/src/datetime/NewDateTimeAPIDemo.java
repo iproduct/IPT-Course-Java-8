@@ -26,17 +26,19 @@ public class NewDateTimeAPIDemo {
 		System.out.println("Accounting should trnasfer salary at: " + payday 
 				+ "(" + payday.getDayOfWeek() + ")");
 		LocalDate dateOfBirth = LocalDate.of(2012, Month.MAY, 14);
-		LocalDate firstBirthday = dateOfBirth.plusYears(30);
-		System.out.println("Birthday: " + payday 
+		LocalDate firstBirthday = dateOfBirth.plusYears(1);
+		System.out.println("Birthday: " + firstBirthday
 				+ "(" + payday.getDayOfWeek() + ")");
 	
 	    String input = "17.05.2015";
 		try {
 		    DateTimeFormatter formatter =
-		                      DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                    DateTimeFormatter.ofPattern("dd.MM.yyyy");
+		    DateTimeFormatter formatter2 =
+                    DateTimeFormatter.ofPattern("dd.MM.yyyy (EEEE)");
 
 		    LocalDate date = LocalDate.parse(input, formatter);
-		    System.out.printf("%s%n", date.format(formatter));
+		    System.out.printf("%s%n", date.format(formatter2));
 		}
 		catch (DateTimeParseException exc) {
 		    System.out.printf("%s is not parsable!%n", input);
