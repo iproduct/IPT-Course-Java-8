@@ -18,7 +18,7 @@ public class MagicNumbersTest {
 	}
 
 	@Test
-	public void testIsContainingAllDigitsTrue() {
+	public void testIsDigitsPermutationContainingAllDigitsTrue() {
 		// Setup
 		int number = 210;
 		int[] otherDigits = { 1, 0, 2 };

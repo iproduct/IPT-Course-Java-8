@@ -92,7 +92,7 @@ public class MagicNumbers {
 			n += d[i] * tenPower;
 			tenPower *= 10;
 		}
-		return n;
+		return n + 1;
 	}
 
 	static int[] decimalNumberToDigits(int number) {
