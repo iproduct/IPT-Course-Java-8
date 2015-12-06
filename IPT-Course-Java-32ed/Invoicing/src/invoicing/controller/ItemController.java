@@ -8,7 +8,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import invoicing.entity.Book;
 import invoicing.entity.Item;
@@ -17,10 +19,22 @@ public class ItemController<T extends Item> {
 	public static final double VAT_RATE = .2;
 	public static final String PRODUCTS_FILENAME = "products.db";
 	private List<T> items = new ArrayList<>();
+	private String productsDBFile = PRODUCTS_FILENAME;
 
 	public List<T> getItems() {
 		return items;
 	}
+	
+	public String getProductsDBFile() {
+		return productsDBFile;
+	}
+
+
+	public void setProductsDBFile(String productsDBFile) {
+		this.productsDBFile = productsDBFile;
+	}
+
+
 
 	public double calcualteTotalPrice(Item[] products) {
 		double total = 0;
@@ -35,8 +49,7 @@ public class ItemController<T extends Item> {
 
 	public void writeProductsToFile(String fileName) {
 		Path filePath = Paths.get(fileName);
-		try (ObjectOutputStream out = 
-				new ObjectOutputStream(Files.newOutputStream(filePath))) {
+		try (ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(filePath))) {
 			out.writeObject(items);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -46,8 +59,7 @@ public class ItemController<T extends Item> {
 	@SuppressWarnings("unchecked")
 	public void readProductsfromFile(String fileName) {
 		Path filePath = Paths.get(fileName);
-		try (ObjectInputStream in = 
-				new ObjectInputStream(Files.newInputStream(filePath))) {
+		try (ObjectInputStream in = new ObjectInputStream(Files.newInputStream(filePath))) {
 			Object obj = in.readObject();
 			if (obj instanceof List) {
 				items = (List<T>) obj;
@@ -55,6 +67,24 @@ public class ItemController<T extends Item> {
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean addItem(T item) {
+		if (items.contains(item)) {
+			return false;
+		} else {
+			item.setId(maxId() + 1);
+			items.add(item);
+			writeProductsToFile(productsDBFile);
+			System.out.println(items);
+			return true;
+		}
+	}
+
+	private long maxId() {
+		Optional<Long> maxId = items.stream().map(Item::getId)
+				.max(Comparator.comparing(Long::longValue));
+		return (maxId.isPresent())? maxId.get() : 0;
 	}
 
 	public static void main(String[] args) {
