@@ -17,6 +17,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.filechooser.FileFilter;
 
 import invoicing.controller.ItemController;
@@ -24,18 +26,31 @@ import invoicing.entity.Item;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import java.awt.event.ActionListener;
 
 public class MainWindow extends JApplet {
 	private ItemController<Item> productController = new ItemController<>();
 	
 	private JFrame mainFrame;
 	private AddProductDialog dlgAddProduct;
+	private BrowseProductsDialog dlgBrowseProducts;
 	private final Action opendb = new SwingAction();
 	
 	public MainWindow() {
+		try {
+	  	    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+	  	        if ("Nimbus".equals(info.getName())) {
+	  	            UIManager.setLookAndFeel(info.getClassName());
+	  	            break;
+	  	        }
+	  	    }
+	  	} catch (Exception e) {
+	  	    e.printStackTrace();
+	  	} 
 	}
 	
 	public MainWindow(JFrame mainFrame) {
+		this();
 		this.mainFrame = mainFrame;
 	}
 	
@@ -82,7 +97,29 @@ public class MainWindow extends JApplet {
 		menuBar.add(mnProducts);
 		
 		JMenuItem mntmAddProduct = new JMenuItem("Add Product");
+		mntmAddProduct.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK));
 		mnProducts.add(mntmAddProduct);
+		
+		JMenuItem mntmBrowseProducts = new JMenuItem("Browse Products");
+		mntmBrowseProducts.addActionListener(ev -> {
+			if(dlgBrowseProducts == null) {
+				dlgBrowseProducts = 
+						new BrowseProductsDialog(mainFrame, MainWindow.this);
+			}
+			dlgBrowseProducts.refresh();
+			dlgBrowseProducts.setVisible(true);
+		});
+		mntmBrowseProducts.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_MASK));
+		mnProducts.add(mntmBrowseProducts);
+		
+		JSeparator separator_1 = new JSeparator();
+		mnProducts.add(separator_1);
+		
+		JMenuItem mntmEditProduct = new JMenuItem("Edit Product");
+		mnProducts.add(mntmEditProduct);
+		
+		JMenuItem mntmDeleteProduct = new JMenuItem("Delete Product");
+		mnProducts.add(mntmDeleteProduct);
 		
 		mntmAddProduct.addActionListener( ev -> {
 			if(dlgAddProduct == null) {

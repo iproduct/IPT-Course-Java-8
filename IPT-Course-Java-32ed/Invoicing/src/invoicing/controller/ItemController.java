@@ -20,6 +20,15 @@ public class ItemController<T extends Item> {
 	public static final String PRODUCTS_FILENAME = "products.db";
 	private List<T> items = new ArrayList<>();
 	private File productsDBFile = new File(PRODUCTS_FILENAME);
+	
+	public ItemController() {
+		readProductsFromFile();
+	}
+
+	public ItemController(File productsDBFile) {
+		this();
+		this.productsDBFile = productsDBFile;
+	}
 
 	public List<T> getItems() {
 		return items;

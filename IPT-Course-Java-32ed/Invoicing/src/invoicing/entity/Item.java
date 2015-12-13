@@ -3,6 +3,9 @@ package invoicing.entity;
 import java.io.Serializable;
 
 public class Item implements Serializable{
+	public static final String[] FIELD_NAMES = {
+			"ID", "Name", "Vendor", "Price", "Group"
+	};
 	private long id;
 	private String name;
 	private String vendor;
@@ -58,7 +61,14 @@ public class Item implements Serializable{
 		this.price = price;
 	}
 
-	
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
