@@ -3,8 +3,13 @@ package invoicing.view;
 import java.awt.BorderLayout;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 import javax.swing.JApplet;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -12,15 +17,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileFilter;
 
 import invoicing.controller.ItemController;
 import invoicing.entity.Item;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
 
 public class MainWindow extends JApplet {
 	private ItemController<Item> productController = new ItemController<>();
 	
 	private JFrame mainFrame;
 	private AddProductDialog dlgAddProduct;
+	private final Action opendb = new SwingAction();
 	
 	public MainWindow() {
 	}
@@ -44,6 +54,7 @@ public class MainWindow extends JApplet {
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmOpen = new JMenuItem("Open");
+		mntmOpen.setAction(opendb);
 		mntmOpen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mnFile.add(mntmOpen);
 		
@@ -109,4 +120,30 @@ public class MainWindow extends JApplet {
 		});
 	}
 
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "Open");
+			putValue(SHORT_DESCRIPTION, "Load Database from file");
+		}
+		public void actionPerformed(ActionEvent e) {
+		      JFileChooser c = new JFileChooser(".");
+		      c.addChoosableFileFilter(new FileFilter() {
+		  		@Override
+		  		public String getDescription() {
+		  			return "Invoicing Database File (*.db)";
+		  		}
+		  		@Override
+		  		public boolean accept(File f) {
+		  			return Pattern.matches(".*\\.db", f.getName()) || f.isDirectory();
+		  		}
+		        });
+		      // Demonstrate "Open" dialog:
+		      int rVal = c.showOpenDialog(MainWindow.this);
+		      if(rVal == JFileChooser.APPROVE_OPTION) {
+		    	File file = c.getSelectedFile();
+		    	productController.setProductsDBFile(file);
+		    	productController.readProductsFromFile();
+		      }
+		}
+	}
 }

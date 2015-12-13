@@ -89,7 +89,7 @@ public class AddProductDialog extends JDialog {
 			if(group.length() == 0)
 					group = "Default";
 			
-			Item item = new Item(1L, name, vendor, price, group);	
+			Item item = new Item(0L, name, vendor, price, group);	
 			if(parent.getProductController().addItem(item))
 				dispose();
 			else {

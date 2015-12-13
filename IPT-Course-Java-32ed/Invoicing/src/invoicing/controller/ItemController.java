@@ -1,11 +1,11 @@
 package invoicing.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -19,18 +19,18 @@ public class ItemController<T extends Item> {
 	public static final double VAT_RATE = .2;
 	public static final String PRODUCTS_FILENAME = "products.db";
 	private List<T> items = new ArrayList<>();
-	private String productsDBFile = PRODUCTS_FILENAME;
+	private File productsDBFile = new File(PRODUCTS_FILENAME);
 
 	public List<T> getItems() {
 		return items;
 	}
 	
-	public String getProductsDBFile() {
+	public File getProductsDBFile() {
 		return productsDBFile;
 	}
 
 
-	public void setProductsDBFile(String productsDBFile) {
+	public void setProductsDBFile(File productsDBFile) {
 		this.productsDBFile = productsDBFile;
 	}
 
@@ -47,9 +47,9 @@ public class ItemController<T extends Item> {
 		return price * VAT_RATE;
 	}
 
-	public void writeProductsToFile(String fileName) {
-		Path filePath = Paths.get(fileName);
-		try (ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(filePath))) {
+	public void writeProductsToFile() {
+		try (ObjectOutputStream out = new ObjectOutputStream(
+				new FileOutputStream(productsDBFile))) {
 			out.writeObject(items);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -57,9 +57,9 @@ public class ItemController<T extends Item> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void readProductsfromFile(String fileName) {
-		Path filePath = Paths.get(fileName);
-		try (ObjectInputStream in = new ObjectInputStream(Files.newInputStream(filePath))) {
+	public void readProductsFromFile() {
+		try (ObjectInputStream in = new ObjectInputStream(
+				new FileInputStream(productsDBFile))) {
 			Object obj = in.readObject();
 			if (obj instanceof List) {
 				items = (List<T>) obj;
@@ -70,15 +70,11 @@ public class ItemController<T extends Item> {
 	}
 
 	public boolean addItem(T item) {
-		if (items.contains(item)) {
-			return false;
-		} else {
-			item.setId(maxId() + 1);
-			items.add(item);
-			writeProductsToFile(productsDBFile);
-			System.out.println(items);
-			return true;
-		}
+		item.setId(maxId() + 1);
+		items.add(item);
+		writeProductsToFile();
+		System.out.println(items);
+		return true;
 	}
 
 	private long maxId() {
@@ -101,9 +97,9 @@ public class ItemController<T extends Item> {
 		// Serialize to file
 		Arrays.asList(books).stream().forEach(book -> pc.getItems().add(book));
 		System.out.println(pc.getItems());
-		pc.writeProductsToFile(PRODUCTS_FILENAME);
+//		pc.writeProductsToFile(PRODUCTS_FILENAME);
 		pc.getItems().clear();
-		pc.readProductsfromFile(PRODUCTS_FILENAME);
+//		pc.readProductsfromFile(PRODUCTS_FILENAME);
 
 		// Print products
 		pc.getItems().stream().forEach(System.out::println);
