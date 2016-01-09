@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +21,14 @@ public class TimeServer {
 	public static Logger logger = Logger.getLogger("timeserver.TimeServer");
 
 	public static void main(String[] args) throws IOException {
+//		System.out.println(logger.getParent());
+//		logger.setUseParentHandlers(false);
+//		Handler consoleHandler = new ConsoleHandler();
+//		consoleHandler.setLevel(Level.FINE);
+//		logger.addHandler(consoleHandler);
 		logger.setLevel(Level.ALL);
+//		logger.getParent().setLevel(Level.ALL);
+//		System.out.println(logger.getUseParentHandlers());
 		try (ServerSocket ss = new ServerSocket(PORT)) {
 			logger.log(Level.INFO, "TimeServer stated on port: " + ss.getLocalPort());
 
@@ -34,7 +43,7 @@ public class TimeServer {
 							true);
 
 					String zoneStr = in.readLine();
-					logger.log(Level.INFO, "Client time request for zone: " + zoneStr);
+					logger.log(Level.FINE, "Client time request for zone: " + zoneStr);
 					ZoneId zoneId;
 					try {
 						zoneId = ZoneId.of(zoneStr);
