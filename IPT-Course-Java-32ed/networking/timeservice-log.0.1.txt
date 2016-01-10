@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-01-10T09:35:37</date>
+  <millis>1452411337994</millis>
+  <sequence>0</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer stated on port: 8000</message>
+</record>
+<record>
+  <date>2016-01-10T09:37:54</date>
+  <millis>1452411474851</millis>
+  <sequence>1</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36325,localport=8000]</message>
+</record>
+<record>
+  <date>2016-01-10T09:37:56</date>
+  <millis>1452411476932</millis>
+  <sequence>3</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36326,localport=8000]</message>
+</record>
+<record>
+  <date>2016-01-10T09:37:58</date>
+  <millis>1452411478935</millis>
+  <sequence>5</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36327,localport=8000]</message>
+</record>
+<?xml version="1.0" encoding="windows-1251" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-01-10T09:39:22</date>
+  <millis>1452411562607</millis>
+  <sequence>0</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer stated on port: 8000</message>
+</record>
+<record>
+  <date>2016-01-10T09:39:32</date>
+  <millis>1452411572159</millis>
+  <sequence>1</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36329,localport=8000]</message>
+</record>
+<record>
+  <date>2016-01-10T09:39:34</date>
+  <millis>1452411574288</millis>
+  <sequence>3</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36330,localport=8000]</message>
+</record>
+<record>
+  <date>2016-01-10T09:39:36</date>
+  <millis>1452411576289</millis>
+  <sequence>5</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36331,localport=8000]</message>
+</record>
+<record>
+  <date>2016-01-10T09:39:38</date>
+  <millis>1452411578293</millis>
+  <sequence>7</sequence>
+  <logger>timeserver.TimeServer</logger>
+  <level>INFO</level>
+  <class>timeserver.TimeServer</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36332,localport=8000]</message>
+</record>

@@ -1,0 +1,14 @@
+Jan 10, 2016 9:43:49 AM timeserver.TimeServer main
+INFO: TimeServer stated on port: 8000
+Jan 10, 2016 9:43:56 AM timeserver.TimeServer main
+INFO: TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36383,localport=8000]
+Jan 10, 2016 9:43:58 AM timeserver.TimeServer main
+INFO: TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36384,localport=8000]
+Jan 10, 2016 9:44:00 AM timeserver.TimeServer main
+INFO: TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36385,localport=8000]
+Jan 10, 2016 9:44:02 AM timeserver.TimeServer main
+INFO: TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36386,localport=8000]
+Jan 10, 2016 9:44:04 AM timeserver.TimeServer main
+INFO: TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36387,localport=8000]
+Jan 10, 2016 9:44:06 AM timeserver.TimeServer main
+INFO: TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36388,localport=8000]
