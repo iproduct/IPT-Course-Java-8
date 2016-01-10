@@ -47,7 +47,10 @@ public class ChatService implements Runnable{
 			String message = "";
 			while(!message.equals("logout()")) {
 				message = in.readLine();
+				logger.log(Level.INFO, "User " + nickname + " sent message: " + message);
+
 				StringBuilder messageBuilder = new StringBuilder(nickname);
+
 				String messageToSend = messageBuilder.append("[")
 					.append(sdf.format(new Date()))
 					.append("]: ").append(message).toString();

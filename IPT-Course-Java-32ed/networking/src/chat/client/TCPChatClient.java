@@ -9,11 +9,13 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import chat.MessageListener;
 import chat.NetClient;
 import chat.model.ConnectionSettings;
-import timeserver.TimeServer;
+import chat.server.TCPChatServer;
 
 public class TCPChatClient implements NetClient, Runnable {
 	private Socket socket;
@@ -21,6 +23,8 @@ public class TCPChatClient implements NetClient, Runnable {
 	private PrintWriter out;
 	private ConnectionSettings settings;
 	private InetAddress address;
+	private List<MessageListener> listeners = new CopyOnWriteArrayList<>();
+	private volatile boolean stopped = false;
 
 	public TCPChatClient() {
 	}
@@ -46,6 +50,8 @@ public class TCPChatClient implements NetClient, Runnable {
 			out.println(settings.getNickname());
 			System.out.println("User " +settings.getNickname() 
 				+ " logged to to server: " + socket);
+//			new Thread(this).start();
+			return null;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			return "Unknown host: " + settings.getAddress();
@@ -53,37 +59,58 @@ public class TCPChatClient implements NetClient, Runnable {
 			e.printStackTrace();
 			return "Error communicating with server.";
 		}
-		return null;
 	}
 
 	@Override
-	public boolean sendMessage(String message) {
-		// TODO Auto-generated method stub
-		return false;
+	public void sendMessage(String message) {
+		out.println(message);
 	}
 
 	@Override
 	public void logout() {
-		// TODO Auto-generated method stub
-
+		out.println("logout()");
+		stopped = true;
 	}
 
 	@Override
 	public void addMessageListener(MessageListener ml) {
-		// TODO Auto-generated method stub
-
+		listeners.add(ml);
 	}
 
 	@Override
 	public void removeMessageListener(MessageListener ml) {
-		// TODO Auto-generated method stub
-
+		listeners.remove(ml);
 	}
 
 	@Override
 	public void run() {
-
-		
+		while(!stopped) {
+			String message;
+			try {
+				message = in.readLine();
+				for(MessageListener listener : listeners)
+					listener.onMessage(message);
+//				listeners.stream().forEach(listener -> {
+//					listener.onMessage(message);
+//				});
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Chat client theread finished: " + settings);
+	}
+	
+	public static void main(String[] args){
+		ConnectionSettings settings = 
+			new ConnectionSettings("localhost", TCPChatServer.PORT, "trayan");
+		TCPChatClient client  = new TCPChatClient();
+		client.login(settings);
+		client.sendMessage("aaaa");
+		try {
+			Thread.sleep(500000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

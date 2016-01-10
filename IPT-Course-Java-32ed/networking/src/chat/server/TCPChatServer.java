@@ -60,9 +60,9 @@ public class TCPChatServer implements Runnable{
 			logger.log(Level.INFO, "TimeServer stated on port: " + ss.getLocalPort());
 
 			while (true) {
-				try (Socket s = ss.accept()) {
+				try {
+					Socket s = ss.accept();
 					logger.log(Level.INFO, "TimeServer connection accepted: " + s);
-					
 					ChatService service = new ChatService(this, s);
 					services.add(service);
 					exec.execute(service);
