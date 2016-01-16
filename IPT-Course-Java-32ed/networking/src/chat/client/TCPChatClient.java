@@ -50,7 +50,7 @@ public class TCPChatClient implements NetClient, Runnable {
 			out.println(settings.getNickname());
 			System.out.println("User " +settings.getNickname() 
 				+ " logged to to server: " + socket);
-//			new Thread(this).start();
+			new Thread(this).start();
 			return null;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -104,6 +104,20 @@ public class TCPChatClient implements NetClient, Runnable {
 		ConnectionSettings settings = 
 			new ConnectionSettings("localhost", TCPChatServer.PORT, "trayan");
 		TCPChatClient client  = new TCPChatClient();
+		client.addMessageListener(new MessageListener() {
+			
+			@Override
+			public void onMessage(String message) {
+				System.out.println("!!!!! " + message);
+				
+			}
+			
+			@Override
+			public void onError(String message) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		client.login(settings);
 		client.sendMessage("aaaa");
 		try {
