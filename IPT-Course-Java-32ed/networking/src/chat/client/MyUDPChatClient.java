@@ -4,40 +4,29 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
-import chat.multicasting.ChatGUI;
+import chat.MessageListener;
+import chat.NetClient;
+import chat.model.ConnectionSettings;
 import chat.utility.DatagramUtilities;
 
-public class MyUDPChatClient extends Thread implements MyChat{
+public class MyUDPChatClient extends Thread implements NetClient{
 	private DatagramSocket socket;
 	private byte[] buf = new byte[1000];
 	private DatagramPacket dp = 
 	    new DatagramPacket(buf, buf.length);
-	private String nickname;
-	private ChatGUI gui;
+	private List<MessageListener> listeners = 
+			Collections.synchronizedList(new ArrayList<MessageListener>());
 	private volatile boolean stop = false;
 	private InetAddress address;
-	private int port;
+	private ConnectionSettings settings;
 
 
-	public MyUDPChatClient(String host, int port, ChatGUI gui) {
-		System.out.println("Making client ");
-		this.port = port;
-		this.gui = gui;
-		try {
-			address = InetAddress.getByName(host);
-			socket = new DatagramSocket();
-			socket.connect(address,port);
-			socket.send(DatagramUtilities.toDatagram("", address, port));
-			System.out.println("Socket created: "
-					+socket.getLocalPort() 
-					+ "-->" + socket.getPort());
-			start();
-		} catch (IOException e) {
-			e.printStackTrace();
-			socket.close();
-		}
+	public MyUDPChatClient() {
 	}
 	
 	public void run() {
@@ -48,7 +37,8 @@ public class MyUDPChatClient extends Thread implements MyChat{
 				message = DatagramUtilities.toString(dp);
 				if(message!=null) {
 					System.out.println(message);
-					gui.showMessage(message);
+					for(MessageListener listener : listeners)
+						listener.onMessage(message);
 				}
 			} catch (SocketException e1) {
 			} catch (IOException e) {
@@ -64,13 +54,13 @@ public class MyUDPChatClient extends Thread implements MyChat{
 
 	@Override
 	public void sendMessage(String message) {
-		message = "["+nickname+"] " + new Date() +": "+message;
+		message = "[" + settings.getNickname() + "] " + new Date() +": "+message;
 		send(message);
 	}
 
 	private void send(String message) {
 		DatagramPacket p =
-			DatagramUtilities.toDatagram(message, address, port);
+			DatagramUtilities.toDatagram(message, address, settings.getPort());
 		System.out.println("Packet " + p.getAddress() + p.getPort());
 		try {
 			socket.send(p);
@@ -80,18 +70,44 @@ public class MyUDPChatClient extends Thread implements MyChat{
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public String login(ConnectionSettings settings) {
+		System.out.println("Making client ");
+		this.settings = settings;
+		try {
+			address = InetAddress.getByName(settings.getAddress());
+			socket = new DatagramSocket();
+			socket.connect(address, settings.getPort());
+			socket.send(DatagramUtilities.toDatagram("", address, settings.getPort()));
+			System.out.println("Socket created: "
+					+socket.getLocalPort() 
+					+ "-->" + socket.getPort());
+			start();
+		} catch (IOException e) {
+			e.printStackTrace();
+			socket.close();
+		}
+		return null;
 	}
 
 	@Override
-	public void stopChat() {
+	public void logout() {
 		send("<END>");
 		socket.close();
 		requestStop();
-		System.out.println("Client closed.");
+		System.out.println("Client closed.");		
 	}
+
+	@Override
+	public void addMessageListener(MessageListener ml) {
+		listeners.add(ml);
+	}
+
+	@Override
+	public void removeMessageListener(MessageListener ml) {
+		listeners.remove(ml);
+	}
+
 
 }

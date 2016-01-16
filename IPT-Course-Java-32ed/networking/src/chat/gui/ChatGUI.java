@@ -18,6 +18,7 @@ import javax.swing.KeyStroke;
 
 import chat.MessageListener;
 import chat.NetClient;
+import chat.client.MyUDPChatClient;
 import chat.client.TCPChatClient;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -55,7 +56,7 @@ public class ChatGUI {
 	 * Create the application.
 	 */
 	public ChatGUI() {
-		netClient = new TCPChatClient(); //Choose protocol
+		netClient = new MyUDPChatClient(); //Choose protocol
 		initialize();
 	}
 
