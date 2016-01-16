@@ -12,9 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 
+import chat.MessageListener;
 import chat.NetClient;
 import chat.client.TCPChatClient;
 import javax.swing.GroupLayout;
@@ -31,6 +33,7 @@ public class ChatGUI {
 	private SignInDialog signDialog;
 	private NetClient netClient;
 	private JTextField jtfNewMessage;
+	private JTextArea jtaMessages;
 
 	/**
 	 * Launch the application.
@@ -72,6 +75,24 @@ public class ChatGUI {
 		//initialize Sign In dialog
 		signDialog = new SignInDialog(this);
 		
+		//add incoming message listener
+		netClient.addMessageListener(new MessageListener() {
+			
+			@Override
+			public void onMessage(String message) {
+				System.out.println("!!!!! " + message);
+				jtaMessages.append(message + "\n");		
+			}
+			
+			@Override
+			public void onError(String message) {
+				System.out.println("ERROR: " + message);
+				JOptionPane.showMessageDialog(frame, 
+						message, "Chat Error", 
+						JOptionPane.ERROR_MESSAGE);
+			}
+		});
+		
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
@@ -105,9 +126,9 @@ public class ChatGUI {
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
 		
-		JTextArea taMessages = new JTextArea();
-		taMessages.setEditable(false);
-		JScrollPane textArea = new JScrollPane(taMessages);
+		jtaMessages = new JTextArea();
+		jtaMessages.setEditable(false);
+		JScrollPane textArea = new JScrollPane(jtaMessages);
 		
 		JLabel lblMessages = new JLabel("Messages:");
 		
@@ -117,7 +138,7 @@ public class ChatGUI {
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
-				if (e.getKeyCode()==KeyEvent.VK_ENTER){
+				if (e.getKeyChar()==KeyEvent.VK_ENTER){
 					sendMessage();
 		        }	
 			}
