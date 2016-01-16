@@ -43,28 +43,34 @@ public class ChatService implements Runnable{
 				new OutputStreamWriter(socket.getOutputStream())), true);
 	
 			nickname = in.readLine();
-			logger.log(Level.INFO, "User " + nickname + " has joined chat.");
-			String message = "";
+			String message = "User " + nickname + " has joined chat.";
+			logger.log(Level.INFO, message);
+			formatSendMessage(message); //sent user joined chat message
+			
 			while(!message.equals("logout()")) {
 				message = in.readLine();
 				logger.log(Level.INFO, "User " + nickname + " sent message: " + message);
-
-				StringBuilder messageBuilder = new StringBuilder(nickname);
-
-				String messageToSend = messageBuilder.append("[")
-					.append(sdf.format(new Date()))
-					.append("]: ").append(message).toString();
-				server.sendAll(messageToSend);
+				formatSendMessage(message);
 			}	
 		} catch (IOException ex) {
 			logger.log(Level.SEVERE, 
 				"Chat client error [" + nickname + "]: "+ socket,
 				ex);
 		} finally {
+			String message = "User " + nickname + " has left chat.";
+			formatSendMessage(message);
 			logger.log(Level.INFO, "User " + nickname + " has left chat.");
 			server.removeService(this);
 		}
 		
+	}
+
+	private void formatSendMessage(String message) {
+		StringBuilder messageBuilder = new StringBuilder(nickname);
+		String messageToSend = messageBuilder.append("[")
+				.append(sdf.format(new Date()))
+				.append("]: ").append(message).toString();
+		server.sendAll(messageToSend);
 	}
 
 	public void sendMessage(String message) throws IOException {
