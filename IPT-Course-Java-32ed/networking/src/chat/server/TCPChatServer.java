@@ -47,7 +47,6 @@ public class TCPChatServer implements Runnable{
 					"Error sending message to client: " + service + ": ", e);
 			}
 		});
-		
 	}
 	
 	public void removeService(ChatService service){
