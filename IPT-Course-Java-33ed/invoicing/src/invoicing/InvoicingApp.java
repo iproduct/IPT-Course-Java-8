@@ -64,6 +64,8 @@ public class InvoicingApp {
 				new Position(products[3], 10)
 				};
 		
+		Contragent[] contrag
+		
 		//Create invoice
 		Invoice invoice = new Invoice("ABC Ltd.", "Ivan Petrov", positions);
 		System.out.println(formatInvoice(invoice));

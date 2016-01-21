@@ -6,8 +6,8 @@ import java.util.Date;
 public class Invoice {
 	private static long invoiceCount = 0;
 	private long number = ++ invoiceCount;
-	private String issuer; 
-	private String receiver;
+	private Contragent issuer; 
+	private Contragent receiver;
 	private Date date = new Date();
 	private Position[] positions = new Position[0];
 	
@@ -27,13 +27,13 @@ public class Invoice {
 	public Invoice() {
 	}
 
-	public Invoice(String issuer, String receiver, Position[] positions) {
+	public Invoice(Contragent issuer, Contragent receiver, Position[] positions) {
 		this.issuer = issuer;
 		this.receiver = receiver;
 		this.positions = positions;
 	}
 
-	public Invoice(long number, String issuer, String receiver, Date date,
+	public Invoice(long number, Contragent issuer, Contragent receiver, Date date,
 			Position[] positions) {
 		this.number = number;
 		this.issuer = issuer;
@@ -50,19 +50,19 @@ public class Invoice {
 		this.number = number;
 	}
 
-	public String getIssuer() {
+	public Contragent getIssuer() {
 		return issuer;
 	}
 
-	public void setIssuer(String issuer) {
+	public void setIssuer(Contragent issuer) {
 		this.issuer = issuer;
 	}
 
-	public String getReceiver() {
+	public Contragent getReceiver() {
 		return receiver;
 	}
 
-	public void setReceiver(String receiver) {
+	public void setReceiver(Contragent receiver) {
 		this.receiver = receiver;
 	}
 
