@@ -1,4 +1,4 @@
-package invoicing;
+package invoicing.controller;
 
 import invoicing.model.Contragent;
 import invoicing.model.Invoice;
