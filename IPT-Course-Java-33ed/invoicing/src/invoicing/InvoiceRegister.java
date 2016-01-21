@@ -1,10 +1,6 @@
 package invoicing;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import invoicing.model.Contragent;
 import invoicing.model.Invoice;
 import invoicing.model.Position;
 import invoicing.model.Product;
@@ -16,7 +12,7 @@ import invoicing.model.Product;
  * @since 1.0
  * @see org.iproduct.invoicing.model.Invoice
  */
-public class InvoicingApp {
+public class InvoiceRegister {
 	
 	/**
 	 * This method prints the invoice as text.
@@ -64,10 +60,13 @@ public class InvoicingApp {
 				new Position(products[3], 10)
 				};
 		
-		Contragent[] contrag
+		Contragent[] contragents = {			
+				new Contragent(122222222, "ABC Ltd.", "Plovdiv"),
+				new Contragent(1234567891, "Ivan Petrov", "Sofia 1000")
+		};
 		
 		//Create invoice
-		Invoice invoice = new Invoice("ABC Ltd.", "Ivan Petrov", positions);
+		Invoice invoice = new Invoice(contragents[0], contragents[1], positions);
 		System.out.println(formatInvoice(invoice));
 		
 	}
