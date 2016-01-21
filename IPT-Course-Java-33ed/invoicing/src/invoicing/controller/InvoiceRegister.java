@@ -23,8 +23,8 @@ public class InvoiceRegister {
 		StringBuilder builder = new StringBuilder();
 		builder.append("No.: ").append(inv.getNumber())
 			.append("\nDate: ").append(inv.getDate())
-			.append("\nIssuer: ").append(inv.getIssuer())
-			.append("\nReceiver: ").append(inv.getReceiver());
+			.append("\n\nIssuer: ").append(inv.getIssuer())
+			.append("\n\nReceiver: ").append(inv.getReceiver());
 
 		builder.append(
 				String.format("\n\n| %3s | %-30s | %8s | %8s | %7s | %10s |", 
@@ -34,12 +34,18 @@ public class InvoiceRegister {
 		int n = 1;
 		for(Position pos : inv.getPositions()){
 			builder.append(
-				String.format("\n| %3d | %-30s | %8.2f | %8.2f | %7s | %10.2f |",
+				String.format("\n| %3d | %-30.30s | %8.2f | %8.2f | %7s | %10.2f |",
 					n++, pos.getProduct().getName(), 
 					pos.getPrice(), pos.getQuantity(), "PCS",
 					pos.getTotalPrice())
 			);
 		}
+		
+		builder.append(String.format("\n\n%66sTotal: %10.2f", "", inv.getTotal()))
+		.append(String.format("\n%68sVAT: %10.2f", "", inv.getVAT()))
+		.append(String.format("\n%84s", "-----------------"))
+		.append(String.format("\n\n%53sTotal VAT included: %10.2f", "", inv.getTotalPlusVAT()));
+			
 			
 		return builder.toString();
 	}
