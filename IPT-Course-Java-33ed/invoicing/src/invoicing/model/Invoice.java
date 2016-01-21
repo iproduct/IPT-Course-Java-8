@@ -2,6 +2,7 @@ package invoicing.model;
 
 import java.util.Date;
 
+
 public class Invoice {
 	private static long invoiceCount = 0;
 	private long number = ++ invoiceCount;
