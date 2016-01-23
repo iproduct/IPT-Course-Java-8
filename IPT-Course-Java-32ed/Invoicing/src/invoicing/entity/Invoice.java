@@ -1,27 +1,50 @@
 package invoicing.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Invoice <T extends Item> {
+	private long number;
+	private Date date = new Date();
 	private String issuer, receiver;
 	private List<Position<T>> positions;
 	
 	public Invoice() {
 	}
 
-	public Invoice(String issuer, String receiver) {
+	public Invoice(long number, String issuer, String receiver) {
+		this.number = number;
 		this.issuer = issuer;
 		this.receiver = receiver;
 		this.positions = new ArrayList<>();
 	}
 	
-	public Invoice(String issuer, String receiver, List<Position<T>> positions) {
+	public Invoice(long number, Date date, String issuer, String receiver, List<Position<T>> positions) {
+		this.number = number;
+		this.date = date;
 		this.issuer = issuer;
 		this.receiver = receiver;
 		this.positions = positions;
 	}
 	
+	
+	public long getNumber() {
+		return number;
+	}
+
+	public void setNumber(long number) {
+		this.number = number;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public String getIssuer() {
 		return issuer;
 	}
