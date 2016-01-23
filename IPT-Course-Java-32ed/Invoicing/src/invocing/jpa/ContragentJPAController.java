@@ -18,7 +18,8 @@ public class ContragentJPAController {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		ContragentJPAController cController = new ContragentJPAController();
+		cController.init();
 
 	}
 
