@@ -31,12 +31,12 @@ public class Invoice implements Serializable {
 	//bi-directional many-to-one association to Contragent
 	@ManyToOne
 	@JoinColumn(name="receiver", nullable=false)
-	private Contragent contragent1;
+	private Contragent receiver;
 
 	//bi-directional many-to-one association to Contragent
 	@ManyToOne
 	@JoinColumn(name="issuer", nullable=false)
-	private Contragent contragent2;
+	private Contragent issuer;
 
 	public Invoice() {
 	}
@@ -79,20 +79,20 @@ public class Invoice implements Serializable {
 		return position;
 	}
 
-	public Contragent getContragent1() {
-		return this.contragent1;
+	public Contragent getReceiver() {
+		return this.receiver;
 	}
 
-	public void setContragent1(Contragent contragent1) {
-		this.contragent1 = contragent1;
+	public void setReceiver(Contragent receiver) {
+		this.receiver = receiver;
 	}
 
-	public Contragent getContragent2() {
-		return this.contragent2;
+	public Contragent getIssuer() {
+		return this.issuer;
 	}
 
-	public void setContragent2(Contragent contragent2) {
-		this.contragent2 = contragent2;
+	public void setIssuer(Contragent issuer) {
+		this.issuer = issuer;
 	}
 
 }

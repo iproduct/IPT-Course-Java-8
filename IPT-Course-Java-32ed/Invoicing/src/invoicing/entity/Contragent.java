@@ -1,8 +1,15 @@
 package invoicing.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -19,30 +26,31 @@ public class Contragent implements Serializable {
 	@Column(unique=true, nullable=false)
 	private long idNumber;
 
-	@Column(length=255)
+	@Column(length=80)
 	private String accountablePerson;
 
-	@Column(length=255)
+	@Column(length=120)
 	private String address;
 
-	@Column(length=255)
+	@Column(length=10)
 	private String bic;
 
-	@Column(length=255)
+	@Column(length=34)
 	private String iban;
 
-	@Column(length=255)
+	@Column(length=120)
 	private String name;
-
-	private int type;
-
-	//bi-directional many-to-one association to Invoice
-	@OneToMany(mappedBy="contragent1")
-	private List<Invoice> invoices1;
+	
+	@Enumerated
+	private ContragentType type;
 
 	//bi-directional many-to-one association to Invoice
-	@OneToMany(mappedBy="contragent2")
-	private List<Invoice> invoices2;
+	@OneToMany(mappedBy="issuer")
+	private List<Invoice> issuedBy;
+
+	//bi-directional many-to-one association to Invoice
+	@OneToMany(mappedBy="receiver")
+	private List<Invoice> receivedBy;
 
 	public Contragent() {
 	}
@@ -95,54 +103,54 @@ public class Contragent implements Serializable {
 		this.name = name;
 	}
 
-	public int getType() {
+	public ContragentType getType() {
 		return this.type;
 	}
 
-	public void setType(int type) {
+	public void setType(ContragentType type) {
 		this.type = type;
 	}
 
 	public List<Invoice> getInvoices1() {
-		return this.invoices1;
+		return this.issuedBy;
 	}
 
 	public void setInvoices1(List<Invoice> invoices1) {
-		this.invoices1 = invoices1;
+		this.issuedBy = invoices1;
 	}
 
 	public Invoice addInvoices1(Invoice invoices1) {
 		getInvoices1().add(invoices1);
-		invoices1.setContragent1(this);
+		invoices1.setIssuer(this);
 
 		return invoices1;
 	}
 
 	public Invoice removeInvoices1(Invoice invoices1) {
 		getInvoices1().remove(invoices1);
-		invoices1.setContragent1(null);
+		invoices1.setIssuer(null);
 
 		return invoices1;
 	}
 
 	public List<Invoice> getInvoices2() {
-		return this.invoices2;
+		return this.receivedBy;
 	}
 
 	public void setInvoices2(List<Invoice> invoices2) {
-		this.invoices2 = invoices2;
+		this.receivedBy = invoices2;
 	}
 
 	public Invoice addInvoices2(Invoice invoices2) {
 		getInvoices2().add(invoices2);
-		invoices2.setContragent2(this);
+		invoices2.setReceiver(this);
 
 		return invoices2;
 	}
 
 	public Invoice removeInvoices2(Invoice invoices2) {
 		getInvoices2().remove(invoices2);
-		invoices2.setContragent2(null);
+		invoices2.setReceiver(null);
 
 		return invoices2;
 	}
