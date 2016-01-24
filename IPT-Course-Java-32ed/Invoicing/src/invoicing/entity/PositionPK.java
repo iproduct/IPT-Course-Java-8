@@ -15,8 +15,8 @@ public class PositionPK implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int number;
 
-	@Column(name="invoice_number", insertable=false, updatable=false, unique=true, nullable=false)
-	private String invoiceNumber;
+	@Column(name="invoice_number", insertable=false, updatable=true, unique=true, nullable=false)
+	private long invoiceNumber;
 
 	public PositionPK() {
 	}
@@ -26,32 +26,36 @@ public class PositionPK implements Serializable {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-	public String getInvoiceNumber() {
+	public long getInvoiceNumber() {
 		return this.invoiceNumber;
 	}
-	public void setInvoiceNumber(String invoiceNumber) {
+	public void setInvoiceNumber(long invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof PositionPK)) {
-			return false;
-		}
-		PositionPK castOther = (PositionPK)other;
-		return 
-			(this.number == castOther.number)
-			&& this.invoiceNumber.equals(castOther.invoiceNumber);
-	}
-
+	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.number;
-		hash = hash * prime + this.invoiceNumber.hashCode();
-		
-		return hash;
+		int result = 1;
+		result = prime * result + (int) (invoiceNumber ^ (invoiceNumber >>> 32));
+		result = prime * result + number;
+		return result;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof PositionPK))
+			return false;
+		PositionPK other = (PositionPK) obj;
+		if (invoiceNumber != other.invoiceNumber)
+			return false;
+		if (number != other.number)
+			return false;
+		return true;
+	}
+
 }
