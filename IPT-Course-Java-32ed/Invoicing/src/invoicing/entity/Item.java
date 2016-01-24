@@ -21,7 +21,7 @@ public class Item implements Serializable {
 	private long id;
 
 	@Column(nullable=false, length=20)
-	private String group;
+	private String category;
 
 	@Column(nullable=false, length=80)
 	private String name;
@@ -46,12 +46,12 @@ public class Item implements Serializable {
 		this.id = id;
 	}
 
-	public String getGroup() {
-		return this.group;
+	public String getCategory() {
+		return this.category;
 	}
 
-	public void setGroup(String group) {
-		this.group = group;
+	public void setCategory(String group) {
+		this.category = group;
 	}
 
 	public String getName() {
@@ -98,6 +98,15 @@ public class Item implements Serializable {
 		position.setItem(null);
 
 		return position;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Item [id=").append(id).append(", category=").append(category).append(", name=").append(name)
+				.append(", price=").append(price).append(", vendor=").append(vendor).append(", positions=")
+				.append(positions).append("]");
+		return builder.toString();
 	}
 
 }

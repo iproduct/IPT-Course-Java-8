@@ -155,4 +155,14 @@ public class Contragent implements Serializable {
 		return invoices2;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Contragent [idNumber=").append(idNumber).append(", accountablePerson=")
+				.append(accountablePerson).append(", address=").append(address).append(", bic=").append(bic)
+				.append(", iban=").append(iban).append(", name=").append(name).append(", type=").append(type)
+				.append(", issuedBy=").append(issuedBy).append(", receivedBy=").append(receivedBy).append("]");
+		return builder.toString();
+	}
+
 }

@@ -76,4 +76,12 @@ public class Position implements Serializable {
 		this.item = item;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Position [id=").append(id).append(", price=").append(price).append(", quantity=")
+				.append(quantity).append(", invoice=").append(invoice).append(", item=").append(item).append("]");
+		return builder.toString();
+	}
+
 }

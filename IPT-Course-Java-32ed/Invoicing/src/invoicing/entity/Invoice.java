@@ -95,4 +95,13 @@ public class Invoice implements Serializable {
 		this.issuer = issuer;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Invoice [number=").append(number).append(", date=").append(date).append(", positions=")
+				.append(positions).append(", receiver=").append(receiver).append(", issuer=").append(issuer)
+				.append("]");
+		return builder.toString();
+	}
+
 }
