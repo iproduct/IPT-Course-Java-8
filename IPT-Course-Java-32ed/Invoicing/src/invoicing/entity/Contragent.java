@@ -1,133 +1,150 @@
 package invoicing.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the contragent database table.
+ * 
+ */
 @Entity
-public class Contragent {
+@Table(name="contragent")
+@NamedQuery(name="Contragent.findAll", query="SELECT c FROM Contragent c")
+public class Contragent implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
+	@Column(unique=true, nullable=false)
 	private long idNumber;
-	private String name;
-	private String address;
-	private CotragentType type;
+
+	@Column(length=255)
 	private String accountablePerson;
-	private String iban;
+
+	@Column(length=255)
+	private String address;
+
+	@Column(length=255)
 	private String bic;
-	
+
+	@Column(length=255)
+	private String iban;
+
+	@Column(length=255)
+	private String name;
+
+	private int type;
+
+	//bi-directional many-to-one association to Invoice
+	@OneToMany(mappedBy="contragent1")
+	private List<Invoice> invoices1;
+
+	//bi-directional many-to-one association to Invoice
+	@OneToMany(mappedBy="contragent2")
+	private List<Invoice> invoices2;
+
 	public Contragent() {
 	}
 
-	public Contragent(long idNumber, String name, String address) {
-		this.idNumber = idNumber;
-		this.name = name;
-		this.address = address;
-	}
-
-	public Contragent(long idNumber, String name, String address, CotragentType type, String accountablePerson) {
-		this.idNumber = idNumber;
-		this.name = name;
-		this.address = address;
-		this.type = type;
-		this.accountablePerson = accountablePerson;
-	}
-
-	public Contragent(long idNumber, String name, String address, CotragentType type, String accountablePerson,
-			String iban, String bic) {
-		this.idNumber = idNumber;
-		this.name = name;
-		this.address = address;
-		this.type = type;
-		this.accountablePerson = accountablePerson;
-		this.iban = iban;
-		this.bic = bic;
-	}
-
 	public long getIdNumber() {
-		return idNumber;
+		return this.idNumber;
 	}
 
 	public void setIdNumber(long idNumber) {
 		this.idNumber = idNumber;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public CotragentType getType() {
-		return type;
-	}
-
-	public void setType(CotragentType type) {
-		this.type = type;
-	}
-
 	public String getAccountablePerson() {
-		return accountablePerson;
+		return this.accountablePerson;
 	}
 
 	public void setAccountablePerson(String accountablePerson) {
 		this.accountablePerson = accountablePerson;
 	}
 
-	public String getIban() {
-		return iban;
+	public String getAddress() {
+		return this.address;
 	}
 
-	public void setIban(String iban) {
-		this.iban = iban;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getBic() {
-		return bic;
+		return this.bic;
 	}
 
 	public void setBic(String bic) {
 		this.bic = bic;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (idNumber ^ (idNumber >>> 32));
-		return result;
+	public String getIban() {
+		return this.iban;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Contragent))
-			return false;
-		Contragent other = (Contragent) obj;
-		if (idNumber != other.idNumber)
-			return false;
-		return true;
+	public void setIban(String iban) {
+		this.iban = iban;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Contragent [idNumber=").append(idNumber).append(", name=").append(name).append(", address=")
-				.append(address).append(", type=").append(type).append(", accountablePerson=").append(accountablePerson)
-				.append(", iban=").append(iban).append(", bic=").append(bic).append("]");
-		return builder.toString();
+	public String getName() {
+		return this.name;
 	}
-	
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getType() {
+		return this.type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public List<Invoice> getInvoices1() {
+		return this.invoices1;
+	}
+
+	public void setInvoices1(List<Invoice> invoices1) {
+		this.invoices1 = invoices1;
+	}
+
+	public Invoice addInvoices1(Invoice invoices1) {
+		getInvoices1().add(invoices1);
+		invoices1.setContragent1(this);
+
+		return invoices1;
+	}
+
+	public Invoice removeInvoices1(Invoice invoices1) {
+		getInvoices1().remove(invoices1);
+		invoices1.setContragent1(null);
+
+		return invoices1;
+	}
+
+	public List<Invoice> getInvoices2() {
+		return this.invoices2;
+	}
+
+	public void setInvoices2(List<Invoice> invoices2) {
+		this.invoices2 = invoices2;
+	}
+
+	public Invoice addInvoices2(Invoice invoices2) {
+		getInvoices2().add(invoices2);
+		invoices2.setContragent2(this);
+
+		return invoices2;
+	}
+
+	public Invoice removeInvoices2(Invoice invoices2) {
+		getInvoices2().remove(invoices2);
+		invoices2.setContragent2(null);
+
+		return invoices2;
+	}
+
 }

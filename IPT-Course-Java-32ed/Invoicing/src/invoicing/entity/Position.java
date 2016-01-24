@@ -1,85 +1,79 @@
 package invoicing.entity;
 
-public class Position<T extends Item> {
-	private int number;
-	private T item;
-	private double quantity = 1;
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the position database table.
+ * 
+ */
+@Entity
+@Table(name="position")
+@NamedQuery(name="Position.findAll", query="SELECT p FROM Position p")
+public class Position implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private PositionPK id;
+
+	@Column(nullable=false)
 	private double price;
+
+	@Column(nullable=false)
+	private double quantity;
+
+	//bi-directional many-to-one association to Invoice
+	@ManyToOne
+	@JoinColumn(name="invoice_number", nullable=false, insertable=false, updatable=false)
+	private Invoice invoice;
+
+	//bi-directional many-to-one association to Item
+	@ManyToOne
+	@JoinColumn(name="item_id", nullable=false)
+	private Item item;
+
 	public Position() {
 	}
-	public Position(int number, T item, double quantity) {
-		this.number = number;
-		this.item = item;
-		this.quantity = quantity;
-		price = item.getPrice();
+
+	public PositionPK getId() {
+		return this.id;
 	}
-	public Position(int number, T item, double quantity, double price) {
-		this.number = number;
-		this.item = item;
-		this.quantity = quantity;
-		this.price = price;
+
+	public void setId(PositionPK id) {
+		this.id = id;
 	}
-	public int getNumber() {
-		return number;
-	}
-	public void setNumber(int number) {
-		this.number = number;
-	}
-	public T getItem() {
-		return item;
-	}
-	public void setItem(T item) {
-		this.item = item;
-	}
-	public double getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
+
 	public double getPrice() {
-		return price;
+		return this.price;
 	}
+
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((item == null) ? 0 : item.hashCode());
-		result = prime * result + number;
-		return result;
+
+	public double getQuantity() {
+		return this.quantity;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Position))
-			return false;
-		Position other = (Position) obj;
-		if (item == null) {
-			if (other.item != null)
-				return false;
-		} else if (!item.equals(other.item))
-			return false;
-		if (number != other.number)
-			return false;
-		return true;
+
+	public void setQuantity(double quantity) {
+		this.quantity = quantity;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Position [number=").append(number).append(", item=").append(item).append(", quantity=")
-				.append(quantity).append(", price=").append(price).append("]");
-		return builder.toString();
+
+	public Invoice getInvoice() {
+		return this.invoice;
 	}
-	
-	
-	
-	
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
+	}
+
+	public Item getItem() {
+		return this.item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 }
-
-

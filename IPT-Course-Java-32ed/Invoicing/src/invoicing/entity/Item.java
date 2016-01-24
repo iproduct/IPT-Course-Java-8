@@ -1,112 +1,103 @@
 package invoicing.entity;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
-public class Item implements Serializable{
-	public static final String[] FIELD_NAMES = {
-			"ID", "Name", "Vendor", "Price", "Group"
-	};
+
+/**
+ * The persistent class for the items database table.
+ * 
+ */
+@Entity
+@Table(name="items")
+@NamedQuery(name="Item.findAll", query="SELECT i FROM Item i")
+public class Item implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Column(unique=true, nullable=false)
 	private long id;
+
+	@Column(nullable=false, length=20)
+	private String group;
+
+	@Column(nullable=false, length=80)
 	private String name;
-	private String vendor;
+
 	private double price;
-	private String group = "Others";
+
+	@Column(length=80)
+	private String vendor;
+
+	//bi-directional many-to-one association to Position
+	@OneToMany(mappedBy="item")
+	private List<Position> positions;
 
 	public Item() {
 	}
 
-	public Item(long id, String name, String group) {
-		this.id = id;
-		this.name = name;
-		this.group = group;
-	}
-	
-	public Item(long id, String name, String vendor, double price, String group) {
-		this.id = id;
-		this.name = name;
-		this.vendor = vendor;
-		this.price = price;
-		this.group = group;
-	}
-	
 	public long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
 	public String getGroup() {
-		return group;
+		return this.group;
 	}
 
 	public void setGroup(String group) {
 		this.group = group;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
+	public String getName() {
+		return this.name;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Item))
-			return false;
-		Item other = (Item) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Product [id=").append(id).append(", name=").append(name)
-				.append(", vendor=").append(vendor)
-				.append(", price=").append(price).append("]");
-		return builder.toString();
+	public double getPrice() {
+		return this.price;
 	}
 
-	public static void main(String[] args) {
-		Item p1 = new Item(1, "Whiteboard Marker", "Hardware"),
-				p2 = new Item(2, "USB Flash 16GB", "AData", 8.5, "Hardware");
-		
-		System.out.println(p1);
-		System.out.println(p2);
-		
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getVendor() {
+		return this.vendor;
+	}
+
+	public void setVendor(String vendor) {
+		this.vendor = vendor;
+	}
+
+	public List<Position> getPositions() {
+		return this.positions;
+	}
+
+	public void setPositions(List<Position> positions) {
+		this.positions = positions;
+	}
+
+	public Position addPosition(Position position) {
+		getPositions().add(position);
+		position.setItem(this);
+
+		return position;
+	}
+
+	public Position removePosition(Position position) {
+		getPositions().remove(position);
+		position.setItem(null);
+
+		return position;
 	}
 
 }

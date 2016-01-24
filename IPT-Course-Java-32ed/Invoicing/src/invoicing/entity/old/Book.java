@@ -1,4 +1,4 @@
-package invoicing.entity;
+package invoicing.entity.old;
 
 public class Book extends Item {
 	private String author;

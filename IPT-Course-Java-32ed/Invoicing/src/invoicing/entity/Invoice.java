@@ -1,36 +1,48 @@
 package invoicing.entity;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-public class Invoice <T extends Item> {
+
+/**
+ * The persistent class for the invoice database table.
+ * 
+ */
+@Entity
+@Table(name="invoice")
+@NamedQuery(name="Invoice.findAll", query="SELECT i FROM Invoice i")
+public class Invoice implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(unique=true, nullable=false)
 	private long number;
-	private Date date = new Date();
-	private String issuer, receiver;
-	private List<Position<T>> positions;
-	
+
+	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
+	private Date date;
+
+	//bi-directional many-to-one association to Position
+	@OneToMany(mappedBy="invoice")
+	private List<Position> positions;
+
+	//bi-directional many-to-one association to Contragent
+	@ManyToOne
+	@JoinColumn(name="receiver", nullable=false)
+	private Contragent contragent1;
+
+	//bi-directional many-to-one association to Contragent
+	@ManyToOne
+	@JoinColumn(name="issuer", nullable=false)
+	private Contragent contragent2;
+
 	public Invoice() {
 	}
 
-	public Invoice(long number, String issuer, String receiver) {
-		this.number = number;
-		this.issuer = issuer;
-		this.receiver = receiver;
-		this.positions = new ArrayList<>();
-	}
-	
-	public Invoice(long number, Date date, String issuer, String receiver, List<Position<T>> positions) {
-		this.number = number;
-		this.date = date;
-		this.issuer = issuer;
-		this.receiver = receiver;
-		this.positions = positions;
-	}
-	
-	
 	public long getNumber() {
-		return number;
+		return this.number;
 	}
 
 	public void setNumber(long number) {
@@ -38,83 +50,49 @@ public class Invoice <T extends Item> {
 	}
 
 	public Date getDate() {
-		return date;
+		return this.date;
 	}
 
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
-	public String getIssuer() {
-		return issuer;
+	public List<Position> getPositions() {
+		return this.positions;
 	}
 
-	public void setIssuer(String issuer) {
-		this.issuer = issuer;
-	}
-
-	public String getReceiver() {
-		return receiver;
-	}
-
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
-	}
-
-	public List<Position<T>> getPositions() {
-		return positions;
-	}
-
-	public void setPositions(List<Position<T>> positions) {
+	public void setPositions(List<Position> positions) {
 		this.positions = positions;
 	}
 
-	public void addPosition(T item, double quantity){
-		addPosition(item, quantity, item.getPrice());
-	}
-	
-	public void addPosition(T item, double quantity, double price){
-		Position p = new Position<Item>(positions.size() + 1 , item, quantity);
-		positions.add(p);
-	}
-	
-	
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("\nIssuer: ").append(issuer)
-			.append("\nReceiver=").append(receiver);
-		for(Position<T> p : getPositions())
-			builder.append(String.format("\n| %4d | %30s | %7.2f | %7.2f | %9.2f |", 
-					p.getNumber(), p.getItem().getName(), p.getPrice(), 
-					p.getQuantity(), p.getPrice() * p.getQuantity()));
-		
-		builder.append("\nPrice: ").append(getPrice())
-			   .append("\nVAT:   ").append(getVAT())
-			   .append("\nTotal: ").append(getTotal());
-		return builder.toString();
+	public Position addPosition(Position position) {
+		getPositions().add(position);
+		position.setInvoice(this);
+
+		return position;
 	}
 
-	private double getTotal() {
-		return getPrice() + getVAT();
+	public Position removePosition(Position position) {
+		getPositions().remove(position);
+		position.setInvoice(null);
+
+		return position;
 	}
 
-	private double getVAT() {
-		return 0.2 * getPrice();
+	public Contragent getContragent1() {
+		return this.contragent1;
 	}
 
-	private double getPrice() {
-		double sum = 0;
-		for(Position<T> item: positions){
-			sum += item.getPrice();
-		}
-		return sum;
+	public void setContragent1(Contragent contragent1) {
+		this.contragent1 = contragent1;
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public Contragent getContragent2() {
+		return this.contragent2;
+	}
 
+	public void setContragent2(Contragent contragent2) {
+		this.contragent2 = contragent2;
 	}
 
 }

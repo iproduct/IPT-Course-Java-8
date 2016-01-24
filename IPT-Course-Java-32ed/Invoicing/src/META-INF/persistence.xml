@@ -5,6 +5,10 @@
 	<persistence-unit name="Invoicing" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>invoicing.entity.Contragent</class>
+		<class>invoicing.entity.Invoice</class>
+		<class>invoicing.entity.Item</class>
+		<class>invoicing.entity.Position</class>
+		<class>invoicing.entity.PositionPK</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
