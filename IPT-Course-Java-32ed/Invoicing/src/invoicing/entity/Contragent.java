@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,7 +19,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="contragent")
-@NamedQuery(name="Contragent.findAll", query="SELECT c FROM Contragent c")
+@NamedQueries({
+	@NamedQuery(name="Contragent.findAll", query="SELECT c FROM Contragent c"),
+	@NamedQuery(name="Contragent.count", query="SELECT COUNT(c) FROM Contragent c"),
+	@NamedQuery(name="Contragent.findAllOrderedByName", 
+		query="SELECT c FROM Contragent c ORDER BY c.name")})
 public class Contragent implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -54,6 +59,32 @@ public class Contragent implements Serializable {
 
 	public Contragent() {
 	}
+
+	public Contragent(long idNumber, String name, String address) {
+		this.idNumber = idNumber;
+		this.name = name;
+		this.address = address;
+	}
+
+	public Contragent(long idNumber, String name, String address, ContragentType type, String accountablePerson) {
+		this.idNumber = idNumber;
+		this.name = name;
+		this.address = address;
+		this.type = type;
+		this.accountablePerson = accountablePerson;
+	}
+
+	public Contragent(long idNumber, String name, String address, ContragentType type, String accountablePerson,
+			String iban, String bic) {
+		this.idNumber = idNumber;
+		this.name = name;
+		this.address = address;
+		this.type = type;
+		this.accountablePerson = accountablePerson;
+		this.iban = iban;
+		this.bic = bic;
+	}
+
 
 	public long getIdNumber() {
 		return this.idNumber;

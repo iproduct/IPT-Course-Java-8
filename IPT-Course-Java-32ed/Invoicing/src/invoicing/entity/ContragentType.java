@@ -1,5 +1,5 @@
 package invoicing.entity;
 
 public enum ContragentType {
-	PERSON, ORAGANIZATION, VAT_ORGANIZATION
+	PERSON, ORGANIZATION, VAT_ORGANIZATION
 }
