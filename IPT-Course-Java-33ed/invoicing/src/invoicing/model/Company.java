@@ -1,5 +1,8 @@
 package invoicing.model;
 
+import java.io.InputStream;
+import java.util.Scanner;
+
 public class Company extends Contragent {
 	private boolean vatRegistered;
 	private String accountablePerson;
@@ -72,4 +75,55 @@ public class Company extends Contragent {
 				.append(getIban()).append("]");
 		return builder.toString();
 	}
+	
+	public void input(InputStream inStream) {
+		Scanner in = new Scanner(inStream);
+		String input;
+		
+		super.input(inStream);
+
+		//is VAT registered
+		System.out.println("Is VAT registered [yes OR no]: ");
+		boolean valid = false;
+		do {
+			input = in.nextLine().trim().toLowerCase();		
+			if ( input.matches("yes|no") ) {
+			 	setVatRegistered(input.equals("yes"));
+				valid = true;
+			} else
+				System.err.println("yes or no");
+		} while (!valid);
+		
+		//input accountable person name
+		System.out.println("Accountable Person Name: ");
+		do {
+			input = in.nextLine();
+			if ( !input.isEmpty() )
+			 	setName(input);
+			else
+				System.err.println("Name should not be empty.");
+		} while (getName() == null);
+		
+		//input BIC
+		System.out.println("BIC: ");
+		do {
+			input = in.nextLine();
+			if (input.matches("(\\w{6}") )
+			 	setIdNumber(Long.parseLong(input));
+			else
+				System.err.println("BIC should be 6 characters.");
+		} while (getIdNumber() <= 0);
+		
+		//input IBAN
+		System.out.println("IBAN: ");
+		do {
+			input = in.nextLine();
+			if (input.matches("(\\w{10,16}") )
+			 	setIdNumber(Long.parseLong(input));
+			else
+				System.err.println("IBAN should be 10 to 16 characters.");
+		} while (getIdNumber() <= 0);
+				
+	}
+
 }

@@ -51,6 +51,7 @@ public class Contragent {
 	private String address;
 	private String phone;
 	private boolean organization;
+	protected Scanner in;
 //	private String iban;
 //	private String bic;
 //	private String contacts;
@@ -145,7 +146,9 @@ public class Contragent {
 	}
 
 	public void input(InputStream inStream) {
-		Scanner in = new Scanner(inStream);
+		if(in == null) {
+			in = new Scanner(inStream);
+		}
 		String input;
 
 		//input code
