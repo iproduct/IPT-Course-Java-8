@@ -1,5 +1,6 @@
 package invoicing.controller;
 
+import invoicing.model.Company;
 import invoicing.model.Contragent;
 import invoicing.model.Invoice;
 import invoicing.model.Position;
@@ -72,9 +73,15 @@ public class InvoiceRegister {
 		};
 		
 		//Create invoice
-		Invoice invoice = new Invoice(contragents[0], contragents[1], positions);
-		System.out.println(formatInvoice(invoice));
 		
+		Contragent issuer = new Company();
+		issuer.input(System.in);
+		
+		Contragent receiver = new Contragent();
+		receiver.input(System.in);
+		
+		Invoice invoice = new Invoice(issuer, receiver, positions);
+		System.out.println(formatInvoice(invoice));
 	}
 
 }

@@ -155,10 +155,10 @@ public class Contragent {
 		System.out.println("Id Number: ");
 		do {
 			input = in.nextLine();
-			if (input.matches("(\\d{9,12}") )
+			if (input.matches("\\d{9,12}") )
 			 	setIdNumber(Long.parseLong(input));
 			else
-				System.err.println("Code should be 9 to 120 digits.");
+				System.err.println("Code should be 9 to 12 digits.");
 		} while (getIdNumber() <= 0);
 		
 		//input name
