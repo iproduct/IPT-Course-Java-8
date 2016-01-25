@@ -99,30 +99,30 @@ public class Company extends Contragent {
 		do {
 			input = in.nextLine();
 			if ( !input.isEmpty() )
-			 	setName(input);
+			 	setAccountablePerson(input);
 			else
 				System.err.println("Name should not be empty.");
-		} while (getName() == null);
+		} while (getAccountablePerson() == null);
 		
 		//input BIC
 		System.out.println("BIC: ");
 		do {
 			input = in.nextLine();
-			if (input.matches("(\\w{6}") )
-			 	setIdNumber(Long.parseLong(input));
+			if (input.matches("\\w{6}") )
+			 	setBic(input);
 			else
 				System.err.println("BIC should be 6 characters.");
-		} while (getIdNumber() <= 0);
+		} while (getBic() == null);
 		
 		//input IBAN
 		System.out.println("IBAN: ");
 		do {
 			input = in.nextLine();
-			if (input.matches("(\\w{10,16}") )
-			 	setIdNumber(Long.parseLong(input));
+			if (input.matches("\\w{10,16}") )
+			 	setIban(input);
 			else
 				System.err.println("IBAN should be 10 to 16 characters.");
-		} while (getIdNumber() <= 0);
+		} while (getIban() == null);
 				
 	}
 
