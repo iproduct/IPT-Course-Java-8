@@ -1,10 +1,15 @@
 package invoicing.controller;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import invoicing.model.Company;
 import invoicing.model.Contragent;
 import invoicing.model.Invoice;
 import invoicing.model.Position;
 import invoicing.model.Product;
+import invoicing.util.ProductComparatorByCode;
+import invoicing.util.ProductComparatorByPrice;
 
 /**
  * Top level invoicing application class.
@@ -21,6 +26,12 @@ public class InvoiceRegister {
 	public void initialize(Product[] products, Contragent[] contragents){
 		this.products = products;
 		this.contragents = contragents;
+	}
+	
+	public void printAllProductsSorted(Comparator<Product> pc){
+		Arrays.sort(products, pc);
+		for(Product p : products)
+			System.out.println(p);
 	}
 	
 	/**
@@ -80,16 +91,23 @@ public class InvoiceRegister {
 				new Contragent(1234567891, "Ivan Petrov", "Sofia 1000")
 		};
 		
+		InvoiceRegister register = new InvoiceRegister();
+		register.initialize(products, contragents);
+		
+		register.printAllProductsSorted(new ProductComparatorByCode());
+		System.out.println();
+		register.printAllProductsSorted(new ProductComparatorByPrice());
+		
 		//Create invoice
 		
-		Contragent issuer = new Company();
-		issuer.input(System.in);
-		
-		Contragent receiver = new Contragent();
-		receiver.input(System.in);
-		
-		Invoice invoice = new Invoice(issuer, receiver, positions);
-		System.out.println(formatInvoice(invoice));
+//		Contragent issuer = new Company();
+//		issuer.input(System.in);
+//		
+//		Contragent receiver = new Contragent();
+//		receiver.input(System.in);
+//		
+//		Invoice invoice = new Invoice(issuer, receiver, positions);
+//		System.out.println(formatInvoice(invoice));
 	}
 
 }
