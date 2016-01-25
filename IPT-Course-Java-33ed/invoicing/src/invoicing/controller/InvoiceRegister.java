@@ -14,6 +14,14 @@ import invoicing.model.Product;
  * @see org.iproduct.invoicing.model.Invoice
  */
 public class InvoiceRegister {
+	private Product[] products = new Product[0];
+	private Contragent[] contragents = new Contragent[0];
+	private Invoice[] invoices= new Invoice[0];
+	
+	public void initialize(Product[] products, Contragent[] contragents){
+		this.products = products;
+		this.contragents = contragents;
+	}
 	
 	/**
 	 * This method prints the invoice as text.
