@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.AbstractTableModel;
 
 import invoicing.controller.ItemController;
-import invoicing.entity.Item;
+import invoicing.entity.old.Item;
 
 public class BrowseProductsDialog extends JDialog {
 	final private MainWindow parent;

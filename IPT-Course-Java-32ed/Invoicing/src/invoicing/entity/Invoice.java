@@ -1,97 +1,107 @@
 package invoicing.entity;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
-public class Invoice <T extends Item> {
-	private String issuer, receiver;
-	private List<Position<T>> positions;
-	
+
+/**
+ * The persistent class for the invoice database table.
+ * 
+ */
+@Entity
+@Table(name="invoice")
+@NamedQuery(name="Invoice.findAll", query="SELECT i FROM Invoice i")
+public class Invoice implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(unique=true, nullable=false)
+	private long number;
+
+	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
+	private Date date;
+
+	//bi-directional many-to-one association to Position
+	@OneToMany(mappedBy="invoice")
+	private List<Position> positions;
+
+	//bi-directional many-to-one association to Contragent
+	@ManyToOne
+	@JoinColumn(name="receiver", nullable=false)
+	private Contragent receiver;
+
+	//bi-directional many-to-one association to Contragent
+	@ManyToOne
+	@JoinColumn(name="issuer", nullable=false)
+	private Contragent issuer;
+
 	public Invoice() {
 	}
 
-	public Invoice(String issuer, String receiver) {
-		this.issuer = issuer;
-		this.receiver = receiver;
-		this.positions = new ArrayList<>();
-	}
-	
-	public Invoice(String issuer, String receiver, List<Position<T>> positions) {
-		this.issuer = issuer;
-		this.receiver = receiver;
-		this.positions = positions;
-	}
-	
-	public String getIssuer() {
-		return issuer;
+	public long getNumber() {
+		return this.number;
 	}
 
-	public void setIssuer(String issuer) {
-		this.issuer = issuer;
+	public void setNumber(long number) {
+		this.number = number;
 	}
 
-	public String getReceiver() {
-		return receiver;
+	public Date getDate() {
+		return this.date;
 	}
 
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public List<Position<T>> getPositions() {
-		return positions;
+	public List<Position> getPositions() {
+		return this.positions;
 	}
 
-	public void setPositions(List<Position<T>> positions) {
+	public void setPositions(List<Position> positions) {
 		this.positions = positions;
 	}
 
-	public void addPosition(T item, double quantity){
-		addPosition(item, quantity, item.getPrice());
+	public Position addPosition(Position position) {
+		getPositions().add(position);
+		position.setInvoice(this);
+
+		return position;
 	}
-	
-	public void addPosition(T item, double quantity, double price){
-		Position p = new Position<Item>(positions.size() + 1 , item, quantity);
-		positions.add(p);
+
+	public Position removePosition(Position position) {
+		getPositions().remove(position);
+		position.setInvoice(null);
+
+		return position;
 	}
-	
-	
-	
+
+	public Contragent getReceiver() {
+		return this.receiver;
+	}
+
+	public void setReceiver(Contragent receiver) {
+		this.receiver = receiver;
+	}
+
+	public Contragent getIssuer() {
+		return this.issuer;
+	}
+
+	public void setIssuer(Contragent issuer) {
+		this.issuer = issuer;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("\nIssuer: ").append(issuer)
-			.append("\nReceiver=").append(receiver);
-		for(Position<T> p : getPositions())
-			builder.append(String.format("\n| %4d | %30s | %7.2f | %7.2f | %9.2f |", 
-					p.getNumber(), p.getItem().getName(), p.getPrice(), 
-					p.getQuantity(), p.getPrice() * p.getQuantity()));
-		
-		builder.append("\nPrice: ").append(getPrice())
-			   .append("\nVAT:   ").append(getVAT())
-			   .append("\nTotal: ").append(getTotal());
+		builder.append("Invoice [number=").append(number).append(", date=").append(date).append(", positions=")
+				.append(positions).append(", receiver=").append(receiver).append(", issuer=").append(issuer)
+				.append("]");
 		return builder.toString();
-	}
-
-	private double getTotal() {
-		return getPrice() + getVAT();
-	}
-
-	private double getVAT() {
-		return 0.2 * getPrice();
-	}
-
-	private double getPrice() {
-		double sum = 0;
-		for(Position<T> item: positions){
-			sum += item.getPrice();
-		}
-		return sum;
-	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

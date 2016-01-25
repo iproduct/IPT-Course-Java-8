@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import invoicing.entity.Item;
+import invoicing.entity.old.Item;
 
 public class AddProductDialog extends JDialog {
 	public static final String[] FIELD_NAMES = {

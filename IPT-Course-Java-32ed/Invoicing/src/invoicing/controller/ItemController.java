@@ -12,8 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import invoicing.entity.Book;
-import invoicing.entity.Item;
+import invoicing.entity.old.Book;
+import invoicing.entity.old.Item;
 
 public class ItemController<T extends Item> {
 	public static final double VAT_RATE = .2;

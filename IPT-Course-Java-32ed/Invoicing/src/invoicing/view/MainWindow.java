@@ -22,7 +22,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.filechooser.FileFilter;
 
 import invoicing.controller.ItemController;
-import invoicing.entity.Item;
+import invoicing.entity.old.Item;
+
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
