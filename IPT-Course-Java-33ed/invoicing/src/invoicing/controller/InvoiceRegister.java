@@ -42,10 +42,15 @@
 
 package invoicing.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import invoicing.model.Company;
 import invoicing.model.Contragent;
 import invoicing.model.Invoice;
 import invoicing.model.Position;
@@ -61,19 +66,33 @@ import invoicing.util.ProductComparatorByPrice;
  * @see org.iproduct.invoicing.model.Invoice
  */
 public class InvoiceRegister {
-	private Product[] products = new Product[0];
-	private Contragent[] contragents = new Contragent[0];
-	private Invoice[] invoices= new Invoice[0];
+	private Map<String, Product> products = new HashMap<>();
+	private Map<Long, Contragent> contragents = new HashMap<>();
+	private Map<Long, Invoice> invoices= new HashMap<>();
 	
-	public void initialize(Product[] products, Contragent[] contragents){
-		this.products = products;
-		this.contragents = contragents;
+	public void initialize(Collection<? extends Product> products, 
+			Collection<? extends Contragent> contragents){
+		this.products.clear();
+		for(Product p : products)
+			this.products.put(p.getCode(), p);
+		this.contragents.clear();
+		for(Contragent p : contragents)
+			this.contragents.put(p.getIdNumber(), p);
 	}
 	
 	public void printAllProductsSorted(Comparator<Product> pc){
-		Arrays.sort(products, pc);
-		for(Product p : products)
+		List<Product> plist = new ArrayList<>(products.values());
+		Collections.sort(plist, pc);
+		for(Product p : plist)
 			System.out.println(p);
+	}
+	
+	public Product findProductByProductCode(String pCode){
+		return products.get(pCode);
+	}
+
+	public Contragent findContragentByIdNumber(long idNumber){
+		return contragents.get(idNumber);
 	}
 	
 	/**
@@ -134,7 +153,7 @@ public class InvoiceRegister {
 		};
 		
 		InvoiceRegister register = new InvoiceRegister();
-		register.initialize(products, contragents);
+		register.initialize(Arrays.asList(products), Arrays.asList(contragents));
 		
 		register.printAllProductsSorted(new ProductComparatorByCode());
 		System.out.println();

@@ -42,7 +42,9 @@
 
 package invoicing.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Invoice {
@@ -51,7 +53,7 @@ public class Invoice {
 	private Contragent issuer; 
 	private Contragent receiver;
 	private Date date = new Date();
-	private Position[] positions = new Position[0];
+	private List<Position> positions = new ArrayList<>();
 	
 	@Override
 	public String toString() {
@@ -69,14 +71,14 @@ public class Invoice {
 	public Invoice() {
 	}
 
-	public Invoice(Contragent issuer, Contragent receiver, Position[] positions) {
+	public Invoice(Contragent issuer, Contragent receiver, List<Position> positions) {
 		this.issuer = issuer;
 		this.receiver = receiver;
 		this.positions = positions;
 	}
 
 	public Invoice(long number, Contragent issuer, Contragent receiver, Date date,
-			Position[] positions) {
+			List<Position> positions) {
 		this.number = number;
 		this.issuer = issuer;
 		this.receiver = receiver;
@@ -116,11 +118,11 @@ public class Invoice {
 		this.date = date;
 	}
 
-	public Position[] getPositions() {
+	public List<Position> getPositions() {
 		return positions;
 	}
 
-	public void setPositions(Position[] positions) {
+	public void setPositions(List<Position> positions) {
 		this.positions = positions;
 	}
 
@@ -162,6 +164,8 @@ public class Invoice {
 		return getTotal() +  getVAT();
 	}
 
-	
+	public void addPosition(Product product, double quantity){
+		positions.add(new Position(product, quantity));
+	}
 	
 }
