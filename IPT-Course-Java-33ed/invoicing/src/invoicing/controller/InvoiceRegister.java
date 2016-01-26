@@ -52,6 +52,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import invoicing.exception.EntityAlreadyExistsException;
 import invoicing.exception.NonExistingEntityException;
 import invoicing.model.Company;
 import invoicing.model.Contragent;
@@ -73,6 +74,7 @@ public class InvoiceRegister {
 	private Map<Long, Contragent> contragents = new HashMap<>();
 	private Map<Long, Invoice> invoices= new HashMap<>();
 	
+	//Invoice register initialization
 	public void initialize(Collection<? extends Product> products, 
 			Collection<? extends Contragent> contragents){
 		this.products.clear();
@@ -83,6 +85,18 @@ public class InvoiceRegister {
 			this.contragents.put(p.getIdNumber(), p);
 	}
 	
+	
+	//Product methods
+	public Product findProductByProductCode(String pCode){
+		return products.get(pCode);
+	}
+
+	public void addProduct(Product product) throws EntityAlreadyExistsException {
+		if ( products.containsKey(product.getCode()) )
+			throw new EntityAlreadyExistsException("Product with code = " + product.getCode() + " already exists.");
+		products.put(product.getCode(), product);
+	}
+	
 	public void printAllProductsSorted(Comparator<Product> pc){
 		List<Product> plist = new ArrayList<>(products.values());
 		Collections.sort(plist, pc);
@@ -90,12 +104,36 @@ public class InvoiceRegister {
 			System.out.println(p);
 	}
 	
-	public Product findProductByProductCode(String pCode){
-		return products.get(pCode);
-	}
-
+	
+	//Contragent methods
 	public Contragent findContragentByIdNumber(long idNumber){
 		return contragents.get(idNumber);
+	}
+	
+	public void addContragent(Contragent contragent) throws EntityAlreadyExistsException {
+		if ( contragents.containsKey(contragent.getIdNumber()) )
+			throw new EntityAlreadyExistsException("Contragent with ID Number = " + contragent.getIdNumber() + " already exists.");
+		contragents.put(contragent.getIdNumber(), contragent);
+	}
+	
+	public void printAllContragentsSorted(Comparator<Contragent> cc){
+		List<Contragent> clist = new ArrayList<>(contragents.values());
+		Collections.sort(clist, cc);
+		for(Contragent c : clist)
+			System.out.println(c);
+	}
+	
+	
+	//Invoice building methods
+	public Invoice newInvoice(Company issuer, Contragent receiver){
+		long maxNumber = 0;
+		if(!invoices.isEmpty()) {
+			Invoice maxInvoice = Collections.max(invoices.values());
+			maxNumber = maxInvoice.getNumber();
+		}
+		Invoice newInvoice = new Invoice(maxNumber+1, issuer, receiver, new Date(),
+				new ArrayList<Position>());
+		return newInvoice;
 	}
 	
 	public void addPositionToInvoice(Invoice invoice, String productCode,
@@ -110,16 +148,7 @@ public class InvoiceRegister {
 		invoices.put(invoice.getNumber(), invoice);
 	}
 	
-	public Invoice newInvoice(Company issuer, Contragent receiver){
-		long maxNumber = 0;
-		if(!invoices.isEmpty()) {
-			Invoice maxInvoice = Collections.max(invoices.values());
-			maxNumber = maxInvoice.getNumber();
-		}
-		Invoice newInvoice = new Invoice(maxNumber+1, issuer, receiver, new Date(),
-				new ArrayList<Position>());
-		return newInvoice;
-	}
+
 	
 	/**
 	 * This method prints the invoice as text.
