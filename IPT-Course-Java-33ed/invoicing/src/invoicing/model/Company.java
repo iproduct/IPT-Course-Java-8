@@ -108,12 +108,12 @@ public class Company extends Contragent {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Company [vatRegistered=").append(vatRegistered).append(", accountablePerson=")
-				.append(accountablePerson).append(", bic=").append(bic).append(", iban=").append(iban)
-				.append(", isVatRegistered()=").append(isVatRegistered()).append(", getAccountablePerson()=")
-				.append(getAccountablePerson()).append(", getBic()=").append(getBic()).append(", getIban()=")
-				.append(getIban()).append("]");
+		StringBuilder builder = new StringBuilder(super.toString());
+		if(isVatRegistered())
+			builder.append("\nVAT Number: ").append("BG").append(getIdNumber());
+		builder.append("\nAccountable Person: ").append(accountablePerson)
+				.append("\nIBAN: ").append(iban)
+				.append("\nBIC: ").append(bic);
 		return builder.toString();
 	}
 	

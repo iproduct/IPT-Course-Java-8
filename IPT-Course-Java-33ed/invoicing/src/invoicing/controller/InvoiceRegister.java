@@ -42,6 +42,7 @@
 
 package invoicing.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -188,14 +189,17 @@ public class InvoiceRegister {
 	 * @return formatted text layout of the inoce
 	 */
 	public static String formatInvoice(Invoice inv){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		StringBuilder builder = new StringBuilder();
-		builder.append("No.: ").append(inv.getNumber())
-			.append("\nDate: ").append(inv.getDate())
-			.append("\n\nIssuer: ").append(inv.getIssuer())
-			.append("\n\nReceiver: ").append(inv.getReceiver());
+		builder.append("\n\nINVOICE")
+			.append("\n==========")
+			.append("\nNo. : ").append(String.format("%010d  ", inv.getNumber()))
+			.append("\nDate: ").append(sdf.format(inv.getDate()))
+			.append("\n\nISSUER: \n").append(inv.getIssuer())
+			.append("\n\nRECEIVER: \n").append(inv.getReceiver());
 
 		builder.append(
-				String.format("\n\n| %3s | %-30s | %8s | %8s | %7s | %10s |", 
+				String.format("\n\n| %3s | %-30.30s | %8s | %8s | %7s | %10s |", 
 					"No.", "Product", "Price", "Quantity", "Measure", "Total")
 			);
 
