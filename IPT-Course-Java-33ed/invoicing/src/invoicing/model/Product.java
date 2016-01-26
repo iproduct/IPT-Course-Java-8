@@ -167,6 +167,8 @@ public class Product {
 			else
 				System.err.println("Invalid price. Ex: 9.57");
 		} while (getPrice() < 0);
+		
+		in.close();
 	}
 	
 	public static void main(String[] args) {

@@ -51,11 +51,7 @@ public class Contragent {
 	private String address;
 	private String phone;
 	private boolean organization;
-	protected Scanner in;
-//	private String iban;
-//	private String bic;
-//	private String contacts;
-	
+
 	public Contragent() {
 	}
 
@@ -146,9 +142,7 @@ public class Contragent {
 	}
 
 	public void input(InputStream inStream) {
-		if(in == null) {
-			in = new Scanner(inStream);
-		}
+		Scanner in = new Scanner(inStream);
 		String input;
 
 		//input code
@@ -192,6 +186,8 @@ public class Contragent {
 			} else
 				System.err.println("yes or no");
 		} while (!valid);
+		
+		in.close();
 	}
 
 	public static void main(String[] args){

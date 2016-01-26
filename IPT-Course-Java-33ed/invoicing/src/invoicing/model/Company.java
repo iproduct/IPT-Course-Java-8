@@ -119,11 +119,10 @@ public class Company extends Contragent {
 	}
 	
 	public void input(InputStream inStream) {
+		super.input(inStream);
 		Scanner in = new Scanner(inStream);
 		String input;
 		
-		super.input(inStream);
-
 		//is VAT registered
 		System.out.println("Is VAT registered [yes OR no]: ");
 		boolean valid = false;
@@ -166,6 +165,7 @@ public class Company extends Contragent {
 				System.err.println("IBAN should be 10 to 16 characters.");
 		} while (getIban() == null);
 				
+		in.close();
 	}
 
 }
