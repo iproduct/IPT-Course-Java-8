@@ -70,6 +70,38 @@ import invoicing.util.ProductComparatorByPrice;
  * @see org.iproduct.invoicing.model.Invoice
  */
 public class InvoiceRegister {
+	public static final Product[] SAMPLE_PRODUCTS = {
+			new Product("BK001", "Thinking in Java", 15.7),
+			new Product("HD001", "Logitech Optical Mouse", 8.75),
+			new Product("SF001", "Photoshop CC", 2000),
+			new Product("HD002", "Raspberry Pi 2", 80),
+			new Product("SV001", "Raspbian Installation", 20),
+			new Product("HD003", "3dIMU - 3D Acceelerometr, Gyrospone & Comapss", 35)
+	};
+		
+	public static final Position[] SAMPLE_POSITIONS = {
+			new Position(SAMPLE_PRODUCTS[0]), 
+			new Position(SAMPLE_PRODUCTS[1], 5), 
+			new Position(SAMPLE_PRODUCTS[3], 10)
+	};
+		
+	public static final Contragent[] SAMPLE_CONTRAGENTS = {			
+			new Contragent(122222222, "ABC Ltd.", "Plovdiv"),
+			new Contragent(1234567891, "Ivan Petrov", "Sofia 1000"),
+			new Contragent(234234243, "D. Anatasov", "Sofia")
+	};
+
+	public static final Company[] SAMPLE_COMPANIES = {			
+			new Company(1234567895L, "ABC Ltd.","Sofia 1000", "359885647345",
+					true, true, "Ivan Petrov", "ASADAE", "ASADAE223234235556"),
+			new Company(1234567892L, "Best Widgets Inc","Sofia 1240", "35902457698",
+					true, true, "Dimitar Mladenov", "ERTDSF", "ERTDSF3452235556"),
+			new Company(123456789, "Stocks Ulimited AD","Sofia 1790", "35902865734",
+					true, true, "Sergei Eftimov", "ATDBTG", "ATDBTG2232343445")
+	};
+
+	
+	
 	private Map<String, Product> products = new HashMap<>();
 	private Map<Long, Contragent> contragents = new HashMap<>();
 	private Map<Long, Invoice> invoices= new HashMap<>();
@@ -187,28 +219,9 @@ public class InvoiceRegister {
 	}
 
 	public static void main(String[] args) {
-		Product[] products = {
-			new Product("BK001", "Thinking in Java", 15.7),
-			new Product("HD001", "Logitech Optical Mouse", 8.75),
-			new Product("SF001", "Photoshop CC", 2000),
-			new Product("HD002", "Raspberry Pi 2", 80),
-			new Product("SV001", "Raspbian Installation", 20),
-			new Product("HD003", "3dIMU - 3D Acceelerometr, Gyrospone & Comapss", 35)
-		};
-		
-		Position[] positions = {
-				new Position(products[0]), 
-				new Position(products[1], 5), 
-				new Position(products[3], 10)
-				};
-		
-		Contragent[] contragents = {			
-				new Contragent(122222222, "ABC Ltd.", "Plovdiv"),
-				new Contragent(1234567891, "Ivan Petrov", "Sofia 1000")
-		};
 		
 		InvoiceRegister register = new InvoiceRegister();
-		register.initialize(Arrays.asList(products), Arrays.asList(contragents));
+		register.initialize(Arrays.asList(SAMPLE_PRODUCTS), Arrays.asList(SAMPLE_CONTRAGENTS));
 		
 		register.printAllProductsSorted(new ProductComparatorByCode());
 		System.out.println();
@@ -218,8 +231,7 @@ public class InvoiceRegister {
 		
 		//Create invoice
 		
-		Company issuer = new Company(123456789, "ABC Ltd.","Sofia 1000", "359885647345",
-				true, true, "Ivan Petrov", "asdsada", "sadsaad223234235556");
+		Company issuer = SAMPLE_COMPANIES[0];
 //		issuer.input(System.in);
 		
 		Contragent receiver = new Contragent(234234243, "D. Anatasov", "Sofia");
@@ -249,5 +261,6 @@ public class InvoiceRegister {
 		
 		System.out.println(formatInvoice(invoice));
 	}
+
 
 }

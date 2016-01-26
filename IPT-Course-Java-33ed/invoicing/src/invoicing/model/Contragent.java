@@ -42,7 +42,6 @@
 
 package invoicing.model;
 
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class Contragent {
@@ -141,8 +140,7 @@ public class Contragent {
 				(idNumber == ((Contragent)obj).idNumber);
 	}
 
-	public void input(InputStream inStream) {
-		Scanner in = new Scanner(inStream);
+	public void input(Scanner in) {
 		String input;
 
 		//input code
@@ -186,8 +184,6 @@ public class Contragent {
 			} else
 				System.err.println("yes or no");
 		} while (!valid);
-		
-		in.close();
 	}
 
 	public static void main(String[] args){

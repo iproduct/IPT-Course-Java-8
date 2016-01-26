@@ -42,7 +42,6 @@
 
 package invoicing.model;
 
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class Company extends Contragent {
@@ -118,9 +117,8 @@ public class Company extends Contragent {
 		return builder.toString();
 	}
 	
-	public void input(InputStream inStream) {
-		super.input(inStream);
-		Scanner in = new Scanner(inStream);
+	public void input(Scanner in) {
+		super.input(in);
 		String input;
 		
 		//is VAT registered
@@ -163,9 +161,7 @@ public class Company extends Contragent {
 			 	setIban(input);
 			else
 				System.err.println("IBAN should be 10 to 16 characters.");
-		} while (getIban() == null);
-				
-		in.close();
+		} while (getIban() == null);			
 	}
 
 }

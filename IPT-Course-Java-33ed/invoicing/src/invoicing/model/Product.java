@@ -134,8 +134,7 @@ public class Product {
 		return builder.toString();
 	}
 
-	public void input(InputStream inStream) {
-		Scanner in = new Scanner(inStream);
+	public void input(Scanner in) {
 		String input;
 
 		//input code
@@ -167,15 +166,13 @@ public class Product {
 			else
 				System.err.println("Invalid price. Ex: 9.57");
 		} while (getPrice() < 0);
-		
-		in.close();
 	}
 	
 	public static void main(String[] args) {
 		Product p1 = new Product("BK001", "Thinking in Java 4 ed.", 25.99);
 		Product p2 = new Product("BK002", "UML Distilled");
 		Product p3 = new Product();
-		p3.input(System.in);
+		p3.input(new Scanner(System.in));
 		System.out.println(p1);
 		System.out.println(p2);
 		System.out.println(p3);
