@@ -47,7 +47,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class Invoice {
+public class Invoice implements Comparable<Invoice>{
 	private static long invoiceCount = 0;
 	private long number = ++ invoiceCount;
 	private Contragent issuer; 
@@ -166,6 +166,11 @@ public class Invoice {
 
 	public void addPosition(Product product, double quantity){
 		positions.add(new Position(product, quantity));
+	}
+
+	@Override
+	public int compareTo(Invoice other) {
+		return Long.compare(this.getNumber(), other.getNumber());
 	}
 	
 }

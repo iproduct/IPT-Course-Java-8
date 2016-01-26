@@ -47,10 +47,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import invoicing.exception.NonExistingEntityException;
+import invoicing.model.Company;
 import invoicing.model.Contragent;
 import invoicing.model.Invoice;
 import invoicing.model.Position;
@@ -93,6 +96,29 @@ public class InvoiceRegister {
 
 	public Contragent findContragentByIdNumber(long idNumber){
 		return contragents.get(idNumber);
+	}
+	
+	public void addPositionToInvoice(Invoice invoice, String productCode,
+			double quantity) throws NonExistingEntityException {
+		Product product = findProductByProductCode(productCode);
+		if (product == null)
+			throw new NonExistingEntityException("Invalid product code: " + productCode);
+		invoice.addPosition(product, quantity);
+	}
+	
+	public void addInvoice(Invoice invoice){
+		invoices.put(invoice.getNumber(), invoice);
+	}
+	
+	public Invoice newInvoice(Company issuer, Contragent receiver){
+		long maxNumber = 0;
+		if(!invoices.isEmpty()) {
+			Invoice maxInvoice = Collections.max(invoices.values());
+			maxNumber = maxInvoice.getNumber();
+		}
+		Invoice newInvoice = new Invoice(maxNumber+1, issuer, receiver, new Date(),
+				new ArrayList<Position>());
+		return newInvoice;
 	}
 	
 	/**
@@ -159,16 +185,40 @@ public class InvoiceRegister {
 		System.out.println();
 		register.printAllProductsSorted(new ProductComparatorByPrice());
 		
+		System.out.println("\n" + register.findProductByProductCode("HD001"));
+		
 		//Create invoice
 		
-//		Contragent issuer = new Company();
+		Company issuer = new Company(123456789, "ABC Ltd.","Sofia 1000", "359885647345",
+				true, true, "Ivan Petrov", "asdsada", "sadsaad223234235556");
 //		issuer.input(System.in);
-//		
-//		Contragent receiver = new Contragent();
+		
+		Contragent receiver = new Contragent(234234243, "D. Anatasov", "Sofia");
 //		receiver.input(System.in);
-//		
-//		Invoice invoice = new Invoice(issuer, receiver, positions);
-//		System.out.println(formatInvoice(invoice));
+		
+		Invoice invoice = register.newInvoice(issuer, receiver);
+		try {
+			register.addPositionToInvoice(invoice, "SF001", 7);
+			register.addPositionToInvoice(invoice, "HD001", 14);
+			register.addPositionToInvoice(invoice, "HD003", 2);
+			register.addInvoice(invoice);
+		} catch (NonExistingEntityException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(formatInvoice(invoice));
+		
+		invoice = register.newInvoice(issuer, receiver);
+		try {
+			register.addPositionToInvoice(invoice, "SF001", 7);
+			register.addPositionToInvoice(invoice, "HD001", 14);
+			register.addPositionToInvoice(invoice, "HD003", 2);
+			register.addInvoice(invoice);
+		} catch (NonExistingEntityException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(formatInvoice(invoice));
 	}
 
 }
