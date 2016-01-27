@@ -117,12 +117,17 @@ public class Contragent {
 		this.phone = phone;
 	}
 
-	@Override
-	public String toString() {
+	public String format() {
 		StringBuilder sb = new StringBuilder("Identification Number: ");
 		sb.append(idNumber).append("\nName: ").append(name).append("\nAddress: ")
 			.append(address);
 		return sb.toString();
+	}
+
+	@Override
+	public String toString() {
+		return "Person  [idNumber=" + idNumber + ", name=" + name + ", address=" + address + ", phone=" + phone
+				+ ", organization=" + organization + "]";
 	}
 
 	@Override
@@ -138,52 +143,6 @@ public class Contragent {
 		return (obj != null) && 
 				(obj instanceof Contragent) && 
 				(idNumber == ((Contragent)obj).idNumber);
-	}
-
-	public void input(Scanner in) {
-		String input;
-
-		//input code
-		System.out.println("Id Number: ");
-		do {
-			input = in.nextLine();
-			if (input.matches("\\d{9,12}") )
-			 	setIdNumber(Long.parseLong(input));
-			else
-				System.err.println("Code should be 9 to 12 digits.");
-		} while (getIdNumber() <= 0);
-		
-		//input name
-		System.out.println("Name: ");
-		do {
-			input = in.nextLine();
-			if ( !input.isEmpty() )
-			 	setName(input);
-			else
-				System.err.println("Name should not be empty.");
-		} while (getName() == null);
-		
-		//input address
-		System.out.println("Adress: ");
-		do {
-			input = in.nextLine();
-			if ( !input.isEmpty() )
-			 	setAddress(input);
-			else
-				System.err.println("Address should not be empty.");
-		} while (getAddress() == null);
-		
-		//input price
-		System.out.println("Is company [yes OR no]: ");
-		boolean valid = false;
-		do {
-			input = in.nextLine().trim().toLowerCase();		
-			if ( input.matches("yes|no") ) {
-			 	setOrganization(input.equals("yes"));
-				valid = true;
-			} else
-				System.err.println("yes or no");
-		} while (!valid);
 	}
 
 	public static void main(String[] args){

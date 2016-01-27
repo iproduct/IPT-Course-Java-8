@@ -42,7 +42,6 @@
 
 package invoicing.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -62,6 +61,7 @@ import invoicing.model.Position;
 import invoicing.model.Product;
 import invoicing.util.ProductComparatorByCode;
 import invoicing.util.ProductComparatorByPrice;
+import invoicing.view.OutputUtils;
 
 /**
  * Top level invoicing application class.
@@ -105,11 +105,14 @@ public class InvoiceRegister {
 	
 	private Map<String, Product> products = new HashMap<>();
 	private Map<Long, Contragent> contragents = new HashMap<>();
-	private Map<Long, Invoice> invoices= new HashMap<>();
+	private Map<Company, List<Invoice>> invoices= new HashMap<>(); //invoice lists for each issuer
+	private Company currentIssuer;
+	private Invoice lastInvoice;
 	
 	//Invoice register initialization
 	public void initialize(Collection<? extends Product> products, 
 			Collection<? extends Contragent> contragents){
+		setCurrentIssuer(SAMPLE_COMPANIES[0]);
 		this.products.clear();
 		for(Product p : products)
 			this.products.put(p.getCode(), p);
@@ -119,6 +122,23 @@ public class InvoiceRegister {
 	}
 	
 	
+	public Company getCurrentIssuer() {
+		return currentIssuer;
+	}
+
+
+	public void setCurrentIssuer(Company currentIssuer) {
+		this.currentIssuer = currentIssuer;
+		if(invoices.get(getCurrentIssuer()) == null) {
+			invoices.put(getCurrentIssuer(), new ArrayList<>());
+		}
+	}
+
+	public Invoice getLastInvoice() {
+		return lastInvoice;
+	}
+	
+
 	//Product methods
 	public Product findProductByProductCode(String pCode){
 		return products.get(pCode);
@@ -127,6 +147,13 @@ public class InvoiceRegister {
 	public void addProduct(Product product) throws EntityAlreadyExistsException {
 		if ( products.containsKey(product.getCode()) )
 			throw new EntityAlreadyExistsException("Product with code = " + product.getCode() + " already exists.");
+		
+		int maxProductId = 0;
+		if(!products.isEmpty()) {
+			Product maxProduct = Collections.max(products.values());
+			maxProductId = maxProduct.getId();
+		}
+		product.setId(maxProductId + 1);
 		products.put(product.getCode(), product);
 	}
 	
@@ -156,15 +183,23 @@ public class InvoiceRegister {
 			System.out.println(c);
 	}
 	
+	public void printAllOrganizationsSorted(Comparator<Contragent> cc){
+		List<Contragent> clist = new ArrayList<>(contragents.values());
+		Collections.sort(clist, cc);
+		for(Contragent c : clist)
+			if(c.isOrganization())
+				System.out.println(c);
+	}
+	
 	
 	//Invoice building methods
-	public Invoice newInvoice(Company issuer, Contragent receiver){
+	public Invoice newInvoice(Contragent receiver){
 		long maxNumber = 0;
-		if(!invoices.isEmpty()) {
-			Invoice maxInvoice = Collections.max(invoices.values());
+		if(!invoices.get(getCurrentIssuer()).isEmpty()) {
+			Invoice maxInvoice = Collections.max(invoices.get(currentIssuer));
 			maxNumber = maxInvoice.getNumber();
 		}
-		Invoice newInvoice = new Invoice(maxNumber+1, issuer, receiver, new Date(),
+		Invoice newInvoice = new Invoice(maxNumber+1, getCurrentIssuer(), receiver, new Date(),
 				new ArrayList<Position>());
 		return newInvoice;
 	}
@@ -178,49 +213,15 @@ public class InvoiceRegister {
 	}
 	
 	public void addInvoice(Invoice invoice){
-		invoices.put(invoice.getNumber(), invoice);
+		invoices.get(getCurrentIssuer()).add(invoice);
+		lastInvoice = invoice;
 	}
 	
-
-	
-	/**
-	 * This method prints the invoice as text.
-	 * @param inv invoice to be printed
-	 * @return formatted text layout of the inoce
-	 */
-	public static String formatInvoice(Invoice inv){
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-		StringBuilder builder = new StringBuilder();
-		builder.append("\n\nINVOICE")
-			.append("\n==========")
-			.append("\nNo. : ").append(String.format("%010d  ", inv.getNumber()))
-			.append("\nDate: ").append(sdf.format(inv.getDate()))
-			.append("\n\nISSUER: \n").append(inv.getIssuer())
-			.append("\n\nRECEIVER: \n").append(inv.getReceiver());
-
-		builder.append(
-				String.format("\n\n| %3s | %-30.30s | %8s | %8s | %7s | %10s |", 
-					"No.", "Product", "Price", "Quantity", "Measure", "Total")
-			);
-
-		int n = 1;
-		for(Position pos : inv.getPositions()){
-			builder.append(
-				String.format("\n| %3d | %-30.30s | %8.2f | %8.2f | %7s | %10.2f |",
-					n++, pos.getProduct().getName(), 
-					pos.getPrice(), pos.getQuantity(), "PCS",
-					pos.getTotalPrice())
-			);
-		}
-		
-		builder.append(String.format("\n\n%66sTotal: %10.2f", "", inv.getTotal()))
-		.append(String.format("\n%68sVAT: %10.2f", "", inv.getVAT()))
-		.append(String.format("\n%84s", "-----------------"))
-		.append(String.format("\n\n%53sTotal VAT included: %10.2f", "", inv.getTotalPlusVAT()));
-			
-			
-		return builder.toString();
+	public List<Invoice> getInvoicesForCurrentIssuer() {
+		return invoices.get(getCurrentIssuer());
 	}
+
+
 
 	public static void main(String[] args) {
 		
@@ -241,7 +242,7 @@ public class InvoiceRegister {
 		Contragent receiver = new Contragent(234234243, "D. Anatasov", "Sofia");
 //		receiver.input(System.in);
 		
-		Invoice invoice = register.newInvoice(issuer, receiver);
+		Invoice invoice = register.newInvoice(receiver);
 		try {
 			register.addPositionToInvoice(invoice, "SF001", 7);
 			register.addPositionToInvoice(invoice, "HD001", 14);
@@ -251,9 +252,9 @@ public class InvoiceRegister {
 			e.printStackTrace();
 		}
 		
-		System.out.println(formatInvoice(invoice));
+		System.out.println(OutputUtils.formatInvoice(invoice));
 		
-		invoice = register.newInvoice(issuer, receiver);
+		invoice = register.newInvoice(receiver);
 		try {
 			register.addPositionToInvoice(invoice, "SF001", 7);
 			register.addPositionToInvoice(invoice, "HD001", 14);
@@ -263,7 +264,7 @@ public class InvoiceRegister {
 			e.printStackTrace();
 		}
 		
-		System.out.println(formatInvoice(invoice));
+		System.out.println(OutputUtils.formatInvoice(invoice));
 	}
 
 

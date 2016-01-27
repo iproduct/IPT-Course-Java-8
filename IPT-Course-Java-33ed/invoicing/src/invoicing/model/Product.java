@@ -45,7 +45,7 @@ package invoicing.model;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class Product {
+public class Product implements Comparable<Product>{
 	private static int count = 0;
 	private int id = ++count;
 	private String code;
@@ -94,6 +94,10 @@ public class Product {
 		return id;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -120,6 +124,11 @@ public class Product {
 	}	
 	
 	@Override
+	public int compareTo(Product other) {
+		return Long.compare(this.getId(), other.getId());
+	}
+	
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Product [id=");
@@ -134,45 +143,10 @@ public class Product {
 		return builder.toString();
 	}
 
-	public void input(Scanner in) {
-		String input;
-
-		//input code
-		System.out.println("Product code: ");
-		do {
-			input = in.nextLine();
-			if (input.matches("(\\d|[a-zA-Z]){5,10}") )
-			 	setCode(input);
-			else
-				System.err.println("Code should be 5 to 10 letters or digits.");
-		} while (getCode() == null);
-		
-		//input name
-		System.out.println("Product name: ");
-		do {
-			input = in.nextLine();
-			if ( !input.isEmpty() )
-			 	setName(input);
-			else
-				System.err.println("Name should not be empty.");
-		} while (getName() == null);
-		
-		//input price
-		System.out.println("Product price: ");
-		do {
-			input = in.nextLine().trim();
-			if ( input.matches("\\d+(\\.\\d+)?") )
-			 	setPrice(Double.parseDouble(input));
-			else
-				System.err.println("Invalid price. Ex: 9.57");
-		} while (getPrice() < 0);
-	}
-	
 	public static void main(String[] args) {
 		Product p1 = new Product("BK001", "Thinking in Java 4 ed.", 25.99);
 		Product p2 = new Product("BK002", "UML Distilled");
 		Product p3 = new Product();
-		p3.input(new Scanner(System.in));
 		System.out.println(p1);
 		System.out.println(p2);
 		System.out.println(p3);

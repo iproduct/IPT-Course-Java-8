@@ -108,60 +108,20 @@ public class Company extends Contragent {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder(super.toString());
+		return "Company [idNumber=" + getIdNumber() + ", name=" + getName() + ", address="
+				+ getAddress() + ", organization=" + isOrganization() + ", phone=" + getPhone() +", VAT_Registered=" + vatRegistered 
+				+ ", accountablePerson=" + accountablePerson + ", BIC=" + bic
+				+ ", IBAN=" + iban + "]";
+	}
+
+	public String format() {
+		StringBuilder builder = new StringBuilder(super.format());
 		if(isVatRegistered())
 			builder.append("\nVAT Number: ").append("BG").append(getIdNumber());
 		builder.append("\nAccountable Person: ").append(accountablePerson)
 				.append("\nIBAN: ").append(iban)
 				.append("\nBIC: ").append(bic);
 		return builder.toString();
-	}
-	
-	public void input(Scanner in) {
-		super.input(in);
-		String input;
-		
-		//is VAT registered
-		System.out.println("Is VAT registered [yes OR no]: ");
-		boolean valid = false;
-		do {
-			input = in.nextLine().trim().toLowerCase();		
-			if ( input.matches("yes|no") ) {
-			 	setVatRegistered(input.equals("yes"));
-				valid = true;
-			} else
-				System.err.println("yes or no");
-		} while (!valid);
-		
-		//input accountable person name
-		System.out.println("Accountable Person Name: ");
-		do {
-			input = in.nextLine();
-			if ( !input.isEmpty() )
-			 	setAccountablePerson(input);
-			else
-				System.err.println("Name should not be empty.");
-		} while (getAccountablePerson() == null);
-		
-		//input BIC
-		System.out.println("BIC: ");
-		do {
-			input = in.nextLine();
-			if (input.matches("\\w{6}") )
-			 	setBic(input);
-			else
-				System.err.println("BIC should be 6 characters.");
-		} while (getBic() == null);
-		
-		//input IBAN
-		System.out.println("IBAN: ");
-		do {
-			input = in.nextLine();
-			if (input.matches("\\w{10,16}") )
-			 	setIban(input);
-			else
-				System.err.println("IBAN should be 10 to 16 characters.");
-		} while (getIban() == null);			
 	}
 
 }
