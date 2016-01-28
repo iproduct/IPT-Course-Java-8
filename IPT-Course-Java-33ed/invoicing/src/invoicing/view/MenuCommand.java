@@ -1,7 +1,7 @@
 package invoicing.view;
 
 public enum MenuCommand {
-	NONE, EXIT,
+	NONE, EXIT, LOAD, SAVE,
 	ADD_PRODUCT, LIST_ALL_PRODUCTS,
 	ADD_CONTRAGENT, LIST_ALL_CONTRAGENTS,
 	SET_ISSUER, 

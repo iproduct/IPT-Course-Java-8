@@ -12,7 +12,10 @@ import static invoicing.view.MenuCommand.PRINT_LAST_INVOICE;
 import static invoicing.view.MenuCommand.PRINT_LAST_INVOICE_TO_FILE;
 import static invoicing.view.MenuCommand.SET_ISSUER;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -34,6 +37,7 @@ import invoicing.util.ContragentComparatorByName;
 import invoicing.util.ProductComparatorByCode;
 
 public class MainMenu {
+	private static final String MENU_CONFIG_FILENAME = "menuconfig.txt";
 	private static final String INVOICES_DIR = "invoices";
 	private static final String INVOICES_FILENAME_PREFIX = "invoice_";
 	private static final String INVOICES_FILENAME_SUFFIX = ".txt";
@@ -41,8 +45,10 @@ public class MainMenu {
 	private static final String[] menuItemStrings = { 
 			"EXIT from this program = EXIT",
 			"Add product = ADD_PRODUCT",
-			"List all products = LIST_ALL_PRODUCTS", "Add new contragent = ADD_CONTRAGENT",
-			"List all contragents = LIST_ALL_CONTRAGENTS", "Choose company issuing invoices = SET_ISSUER",
+			"List all products = LIST_ALL_PRODUCTS", 
+			"Add new contragent = ADD_CONTRAGENT",
+			"List all contragents = LIST_ALL_CONTRAGENTS", 
+			"Choose company issuing invoices = SET_ISSUER",
 			"Issue new invoice = ADD_INVOICE",
 			"Print last invoice = PRINT_LAST_INVOICE",
 			"Print last invoice to file (invoices/invoice_XXXXXXXXXX.txt) = PRINT_LAST_INVOICE_TO_FILE",
@@ -63,9 +69,21 @@ public class MainMenu {
 		register.initialize(Arrays.asList(InvoiceRegister.SAMPLE_PRODUCTS), contragents);
 
 		// Parse menu items
-		for (String s : menuItemStrings) {
-			menuItems.add(parseMenuItemString(s));
+		try {
+			BufferedReader configuration = new BufferedReader(
+					new FileReader(MENU_CONFIG_FILENAME));
+			String line;
+			while((line = configuration.readLine())!= null) {
+				menuItems.add(parseMenuItemString(line));
+			}
+		} catch (FileNotFoundException e1) {
+			System.err.println("Menu cofiguration file not found: " + MENU_CONFIG_FILENAME);
+			loadMenuConfigDefaults();
+		} catch (IOException e) {
+			System.err.println("Error reding menu cofiguration file: " + MENU_CONFIG_FILENAME);
+			loadMenuConfigDefaults();
 		}
+		
 		
 		// Add commands to map.
 		commands.put(NONE, new Command() {
@@ -249,6 +267,12 @@ public class MainMenu {
 			}
 		});
 
+	}
+
+	private void loadMenuConfigDefaults() {
+		for (String s : menuItemStrings) {
+			menuItems.add(parseMenuItemString(s));
+		}
 	}
 
 	public void start() {

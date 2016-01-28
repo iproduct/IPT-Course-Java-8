@@ -236,7 +236,7 @@ public class InvoiceRegister {
 		
 		//Create invoice
 		
-		Company issuer = SAMPLE_COMPANIES[0];
+//		Company issuer = SAMPLE_COMPANIES[0];
 //		issuer.input(System.in);
 		
 		Contragent receiver = new Contragent(234234243, "D. Anatasov", "Sofia");
