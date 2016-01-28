@@ -42,9 +42,10 @@
 
 package invoicing.model;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Company extends Contragent {
+public class Company extends Contragent implements Serializable {
 	private boolean vatRegistered;
 	private String accountablePerson;
 	private String bic;

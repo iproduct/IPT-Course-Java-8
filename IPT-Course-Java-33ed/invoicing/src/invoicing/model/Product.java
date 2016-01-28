@@ -43,9 +43,10 @@
 package invoicing.model;
 
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Product implements Comparable<Product>{
+public class Product implements Comparable<Product>, Serializable{
 	private static int count = 0;
 	private int id = ++count;
 	private String code;

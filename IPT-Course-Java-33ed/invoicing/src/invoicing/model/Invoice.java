@@ -42,12 +42,13 @@
 
 package invoicing.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-public class Invoice implements Comparable<Invoice>{
+public class Invoice implements Comparable<Invoice>, Serializable{
 	private static long invoiceCount = 0;
 	private long number = ++ invoiceCount;
 	private Contragent issuer; 

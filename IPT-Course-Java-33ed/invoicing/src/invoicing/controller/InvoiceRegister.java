@@ -42,6 +42,7 @@
 
 package invoicing.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -70,7 +71,7 @@ import invoicing.view.OutputUtils;
  * @since 1.0
  * @see org.iproduct.invoicing.model.Invoice
  */
-public class InvoiceRegister {
+public class InvoiceRegister implements Serializable{
 	public static final Product[] SAMPLE_PRODUCTS = {
 			new Product("BK001", "Thinking in Java", 15.7),
 			new Product("HD001", "Logitech Optical Mouse", 8.75),

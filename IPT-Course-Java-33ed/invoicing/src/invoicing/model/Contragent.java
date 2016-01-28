@@ -42,9 +42,10 @@
 
 package invoicing.model;
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Contragent {
+public class Contragent implements Serializable{
 	private long idNumber;
 	private String name;
 	private String address;

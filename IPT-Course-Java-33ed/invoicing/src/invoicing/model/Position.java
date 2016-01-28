@@ -42,7 +42,9 @@
 
 package invoicing.model;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable {
 	public static final double VAT_RATE = 0.2d;
 	private Product product;
 	private double quantity;

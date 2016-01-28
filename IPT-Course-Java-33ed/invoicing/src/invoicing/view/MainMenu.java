@@ -7,17 +7,23 @@ import static invoicing.view.MenuCommand.EXIT;
 import static invoicing.view.MenuCommand.GENERATE_INVOICING_REPORT_AS_CSV_FILE;
 import static invoicing.view.MenuCommand.LIST_ALL_CONTRAGENTS;
 import static invoicing.view.MenuCommand.LIST_ALL_PRODUCTS;
+import static invoicing.view.MenuCommand.LOAD;
 import static invoicing.view.MenuCommand.NONE;
 import static invoicing.view.MenuCommand.PRINT_LAST_INVOICE;
 import static invoicing.view.MenuCommand.PRINT_LAST_INVOICE_TO_FILE;
+import static invoicing.view.MenuCommand.SAVE;
 import static invoicing.view.MenuCommand.SET_ISSUER;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +43,7 @@ import invoicing.util.ContragentComparatorByName;
 import invoicing.util.ProductComparatorByCode;
 
 public class MainMenu {
+	private static final String SESSION_FILENAME = "invoices.db";
 	private static final String MENU_CONFIG_FILENAME = "menuconfig.txt";
 	private static final String INVOICES_DIR = "invoices";
 	private static final String INVOICES_FILENAME_PREFIX = "invoice_";
@@ -57,7 +64,7 @@ public class MainMenu {
 
 	private static final List<MenuItem> menuItems = new ArrayList<>();
 	private static final Map<MenuCommand, Command> commands = new EnumMap<MenuCommand, Command>(MenuCommand.class);
-	private static final InvoiceRegister register = new InvoiceRegister(); // Singleton
+	private static InvoiceRegister register = new InvoiceRegister(); 
 	private final Scanner in;
 
 	public MainMenu(InputStream inStream) {
@@ -200,7 +207,6 @@ public class MainMenu {
 			public boolean action() {
 				return InputUtils.inputInvoice(in, register);
 			}
-
 		});
 		commands.put(PRINT_LAST_INVOICE, new Command() {
 			@Override
@@ -262,6 +268,34 @@ public class MainMenu {
 				} catch (IOException e) {
 					System.err.println("Error writing to file: " + fileName );
 					System.err.println(e.getMessage());
+				}
+				return false;
+			}
+		});
+		commands.put(LOAD, new Command() {
+			@Override
+			public boolean action() {
+				try (ObjectInputStream inSession = new ObjectInputStream(
+							new FileInputStream(SESSION_FILENAME))) {
+					register = (InvoiceRegister) inSession.readObject();
+					return true;
+				} catch (IOException | ClassNotFoundException e) {
+					System.err.println("Error loading data from file: " + SESSION_FILENAME);
+					e.printStackTrace();
+				}
+				return false;
+			}
+		});
+		commands.put(SAVE, new Command() {
+			@Override
+			public boolean action() {
+				try (ObjectOutputStream outSession = new ObjectOutputStream(
+							new FileOutputStream(SESSION_FILENAME))) {
+					outSession.writeObject(register);
+					return true;
+				} catch (IOException e) {
+					System.err.println("Error saving data to file: " + SESSION_FILENAME);
+					e.printStackTrace();
 				}
 				return false;
 			}
