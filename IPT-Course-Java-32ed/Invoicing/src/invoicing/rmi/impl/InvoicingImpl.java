@@ -6,6 +6,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.RMIClientSocketFactory;
 import java.rmi.server.RMIServerSocketFactory;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -40,8 +41,12 @@ public class InvoicingImpl extends UnicastRemoteObject implements Invoicing {
 
 	@Override
 	public List<Item> getAllProducts() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		 Item[] hardwareItems = new Item[] {
+				new Item(1, "Whiteboard Marker", "", .89, "Hardware"),
+				new Item(2, "USB Flash 16GB", "AData", 8.5, "Hardware"),
+				new Item(3, "Computer Mouse", "Logitech", 12.33, "Hardware") 
+		};
+		return Arrays.asList(hardwareItems);
 	}
 
 	@Override
@@ -132,7 +137,7 @@ public class InvoicingImpl extends UnicastRemoteObject implements Invoicing {
 			UnicastRemoteObject.unexportObject(invoicingImpl, true);
 			Invoicing stub = 
 		          (Invoicing) UnicastRemoteObject.exportObject(invoicingImpl, 0);
-		    registry.rebind("//localhost:2016/Invoicing", stub);
+		    registry.rebind("Invoicing", stub);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

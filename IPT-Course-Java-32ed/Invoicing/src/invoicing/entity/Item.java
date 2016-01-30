@@ -38,6 +38,20 @@ public class Item implements Serializable {
 	public Item() {
 	}
 
+	public Item(long id, String name, String group) {
+		this.id = id;
+		this.name = name;
+		this.category = group;
+	}
+	
+	public Item(long id, String name, String vendor, double price, String group) {
+		this.id = id;
+		this.name = name;
+		this.vendor = vendor;
+		this.price = price;
+		this.category = group;
+	}
+
 	public long getId() {
 		return this.id;
 	}
