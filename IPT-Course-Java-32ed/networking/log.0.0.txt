@@ -2,46 +2,55 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2016-01-10T09:56:14</date>
-  <millis>1452412574308</millis>
+  <date>2016-01-26T10:13:35</date>
+  <millis>1453796015496</millis>
   <sequence>0</sequence>
-  <logger>timeserver.TimeServer</logger>
-  <level>INFO</level>
-  <class>timeserver.TimeServer</class>
-  <method>main</method>
+  <logger>chat.server.TCPChatServer</logger>
+  <level>SEVERE</level>
+  <class>chat.server.TCPChatServer</class>
+  <method>run</method>
   <thread>1</thread>
-  <message>TimeServer stated on port: 8000</message>
+  <message>Problem running Chat Server on port 8000: </message>
+  <exception>
+    <message>java.net.BindException: Address already in use: JVM_Bind</message>
+    <frame>
+      <class>java.net.DualStackPlainSocketImpl</class>
+      <method>bind0</method>
+    </frame>
+    <frame>
+      <class>java.net.DualStackPlainSocketImpl</class>
+      <method>socketBind</method>
+    </frame>
+    <frame>
+      <class>java.net.AbstractPlainSocketImpl</class>
+      <method>bind</method>
+    </frame>
+    <frame>
+      <class>java.net.PlainSocketImpl</class>
+      <method>bind</method>
+    </frame>
+    <frame>
+      <class>java.net.ServerSocket</class>
+      <method>bind</method>
+    </frame>
+    <frame>
+      <class>java.net.ServerSocket</class>
+      <method>&lt;init&gt;</method>
+    </frame>
+    <frame>
+      <class>java.net.ServerSocket</class>
+      <method>&lt;init&gt;</method>
+    </frame>
+    <frame>
+      <class>chat.server.TCPChatServer</class>
+      <method>run</method>
+      <line>58</line>
+    </frame>
+    <frame>
+      <class>chat.server.TCPChatServer</class>
+      <method>main</method>
+      <line>80</line>
+    </frame>
+  </exception>
 </record>
-<record>
-  <date>2016-01-10T09:56:19</date>
-  <millis>1452412579009</millis>
-  <sequence>1</sequence>
-  <logger>timeserver.TimeServer</logger>
-  <level>INFO</level>
-  <class>timeserver.TimeServer</class>
-  <method>main</method>
-  <thread>1</thread>
-  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36457,localport=8000]</message>
-</record>
-<record>
-  <date>2016-01-10T09:56:21</date>
-  <millis>1452412581079</millis>
-  <sequence>3</sequence>
-  <logger>timeserver.TimeServer</logger>
-  <level>INFO</level>
-  <class>timeserver.TimeServer</class>
-  <method>main</method>
-  <thread>1</thread>
-  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36458,localport=8000]</message>
-</record>
-<record>
-  <date>2016-01-10T09:56:23</date>
-  <millis>1452412583080</millis>
-  <sequence>5</sequence>
-  <logger>timeserver.TimeServer</logger>
-  <level>INFO</level>
-  <class>timeserver.TimeServer</class>
-  <method>main</method>
-  <thread>1</thread>
-  <message>TimeServer connection accepted: Socket[addr=/127.0.0.1,port=36459,localport=8000]</message>
-</record>
+</log>

@@ -2,6 +2,10 @@ package invoicing.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import invoicing.entity.Position;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +45,21 @@ public class Invoice implements Serializable {
 	public Invoice() {
 	}
 
+	public Invoice(long number, Contragent issuer, Contragent receiver) {
+		this.number = number;
+		this.issuer = issuer;
+		this.receiver = receiver;
+		this.positions = new ArrayList<>();
+	}
+	
+	public Invoice(long number, Date date, Contragent issuer, Contragent receiver, List<Position> positions) {
+		this.number = number;
+		this.date = date;
+		this.issuer = issuer;
+		this.receiver = receiver;
+		this.positions = positions;
+	}
+	
 	public long getNumber() {
 		return this.number;
 	}
