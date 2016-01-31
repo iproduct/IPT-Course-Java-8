@@ -63,6 +63,12 @@ public class PositionPK implements Serializable {
 
 	public PositionPK() {
 	}
+	
+	public PositionPK(int number, long invoiceNumber) {
+		this.number = number;
+		this.invoiceNumber = invoiceNumber;
+	}
+	
 	public int getNumber() {
 		return this.number;
 	}
