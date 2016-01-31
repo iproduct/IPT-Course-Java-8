@@ -60,6 +60,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.iproduct.invoicing.IPTInvoicingClient;
 import org.iproduct.invoicing.entity.Item;
 import org.iproduct.invoicing.jpa.exceptions.EntityAlreadyExistsException;
 

@@ -62,6 +62,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.AbstractTableModel;
 
+import org.iproduct.invoicing.IPTInvoicingClient;
 import org.iproduct.invoicing.entity.Item;
 
 public class ManageProductsDialog extends JDialog {

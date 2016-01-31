@@ -67,7 +67,7 @@ public interface Invoicing extends Remote{
 	Contragent addContragent(Contragent contragent) throws RemoteException, EntityAlreadyExistsException;
 	List<Contragent> getAllContragents() throws RemoteException;
 	List<Contragent> getContragents(int from, int max) throws RemoteException, EntityDoesNotExistException;
-	Contragent updateContragent(Contragent Contragent) throws RemoteException;
+	Contragent updateContragent(Contragent Contragent) throws RemoteException, EntityDoesNotExistException;
 	Contragent deleteContragent(long contragentId) 
 			throws RemoteException, EntityDoesNotExistException;
 	

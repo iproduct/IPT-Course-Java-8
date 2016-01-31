@@ -41,7 +41,7 @@
 * "Portions Copyright (c) {year} {name of copyright owner}"
 */
 
-package org.iproduct.invoicing.view;
+package org.iproduct.invoicing;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -69,6 +69,10 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.iproduct.invoicing.rmi.Invoicing;
 import org.iproduct.invoicing.rmi.client.InvoicingRMIClient;
+import org.iproduct.invoicing.view.AddContragentDialog;
+import org.iproduct.invoicing.view.AddProductDialog;
+import org.iproduct.invoicing.view.ManageContragentsDialog;
+import org.iproduct.invoicing.view.ManageProductsDialog;
 
 import java.awt.event.ActionListener;
 

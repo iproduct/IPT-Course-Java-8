@@ -122,26 +122,22 @@ public class InvoicingImpl extends UnicastRemoteObject implements Invoicing {
 
 	@Override
 	public List<Contragent> getAllContragents() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return contragentController.findAll();
 	}
 
 	@Override
 	public List<Contragent> getContragents(int from, int max) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		return contragentController.find(from, max);
 	}
 
 	@Override
-	public Contragent updateContragent(Contragent Contragent) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public Contragent updateContragent(Contragent contragent) throws RemoteException, EntityDoesNotExistException {
+		return contragentController.update(contragent);
 	}
 
 	@Override
 	public Contragent deleteContragent(long contragentId) throws RemoteException, EntityDoesNotExistException {
-		// TODO Auto-generated method stub
-		return null;
+		return contragentController.delete(contragentId);
 	}
 
 	@Override

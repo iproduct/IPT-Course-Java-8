@@ -60,6 +60,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.iproduct.invoicing.IPTInvoicingClient;
 import org.iproduct.invoicing.entity.Contragent;
 import org.iproduct.invoicing.entity.ContragentType;
 import org.iproduct.invoicing.entity.Item;
