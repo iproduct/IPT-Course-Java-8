@@ -56,7 +56,7 @@ import java.util.List;
 import org.iproduct.invoicing.entity.Contragent;
 import org.iproduct.invoicing.entity.Invoice;
 import org.iproduct.invoicing.entity.Item;
-import org.iproduct.invoicing.entity.old.Position;
+import org.iproduct.invoicing.entity.Position;
 import org.iproduct.invoicing.jpa.ContragentJPAController;
 import org.iproduct.invoicing.jpa.ItemJPAController;
 import org.iproduct.invoicing.jpa.JPAMainController;
