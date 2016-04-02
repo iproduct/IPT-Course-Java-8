@@ -40,18 +40,22 @@ public class Point {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Point other = (Point) obj;
-		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
-			return false;
-		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-			return false;
-		return true;
+//		if (this == obj)
+//			return true;
+//		if ()
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Point other = (Point) obj;
+//		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+//			return false;
+//		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+//			return false;
+		return obj != null && obj instanceof Point 
+			&& Double.doubleToLongBits(((Point)obj).x)
+				== Double.doubleToLongBits(x)
+			&& Double.doubleToLongBits(((Point)obj).y)
+				== Double.doubleToLongBits(y);
 	}
 
 	@Override
