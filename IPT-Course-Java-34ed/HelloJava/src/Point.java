@@ -63,7 +63,7 @@ public class Point {
 		return "Point (" +  x + ", " + y + ")";
 	}
 	
-	private double distance(Point p2) {
+	public double distance(Point p2) {
 		return Math.hypot(x - p2.x, y - p2.y);
 	}
 
