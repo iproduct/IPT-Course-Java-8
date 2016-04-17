@@ -33,9 +33,22 @@ public class LibraryController {
 		Book b1 = new Book("Thinking in Java 4ed.", authors, 
 				"Prentince Hall", 2013);
 		Book b2 = new Book("Effective Java", 
-			Arrays.asList(new String[] {"Joshua Bloch"}), 
-			"Wesley", 2008);
-		
+				Arrays.asList(new String[] {"Joshua Bloch"}), 
+				"Wesley", 2008);	
+		Book b3 = new Book("Design Patterns in Java", 
+				Arrays.asList(
+					new String[] {"Steven Metsker", "William C. Wake"}), 
+					"Wesley", 2006);
+		Book b4 = new Book("Design Patterns: Elements of Reusable Object-Oriented Software", 
+				Arrays.asList(new String[] {
+					" Erich Gamma", "Ralph Johnson", "John Vlissides",
+					""}), 
+					"Wesley", 2008);
+		Book b5 = new Book("Applied Java Patterns", 
+				Arrays.asList(new String[] {
+						"Stephen Stelting", "Olav Maassen"}), 
+					"Sun", 2009);
+			
 		//Library controller
 		LibraryController library = new LibraryController();
 		library.addBook("IT000000001", b1);
