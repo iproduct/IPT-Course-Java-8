@@ -2,12 +2,13 @@ package library.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import library.model.Book;
+import library.util.BookTitleComparator;
 import library.view.LibraryView;
 
 public class LibraryController {
@@ -26,7 +27,7 @@ public class LibraryController {
 	}
 
 	public static void main(String[] args) {
-		List<String> authors = new ArrayList<String>();
+		List<String> authors = new LinkedList<String>();
 		authors.add("Bruce Eckel");
 		Book b1 = new Book("Thinking in Java 4ed.", authors, 
 				"Prentince Hall", 2013);
@@ -58,7 +59,21 @@ public class LibraryController {
 //		System.out.println(library.getBooksCollection());
 		
 		LibraryView view = new LibraryView(library);
-		System.out.println(view.formatBookList());
+		System.out.println(view.formatBookList(
+			(Book book1, Book book2) -> {
+				String a1 = book1.getAuthors().get(0);
+				String a2 = book2.getAuthors().get(0);
+				a1 = (a1 != null) ? a1 : "";
+				a2 = (a2 != null) ? a2 : "";
+				String[] names1 = a1.split(" ");
+				String lastName1 = (names1.length > 0) ? names1[names1.length-1]: "";
+				String[] names2 = a2.split(" ");
+				String lastName2 = (names2.length > 0) ? names2[names2.length-1]: "";
+				return lastName1.compareToIgnoreCase(lastName2);
+			}
+		));
+		
+		
 	}
 
 }
