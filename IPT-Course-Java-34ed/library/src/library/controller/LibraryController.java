@@ -2,13 +2,14 @@ package library.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import library.model.Book;
-import library.util.BookTitleComparator;
 import library.view.LibraryView;
 
 public class LibraryController {
@@ -73,6 +74,15 @@ public class LibraryController {
 			}
 		));
 		
+		//Streaming API demo
+		List<String> titles = library.getBooks().parallelStream()
+			.sorted(Comparator.comparing(Book::getYear))
+			.filter(book -> book.getYear() > 2008)
+			.map(book -> {System.out.println(book); return book;})
+			.map(Book::getTitle)
+			.collect(Collectors.toList());
+		System.out.println("\nTitles only:");
+		titles.stream().forEach(t -> System.out.println(t));
 		
 	}
 
