@@ -42,7 +42,7 @@ public class LibraryController {
 		Book b4 = new Book("Design Patterns: Elements of Reusable Object-Oriented Software", 
 				Arrays.asList(new String[] {
 					" Erich Gamma", "Ralph Johnson", "John Vlissides",
-					""}), 
+					"Richard Helm"}), 
 					"Wesley", 2008);
 		Book b5 = new Book("Applied Java Patterns", 
 				Arrays.asList(new String[] {
@@ -53,6 +53,9 @@ public class LibraryController {
 		LibraryController library = new LibraryController();
 		library.addBook("IT000000001", b1);
 		library.addBook("IT000000002", b2);
+		library.addBook("IT000000003", b3);
+		library.addBook("IT000000004", b4);
+		library.addBook("IT000000005", b5);
 //		System.out.println(library.getBooks());
 //		System.out.println(library.getBooksCollection());
 		
