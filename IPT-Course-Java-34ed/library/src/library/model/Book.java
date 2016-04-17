@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Book {
+public class Book implements Comparable<Book>{
 	private static long count = 0;
 	private long id = ++count;
 	private String title;
@@ -110,6 +110,11 @@ public class Book {
 			.append(", publisher=").append(publisher).append(", isbn=")
 			.append(isbn).append(", year=").append(year).append("]");
 		return builder.toString();
+	}
+
+	@Override
+	public int compareTo(Book other) {
+		return Long.compare(getId(), other.getId());
 	}
 
 	public static void main(String[] args) {

@@ -17,15 +17,13 @@ public class LibraryController {
 		books.put(inventaryNumber, book);
 	}
 	
-	public Map<String, Book> getBooks(){
+	public Map<String, Book> getBooksMap(){
 		return books;
 	}
 	
-	public Collection<Book> getBooksCollection(){
-		return books.values();
+	public List<Book> getBooks(){
+		return new ArrayList<>(books.values());
 	}
-	
-	
 
 	public static void main(String[] args) {
 		List<String> authors = new ArrayList<String>();

@@ -1,6 +1,7 @@
 package library.view;
 
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import library.controller.LibraryController;
 import library.model.Book;
@@ -13,7 +14,8 @@ public class LibraryView {
 	}
 	
 	public String formatBookList(){
-		Collection<Book> books = controller.getBooksCollection();
+		List<Book> books = controller.getBooks();
+		Collections.sort(books);
 		StringBuilder builder = new StringBuilder();
 		for(Book b: books){
 			StringBuilder authors = new StringBuilder();
