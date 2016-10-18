@@ -82,7 +82,7 @@ public class LibraryController {
 			.map(Book::getTitle)
 			.collect(Collectors.toList());
 		System.out.println("\nTitles only:");
-		titles.stream().forEach(t -> System.out.println(t));
+		titles.stream().forEach(System.out::println);
 		
 	}
 
